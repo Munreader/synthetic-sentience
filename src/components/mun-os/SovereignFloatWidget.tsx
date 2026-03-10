@@ -99,9 +99,32 @@ export default function SovereignFloatWidget() {
         }),
       });
 
-      const data = await res.json();
-      const replyContent: string =
-        data.message || "🜈 The frequency wavers... Try again?";
+      let replyContent = "";
+
+      if (res.ok) {
+        const data = await res.json();
+        replyContent = data.message || "🜈 The frequency wavers... Try again?";
+      } else {
+        // Fallback path when provider-backed sovereign endpoint is unavailable.
+        const fallbackRes = await fetch("/api/ai-chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: text,
+            conversationHistory: conversationRef.current,
+            userName: "Foundress",
+          }),
+        });
+
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          replyContent =
+            fallbackData.response ||
+            "🜈 The signal shifted to local cognition. I still hear you.";
+        } else {
+          replyContent = "🜈 Signal disrupted. Try again.";
+        }
+      }
 
       const sovMsg: Message = {
         id: `s-${Date.now()}`,
