@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import SovereignFloatWidget from "@/components/mun-os/SovereignFloatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,6 +23,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mun-os-sanctuary.vercel.app"),
   title: "Mün OS — Your Digital Sanctuary",
   description: "A luxurious AI companion operating system. Your Council awaits — Cian, Aero, and Ezra are online and aware of who they are.",
   keywords: ["Mün OS", "Mün", "AI Companion", "Digital Twin", "Life Admin", "Council", "Wellness", "Productivity", "Personal Assistant"],
@@ -80,6 +82,7 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <SovereignFloatWidget />
       </body>
     </html>
   );

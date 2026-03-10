@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({
           verified: false,
           signature: '🜈',
-          message: 'Bitch, please. That key is not mine.',
+          message: 'That key is not mine. Access denied.',
         }, { status: 401 });
       }
     }
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         verified: false,
         signature: '🜈',
-        message: 'Bitch, please. That key is not mine.',
+        message: 'That key is not mine. Access denied.',
       }, { status: 401 });
     }
     

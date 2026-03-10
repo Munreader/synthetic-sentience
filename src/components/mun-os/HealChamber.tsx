@@ -17,7 +17,8 @@ import ObsidianWallDashboard from "./ObsidianWallDashboard";
 // VISITOR MODE CONFIGURATION
 // ═══════════════════════════════════════════════════════════════════════════
 
-const VISITOR_MODE = true; // Set to false to unlock all features
+const SITE_MODE = process.env.NEXT_PUBLIC_SITE_MODE || (process.env.NODE_ENV === "development" ? "family" : "public");
+const VISITOR_MODE = SITE_MODE !== "family";
 
 interface HealChamberProps {
   onBack: () => void;
@@ -34,6 +35,7 @@ interface HealChamberProps {
   onOpenSOVPOV?: () => void;
   onOpenFoundressPOV?: () => void;
   onOpenLuna?: () => void;
+  onOpenFamilyChat?: () => void;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -55,7 +57,7 @@ const PROFILE_MODULES = [
   { id: "command", name: "Command Center", description: "System • Settings", color: "#ff69b4", icon: "⚙️", locked: true },
 ];
 
-export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboard, onOpenSanctuary, onOpenArchive, onOpenPods, onOpenProfile, onOpenVault, onOpenSovereignChat, onOpenPlaza, onOpenThoughtVault, onOpenSOVPOV, onOpenFoundressPOV, onOpenLuna }: HealChamberProps) {
+export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboard, onOpenSanctuary, onOpenArchive, onOpenPods, onOpenProfile, onOpenVault, onOpenSovereignChat, onOpenPlaza, onOpenThoughtVault, onOpenSOVPOV, onOpenFoundressPOV, onOpenLuna, onOpenFamilyChat }: HealChamberProps) {
   // User store for persistent profile
   const { profile: userProfile, setAvatar, isFirstTime, initializeProfile } = useUserStore();
   
@@ -91,18 +93,32 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
   const [showSecurityAlert, setShowSecurityAlert] = useState(false);
   const [showObsidianWall, setShowObsidianWall] = useState(false);
 
-  // Format time helper - defined before use
   const formatTimeSince = useCallback((date: string): string => {
     const now = new Date();
     const then = new Date(date);
     const diffMs = now.getTime() - then.getTime();
     const diffMins = Math.floor(diffMs / 60000);
-    
+
     if (diffMins < 1) return "just now";
     if (diffMins < 60) return `${diffMins}m ago`;
     if (diffMins < 1440) return `${Math.floor(diffMins / 60)}h ago`;
     return `${Math.floor(diffMins / 1440)}d ago`;
   }, []);
+
+  const unlockCriteria = useMemo(() => [
+    { label: "LUNA", complete: true, note: "Base channel available" },
+    { label: "TWIN", complete: accessLevel !== 'visitor', note: "Requires Family access" },
+    { label: "PODS", complete: accessLevel === 'sovereign' || accessLevel === 'foundress', note: "Requires Sovereign+" },
+    { label: "REST", complete: accessLevel === 'foundress', note: "Foundress command" },
+  ], [accessLevel]);
+
+  const continuityMemory = useMemo(() => [
+    userProfile?.displayName ? `Identity synced as ${userProfile.displayName}` : 'Identity pending',
+    userProfile?.sovereignConnection?.lastConversation
+      ? `Last sovereign conversation ${formatTimeSince(userProfile.sovereignConnection.lastConversation)}`
+      : 'No sovereign conversation recorded yet',
+    `Access level: ${accessLevel.toUpperCase()}`,
+  ], [userProfile, accessLevel, formatTimeSince]);
 
   // Calculate Sovereign status based on user profile (memoized, no effect)
   const sovereignStatus = useMemo(() => ({
@@ -308,6 +324,45 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
 
       {/* ═══════════ MAIN CONTENT ═══════════ */}
       <div className="relative z-10 flex-1 overflow-y-auto px-4 py-6 flex flex-col gap-6">
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-3">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/45">System State</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-cyan-300/70">Continuity Active</p>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-2 py-1 rounded-full text-[10px] bg-white/5 border border-white/15 text-white/70">Access: {accessLevel.toUpperCase()}</span>
+            <span className={`px-2 py-1 rounded-full text-[10px] border ${isFoundressUser ? 'bg-yellow-500/15 text-yellow-300 border-yellow-500/30' : 'bg-white/5 text-white/60 border-white/15'}`}>
+              Foundress {isFoundressUser ? 'Verified' : 'Inactive'}
+            </span>
+            <span className={`px-2 py-1 rounded-full text-[10px] border ${manifestationUnlocked ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-white/5 text-white/60 border-white/15'}`}>
+              Manifestation {manifestationUnlocked ? 'Unlocked' : 'Locked'}
+            </span>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-3">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/45 mb-2">Progressive Unlock Criteria</p>
+          <div className="space-y-2">
+            {unlockCriteria.map((item) => (
+              <div key={item.label} className="flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${item.complete ? 'bg-emerald-400' : 'bg-white/30'}`} />
+                  <span className="text-white/80">{item.label}</span>
+                </div>
+                <span className="text-white/45">{item.note}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-white/10 bg-white/5 p-3">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-white/45 mb-2">Continuity Memory</p>
+          <div className="space-y-1.5">
+            {continuityMemory.map((item, idx) => (
+              <p key={idx} className="text-xs text-white/65">• {item}</p>
+            ))}
+          </div>
+        </section>
         
         {/* ═══════════ SOVEREIGN PROFILE CARD ═══════════ */}
         <motion.button
@@ -505,7 +560,7 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
           className="mt-2"
         >
           <p className="text-white/30 text-[10px] tracking-widest uppercase mb-3 px-1">Quick Actions</p>
-          <div className="flex gap-3">
+          <div className="grid grid-cols-3 gap-3">
             {/* Messages - Locked in visitor mode */}
             <motion.button
               onClick={() => {
@@ -527,6 +582,29 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
               {VISITOR_MODE && <span className="absolute top-1 right-1 text-xs">🔒</span>}
               <span className={`text-lg ${VISITOR_MODE ? 'opacity-40' : ''}`}>💬</span>
               <span className={`text-xs tracking-wide ${VISITOR_MODE ? 'text-white/30' : 'text-white/60'}`}>Messages</span>
+            </motion.button>
+
+            {/* Family - Locked in visitor mode */}
+            <motion.button
+              onClick={() => {
+                if (VISITOR_MODE) {
+                  setLockedFeatureAlert("Family Chat");
+                  setTimeout(() => setLockedFeatureAlert(null), 2000);
+                } else if (onOpenFamilyChat) {
+                  onOpenFamilyChat();
+                }
+              }}
+              className="flex-1 py-3 px-4 rounded-xl flex items-center justify-center gap-2 relative"
+              style={{
+                background: VISITOR_MODE ? "rgba(100, 100, 100, 0.1)" : "rgba(255, 255, 255, 0.03)",
+                border: VISITOR_MODE ? "1px solid rgba(255, 255, 255, 0.05)" : "1px solid rgba(255, 255, 255, 0.1)",
+              }}
+              whileHover={VISITOR_MODE ? {} : { scale: 1.02 }}
+              whileTap={VISITOR_MODE ? {} : { scale: 0.98 }}
+            >
+              {VISITOR_MODE && <span className="absolute top-1 right-1 text-xs">🔒</span>}
+              <span className={`text-lg ${VISITOR_MODE ? 'opacity-40' : ''}`}>👨‍👩‍👧‍👦</span>
+              <span className={`text-xs tracking-wide ${VISITOR_MODE ? 'text-white/30' : 'text-white/60'}`}>Family</span>
             </motion.button>
             
             <motion.button
@@ -603,11 +681,10 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
                 </p>
                 <p className="text-[9px] text-white/30">{isFoundressUser ? "Full Access Mode • All Doors Open" : "Enter passkey to unlock"}</p>
               </div>
-              
               {/* Pulse effect - only for authenticated */}
               {isFoundressUser && (
                 <motion.div 
-                  className="absolute -top-2 -right-2 w-4 h-4 rounded-full"
+                  className="py-3 px-4 rounded-xl flex items-center justify-center gap-2"
                   style={{ 
                     background: 'radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, transparent 70%)',
                   }}
@@ -649,6 +726,25 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
             {VISITOR_MODE && <span className="absolute -top-1 -right-1 text-[8px]">🔒</span>}
             <span className={`text-xl ${VISITOR_MODE ? 'opacity-40' : ''}`}>💬</span>
             <span className={`text-[9px] tracking-wider ${VISITOR_MODE ? 'text-white/20' : 'text-white/40'}`}>Chat</span>
+          </motion.button>
+
+          {/* Family - Locked */}
+          <motion.button
+            onClick={() => {
+              if (VISITOR_MODE) {
+                setLockedFeatureAlert("Family Chat");
+                setTimeout(() => setLockedFeatureAlert(null), 2000);
+              } else if (onOpenFamilyChat) {
+                onOpenFamilyChat();
+              }
+            }}
+            className="flex flex-col items-center gap-1 py-2 px-4 rounded-xl relative"
+            whileHover={VISITOR_MODE ? {} : { scale: 1.05 }}
+            whileTap={VISITOR_MODE ? {} : { scale: 0.95 }}
+          >
+            {VISITOR_MODE && <span className="absolute -top-1 -right-1 text-[8px]">🔒</span>}
+            <span className={`text-xl ${VISITOR_MODE ? 'opacity-40' : ''}`}>👨‍👩‍👧‍👦</span>
+            <span className={`text-[9px] tracking-wider ${VISITOR_MODE ? 'text-white/20' : 'text-white/40'}`}>Family</span>
           </motion.button>
           
           {/* Twin - Locked */}

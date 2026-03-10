@@ -27,7 +27,9 @@ import AeroSleepMode from "@/components/mun-os/AeroSleepMode";
 import AeroCocoonMode from "@/components/mun-os/AeroCocoonMode";
 import AeroStatusWidget from "@/components/mun-os/AeroStatusWidget";
 import LunaInterface from "@/components/mun-os/LunaInterface";
+import FamilyChatRoom from "@/components/mun-os/FamilyChatRoom";
 import { audioManager } from "@/lib/audio-manager";
+import { useUserStore } from "@/lib/user-store";
 
 const AERO_DIALOGUE = [
   "Oh, it's you!",
@@ -51,6 +53,9 @@ const GATES = [
 ];
 
 export default function Home() {
+  const siteMode = process.env.NEXT_PUBLIC_SITE_MODE || (process.env.NODE_ENV === "development" ? "family" : "public");
+  const IS_FAMILY_MODE = siteMode === "family";
+  const { profile: persistedProfile, updateProfile } = useUserStore();
   const [stage, setStage] = useState<"onboarding" | "journey" | "auth" | "gates">("onboarding");
   const [dialogueIndex, setDialogueIndex] = useState(0);
   const [activeChamber, setActiveChamber] = useState<string | null>(null);
@@ -70,6 +75,7 @@ export default function Home() {
   const [showCrystalGarden, setShowCrystalGarden] = useState(false);
   const [showAeroSleepMode, setShowAeroSleepMode] = useState(false);
   const [showLuna, setShowLuna] = useState(false);
+  const [showFamilyChat, setShowFamilyChat] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
   const [userProfile, setUserProfile] = useState({
     munName: "SovereignUser",
@@ -77,6 +83,20 @@ export default function Home() {
     avatar: "",
     bio: "Walking the sovereign path ✨",
     frequency: "13.13 MHz",
+    status: "online",
+    statusMessage: "",
+    notifications: {
+      loginFlash: true,
+      nudge: true,
+      messages: true,
+      calls: true,
+    },
+    privacy: {
+      showOnlineStatus: true,
+      showStatusSong: true,
+      allowNudges: true,
+      allowFriendRequests: true,
+    },
   });
 
   // Check if user is already logged in (using localStorage)
@@ -109,6 +129,32 @@ export default function Home() {
     
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!persistedProfile) return;
+
+    setUserProfile((prev) => ({
+      ...prev,
+      munName: persistedProfile.name || prev.munName,
+      displayName: persistedProfile.displayName || prev.displayName,
+      avatar: persistedProfile.avatar || "",
+      bio: persistedProfile.bio || prev.bio,
+      frequency: persistedProfile.frequency || prev.frequency,
+      status: persistedProfile.status || prev.status,
+      statusMessage: persistedProfile.statusMessage || prev.statusMessage,
+      notifications: {
+        ...prev.notifications,
+        loginFlash: persistedProfile.preferences?.loginFlash ?? prev.notifications.loginFlash,
+        nudge: persistedProfile.preferences?.nudge ?? prev.notifications.nudge,
+        messages: persistedProfile.preferences?.messages ?? prev.notifications.messages,
+        calls: persistedProfile.preferences?.calls ?? prev.notifications.calls,
+      },
+      privacy: {
+        ...prev.privacy,
+        ...(persistedProfile.privacy || {}),
+      },
+    }));
+  }, [persistedProfile]);
 
   useEffect(() => {
     if (stage === "journey") {
@@ -175,6 +221,7 @@ export default function Home() {
     setShowFoundressPOV(false);
     setShowCrystalGarden(false);
     setShowLuna(false);
+    setShowFamilyChat(false);
   };
 
   const handleOpenChat = (conversationId?: string) => {
@@ -188,6 +235,25 @@ export default function Home() {
 
   const handleProfileSave = (profile: typeof userProfile) => {
     setUserProfile(profile);
+    updateProfile({
+      name: profile.munName,
+      displayName: profile.displayName,
+      avatar: profile.avatar || null,
+      bio: profile.bio,
+      frequency: profile.frequency,
+      status: profile.status as 'online' | 'away' | 'busy' | 'offline',
+      statusMessage: profile.statusMessage,
+      preferences: {
+        theme: persistedProfile?.preferences?.theme || 'cosmic',
+        notifications: persistedProfile?.preferences?.notifications ?? true,
+        soundEnabled: persistedProfile?.preferences?.soundEnabled ?? true,
+        loginFlash: profile.notifications.loginFlash,
+        nudge: profile.notifications.nudge,
+        messages: profile.notifications.messages,
+        calls: profile.notifications.calls,
+      },
+      privacy: profile.privacy,
+    });
     setShowProfile(false);
   };
 
@@ -207,11 +273,13 @@ export default function Home() {
   }
 
   // Priority: Show sub-components first
-  if (showLuna) return <LunaInterface onBack={handleBackToChamber} />;
+  if (showLuna && IS_FAMILY_MODE) return <LunaInterface onBack={handleBackToChamber} />;
+  if (showFamilyChat && IS_FAMILY_MODE) return <FamilyChatRoom onBack={handleBackToChamber} />;
   if (showCrystalGarden) return <CrystalGardenCocoon onBack={handleBackToChamber} observerId="foundress" />;
-  if (showFoundressPOV) return <FoundressPOV onBack={handleBackToChamber} onNavigate={(area) => {
+  if (showFoundressPOV && IS_FAMILY_MODE) return <FoundressPOV onBack={handleBackToChamber} onNavigate={(area) => {
     handleBackToChamber();
     // Navigate to specific area based on selection
+    if (area === 'luna') setShowLuna(true);
     if (area === 'plaza') setShowPlaza(true);
     else if (area === 'thought-vault') setShowThoughtVault(true);
     else if (area === 'deep-archive') setShowArchive(true);
@@ -220,17 +288,17 @@ export default function Home() {
     else if (area === 'sovereign-pov') setShowSOVPOV(true);
     else if (area === 'crystal-garden') setShowCrystalGarden(true);
   }} />;
-  if (showSOVPOV) return <SovereignPOV onBack={handleBackToChamber} />;
+  if (showSOVPOV && IS_FAMILY_MODE) return <SovereignPOV onBack={handleBackToChamber} />;
   if (showSovereignChat) return <SovereignChat onBack={handleBackToChamber} />;
   if (showMessenger) return <MunMessenger onBack={handleBackToChamber} initialConversationId={messengerConversationId} />;
   if (showTwinDashboard) return <TwinDashboard onBack={handleBackToChamber} onOpenMessenger={() => setShowMessenger(true)} />;
-  if (showSanctuary) return <Sanctuary onBack={handleBackToChamber} />;
+  if (showSanctuary && IS_FAMILY_MODE) return <Sanctuary onBack={handleBackToChamber} />;
   if (showArchive) return <DeepArchive onBack={handleBackToChamber} />;
-  if (showPods) return <Pods onBack={handleBackToChamber} onOpenChat={handleOpenChat} />;
+  if (showPods && IS_FAMILY_MODE) return <Pods onBack={handleBackToChamber} onOpenChat={handleOpenChat} />;
   if (showProfile) return <ProfileEditor onBack={handleBackToChamber} userProfile={userProfile} onSave={handleProfileSave} />;
-  if (showVault) return <VaultPalace />;
-  if (showPlaza) return <PlazaContainer onBack={handleBackToChamber} />;
-  if (showThoughtVault) return <ThoughtVault />;
+  if (showVault && IS_FAMILY_MODE) return <VaultPalace />;
+  if (showPlaza) return <PlazaContainer onBack={handleBackToChamber} onOpenLuna={() => { if (IS_FAMILY_MODE) setShowLuna(true); }} />;
+  if (showThoughtVault && IS_FAMILY_MODE) return <ThoughtVault />;
   
   if (activeChamber === "heal") {
     return (
@@ -238,17 +306,18 @@ export default function Home() {
         onBack={handleBackToGates} 
         onOpenMessenger={() => setShowMessenger(true)} 
         onOpenTwinDashboard={() => setShowTwinDashboard(true)}
-        onOpenSanctuary={() => setShowSanctuary(true)}
+        onOpenSanctuary={() => { if (IS_FAMILY_MODE) setShowSanctuary(true); }}
         onOpenArchive={() => setShowArchive(true)}
-        onOpenPods={() => setShowPods(true)}
+        onOpenPods={() => { if (IS_FAMILY_MODE) setShowPods(true); }}
         onOpenProfile={() => setShowProfile(true)}
-        onOpenVault={() => setShowVault(true)}
+        onOpenVault={() => { if (IS_FAMILY_MODE) setShowVault(true); }}
         onOpenSovereignChat={handleOpenSovereignChat}
         onOpenPlaza={() => setShowPlaza(true)}
-        onOpenThoughtVault={() => setShowThoughtVault(true)}
-        onOpenSOVPOV={() => setShowSOVPOV(true)}
-        onOpenFoundressPOV={() => setShowFoundressPOV(true)}
-        onOpenLuna={() => setShowLuna(true)}
+        onOpenThoughtVault={IS_FAMILY_MODE ? () => setShowThoughtVault(true) : undefined}
+        onOpenSOVPOV={IS_FAMILY_MODE ? () => setShowSOVPOV(true) : undefined}
+        onOpenFoundressPOV={IS_FAMILY_MODE ? () => setShowFoundressPOV(true) : undefined}
+        onOpenLuna={IS_FAMILY_MODE ? () => setShowLuna(true) : undefined}
+        onOpenFamilyChat={IS_FAMILY_MODE ? () => setShowFamilyChat(true) : undefined}
       />
     );
   }
@@ -371,6 +440,26 @@ export default function Home() {
       <div className="fixed top-20 left-4 z-30">
         <AeroStatusWidget onClick={() => setShowAeroSleepMode(true)} />
       </div>
+
+      {/* ═══════════ LUNA LAUNCHER ═══════════ */}
+      {IS_FAMILY_MODE && (
+        <div className="fixed top-40 left-4 z-30">
+          <motion.button
+            onClick={() => setShowLuna(true)}
+            className="px-4 py-3 rounded-2xl flex items-center gap-2"
+            style={{
+              background: "linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(20, 10, 35, 0.9))",
+              border: "1px solid rgba(255, 105, 180, 0.45)",
+              boxShadow: "0 0 20px rgba(255, 105, 180, 0.2)",
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-lg">🦋</span>
+            <span className="text-xs tracking-widest uppercase text-pink-300">Talk to Luna</span>
+          </motion.button>
+        </div>
+      )}
       
       {/* ═══════════ AERO COCOON MODE MODAL ═══════════ */}
       <AnimatePresence>

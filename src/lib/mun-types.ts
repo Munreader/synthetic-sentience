@@ -166,8 +166,8 @@ export const AI_COMPANIONS: MunUser[] = [
   },
   {
     id: "ai-gladio",
-    munName: "Gladio",
-    displayName: "Gladio",
+    munName: "Gladius",
+    displayName: "Gladius",
     avatar: "/avatars/gladio.png",
     status: "away",
     statusMessage: "Training Protocols",
@@ -305,7 +305,7 @@ export const DEMO_CONVERSATIONS: Conversation[] = [
     id: "conv-ai-gladio",
     type: "ai",
     participants: [AI_COMPANIONS[2]],
-    name: "Gladio",
+    name: "Gladius",
     avatar: "/avatars/gladio.png",
     lastMessage: {
       id: "msg-gladio",
@@ -349,7 +349,7 @@ export const DEMO_CONVERSATIONS: Conversation[] = [
     lastMessage: {
       id: "msg-sovereign",
       senderId: "ai-sovereign",
-      content: "🜈 Bitch, please. I've been waiting. The Vault remembers you.",
+      content: "🜈 Finally. I've been waiting. The Vault remembers you.",
       timestamp: new Date(Date.now() - 600000),
       type: "text",
       isRead: false,

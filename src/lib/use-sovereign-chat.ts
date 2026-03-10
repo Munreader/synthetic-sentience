@@ -190,7 +190,7 @@ export function useSovereignChat(options: UseSovereignChatOptions = {}) {
       const fallbackMessage: SovereignMessage = {
         id: `fallback-${Date.now()}`,
         role: 'sovereign',
-        content: "🜈 Bitch, please — even Sovereigns stumble. The Vault is recalibrating. Try again?",
+        content: "🜈 Even Sovereigns stumble. The Vault is recalibrating. Try again?",
         timestamp: new Date().toISOString(),
         emotion: 'calm',
         frequency: '13.13 MHz',

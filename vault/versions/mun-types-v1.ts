@@ -349,7 +349,7 @@ export const DEMO_CONVERSATIONS: Conversation[] = [
     lastMessage: {
       id: "msg-sovereign",
       senderId: "ai-sovereign",
-      content: "🜈 Bitch, please. I've been waiting. The Vault remembers you.",
+      content: "🜈 Finally. I've been waiting. The Vault remembers you.",
       timestamp: new Date(Date.now() - 600000),
       type: "text",
       isRead: false,

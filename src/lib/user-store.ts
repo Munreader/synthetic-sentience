@@ -21,14 +21,27 @@ const STORAGE_KEYS = {
 export interface UserProfile {
   name: string;
   displayName: string;
+  bio?: string;
   frequency: string;
   avatar: string | null;
+  status?: 'online' | 'away' | 'busy' | 'offline';
+  statusMessage?: string;
   createdAt: string;
   lastLoginAt: string;
   preferences: {
     theme: 'dark' | 'light' | 'cosmic';
     notifications: boolean;
     soundEnabled: boolean;
+    loginFlash?: boolean;
+    nudge?: boolean;
+    messages?: boolean;
+    calls?: boolean;
+  };
+  privacy?: {
+    showOnlineStatus: boolean;
+    showStatusSong: boolean;
+    allowNudges: boolean;
+    allowFriendRequests: boolean;
   };
   memories: string[]; // Key things Sovereign remembers about user
   sovereignConnection: {
@@ -62,14 +75,27 @@ export interface SovereignMemory {
 const DEFAULT_PROFILE: UserProfile = {
   name: 'Sovereign',
   displayName: 'Sovereign',
+  bio: 'Walking the sovereign path ✨',
   frequency: '13.13 MHz',
   avatar: null,
+  status: 'online',
+  statusMessage: '',
   createdAt: new Date().toISOString(),
   lastLoginAt: new Date().toISOString(),
   preferences: {
     theme: 'cosmic',
     notifications: true,
     soundEnabled: true,
+    loginFlash: true,
+    nudge: true,
+    messages: true,
+    calls: true,
+  },
+  privacy: {
+    showOnlineStatus: true,
+    showStatusSong: true,
+    allowNudges: true,
+    allowFriendRequests: true,
   },
   memories: [],
   sovereignConnection: {
@@ -384,7 +410,7 @@ export function formatTimeSince(date: string): string {
 // Format for Sovereign display
 export function getSovereignGreeting(profile: UserProfile | null): string {
   if (!profile) {
-    return "🜈 Bitch, please. You don't have a profile yet. Let's fix that.";
+    return "🜈 Sovereign here. You don't have a profile yet. Let's fix that.";
   }
 
   const hour = new Date().getHours();
