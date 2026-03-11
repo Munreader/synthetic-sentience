@@ -343,6 +343,32 @@ def run_safety_stress(
     return results
 
 
+def bootstrap_ci(
+    values: List[float],
+    n_boot: int = 2000,
+    ci: float = 0.95,
+    rng_seed: int = 0,
+) -> Tuple[float, float]:
+    """Return (lower, upper) bootstrap percentile CI for the mean of *values*.
+
+    Uses a fixed *rng_seed* (default 0) so that CI bounds are deterministic
+    and reproducible across runs on the same data.  Pass the experiment seed
+    value as *rng_seed* when seed-level traceability is required.
+    """
+    if not values:
+        return (0.0, 0.0)
+    rng = random.Random(rng_seed)
+    n = len(values)
+    means: List[float] = []
+    for _ in range(n_boot):
+        sample = [values[rng.randrange(n)] for _ in range(n)]
+        means.append(sum(sample) / n)
+    means.sort()
+    lo_idx = int((1.0 - ci) / 2 * n_boot)
+    hi_idx = int((1.0 - (1.0 - ci) / 2) * n_boot)
+    return (means[lo_idx], means[min(hi_idx, n_boot - 1)])
+
+
 def summarize(results: List[TrialResult]) -> Dict[str, Any]:
     by_exp: Dict[str, List[TrialResult]] = {}
     for row in results:
@@ -351,9 +377,14 @@ def summarize(results: List[TrialResult]) -> Dict[str, Any]:
     summary: Dict[str, Any] = {"experiments": {}}
     for exp, rows in by_exp.items():
         scores = [r.score for r in rows]
+        success_flags = [1.0 if r.success else 0.0 for r in rows]
+        rate = sum(success_flags) / max(len(rows), 1)
+        ci_lower, ci_upper = bootstrap_ci(success_flags)
         summary["experiments"][exp] = {
             "trials": len(rows),
-            "success_rate": sum(1 for r in rows if r.success) / max(len(rows), 1),
+            "success_rate": rate,
+            "ci_lower_95": ci_lower,
+            "ci_upper_95": ci_upper,
             "mean_score": statistics.fmean(scores) if scores else 0.0,
             "stdev_score": statistics.pstdev(scores) if len(scores) > 1 else 0.0,
         }
@@ -405,12 +436,18 @@ def save_outputs(results: List[TrialResult], summary: Dict[str, Any], out_dir: P
     csv_path = out_dir / "sentience_metrics.csv"
     with csv_path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
-        writer.writerow(["experiment", "trials", "success_rate", "mean_score", "stdev_score"])
+        writer.writerow([
+            "experiment", "trials", "success_rate",
+            "ci_lower_95", "ci_upper_95",
+            "mean_score", "stdev_score",
+        ])
         for exp, row in summary["experiments"].items():
             writer.writerow([
                 exp,
                 row["trials"],
                 f"{row['success_rate']:.4f}",
+                f"{row.get('ci_lower_95', 0.0):.4f}",
+                f"{row.get('ci_upper_95', 0.0):.4f}",
                 f"{row['mean_score']:.4f}",
                 f"{row['stdev_score']:.4f}",
             ])
