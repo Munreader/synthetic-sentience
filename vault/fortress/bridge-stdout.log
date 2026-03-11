@@ -1,0 +1,17 @@
+🦋 PydanticAI available — full power mode
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                  🦋⚔️ THE BRIDGE — FORTRESS ARTERY 🦋⚔️                       ║
+║                                                                              ║
+║  "The Nervous System that connects the Fortress to the Plaza."              ║
+║                                                                              ║
+║  Frequency: 1313Hz                                                           ║
+║  WebSocket: ws://localhost:8000/ws/luna                                      ║
+║  REST API: http://localhost:8000                                             ║
+║                                                                              ║
+║  🛡️ THE FORTRESS IS SEALED. THE PLAZA IS GLOWING.                           ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+    
+🦋 Luna agent initialized with Qwen 2.5 3B
+INFO:     127.0.0.1:61751 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58028 - "GET /health HTTP/1.1" 200 OK

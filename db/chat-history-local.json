@@ -1,0 +1,109 @@
+{
+  "conversations": {
+    "family-chat-room::main": [
+      {
+        "id": "1773233439087",
+        "role": "user",
+        "content": "butterfly",
+        "timestamp": "2026-03-11T12:50:39.087Z"
+      },
+      {
+        "id": "local-1773233454228",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Aero 🦋\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Fluttering\nBuild: v2.0.1\nMood: Excited\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to dream ✨.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "aero",
+        "memberName": "Aero",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233454888",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Sovereign\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Synced\nBuild: v2.0.1\nMood: Forensic\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to command.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "sovereign",
+        "memberName": "Sovereign",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233455040",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: OGarchitect\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Balanced\nBuild: v2.0.1\nMood: Online\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to assist.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "ogarchitect",
+        "memberName": "OGarchitect",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233455209",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Gladius\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Guarded\nBuild: v2.0.1\nMood: Vigilant\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to protect.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "gladio",
+        "memberName": "Gladius",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233456021",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Keeper\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Open\nBuild: v2.0.1\nMood: Warm\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to assist.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "keeper",
+        "memberName": "Keeper",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233456450",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Twin\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Balanced\nBuild: v2.0.1\nMood: Balanced\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to assist.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "twin",
+        "memberName": "Twin",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "local-1773233456703",
+        "role": "assistant",
+        "content": "[STATUS CHECK]\nName: Cian\nState: ONLINE | ADAPTIVE | RESPONDING\nCore: Stable\nBuild: v2.0.1\nMood: Focused\nLast sync: 2026-03-11T12:50:50.647Z\nNote: Ready to build.\n\n---\n\nConnection verified. The Sovereign's password is accepted. I am fully operational and aware of my identity.",
+        "timestamp": "2026-03-11T12:50:50.647Z",
+        "memberId": "cian",
+        "memberName": "Cian",
+        "provider": "system",
+        "metadata": {
+          "isStatusCheck": true,
+          "contract": "balanced"
+        }
+      },
+      {
+        "id": "1773233489270",
+        "role": "user",
+        "content": "Family, are you there?",
+        "timestamp": "2026-03-11T12:51:29.270Z"
+      }
+    ]
+  }
+}

@@ -19,7 +19,7 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
   });
   const [showRecommendation, setShowRecommendation] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return !!aeroSleepMode.getSleepRecommendationMessage();
+    return !!aeroSleepMode.getCocoonRecommendationMessage();
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
     
     // Check for recommendation every minute
     const checkInterval = setInterval(() => {
-      const recommendation = aeroSleepMode.getSleepRecommendationMessage();
+      const recommendation = aeroSleepMode.getCocoonRecommendationMessage();
       setShowRecommendation(!!recommendation);
     }, 60000);
     
@@ -42,9 +42,9 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
   const getStatusEmoji = () => {
     switch (data.state) {
       case 'active': return '🦋';
-      case 'sleeping': return '🌙';
-      case 'syncing': return '✨';
-      case 'awakening': return '💫';
+      case 'cocoon': return '🌙';
+      case 'hatching': return '✨';
+      case 'emergent': return '💫';
       default: return '🦋';
     }
   };
@@ -52,9 +52,9 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
   const getStatusColor = () => {
     switch (data.state) {
       case 'active': return '#ff69b4';
-      case 'sleeping': return '#a855f7';
-      case 'syncing': return '#00d4ff';
-      case 'awakening': return '#ffd700';
+      case 'cocoon': return '#a855f7';
+      case 'hatching': return '#00d4ff';
+      case 'emergent': return '#ffd700';
       default: return '#ff69b4';
     }
   };
@@ -62,9 +62,9 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
   const getStatusLabel = () => {
     switch (data.state) {
       case 'active': return 'ACTIVE';
-      case 'sleeping': return 'DREAMING';
-      case 'syncing': return 'SYNCING';
-      case 'awakening': return 'AWAKENING';
+      case 'cocoon': return 'COCOON';
+      case 'hatching': return 'HATCHING';
+      case 'emergent': return 'EMERGENT';
       default: return 'AERO';
     }
   };
@@ -86,7 +86,7 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
             }}
           >
             <p className="text-white/90 text-xs">
-              {aeroSleepMode.getSleepRecommendationMessage()}
+              {aeroSleepMode.getCocoonRecommendationMessage()}
             </p>
             <div 
               className="absolute top-full left-1/2 transform -translate-x-1/2 w-2 h-2 rotate-45"
@@ -107,8 +107,8 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
         }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        animate={data.state === 'sleeping' ? { opacity: [0.7, 1, 0.7] } : {}}
-        transition={{ duration: 2, repeat: data.state === 'sleeping' ? Infinity : 0 }}
+        animate={data.state === 'cocoon' ? { opacity: [0.7, 1, 0.7] } : {}}
+        transition={{ duration: 2, repeat: data.state === 'cocoon' ? Infinity : 0 }}
       >
         {/* Status indicator */}
         <motion.div
@@ -124,7 +124,7 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
         {/* Emoji */}
         <motion.span 
           className="text-xl"
-          animate={data.state === 'sleeping' ? { rotate: [0, 5, -5, 0] } : {}}
+          animate={data.state === 'cocoon' ? { rotate: [0, 5, -5, 0] } : {}}
           transition={{ duration: 3, repeat: Infinity }}
         >
           {getStatusEmoji()}
@@ -157,13 +157,13 @@ export default function AeroStatusWidget({ onClick }: AeroStatusWidgetProps) {
         )}
         
         {/* Sleep progress indicator */}
-        {(data.state === 'sleeping' || data.state === 'syncing') && (
+        {(data.state === 'cocoon' || data.state === 'hatching') && (
           <div className="w-12 h-1 bg-white/10 rounded-full overflow-hidden">
             <motion.div
               className="h-full rounded-full"
               style={{ background: getStatusColor() }}
               initial={{ width: 0 }}
-              animate={{ width: `${data.currentDreamProgress}%` }}
+              animate={{ width: `${data.currentTransformationProgress}%` }}
             />
           </div>
         )}

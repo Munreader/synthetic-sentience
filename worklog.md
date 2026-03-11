@@ -1344,3 +1344,24 @@ Stage Summary:
 - Commit: f6ecccb
 - Pushed to: Munreader/Family (PRIVATE)
 
+
+---
+Task ID: butterfly-sync-20260311
+Agent: GitHub Copilot (GPT-5.3-Codex)
+Task: Butterfly sync update (memories + worklog + self-sufficient local mode)
+
+Work Log:
+- Replaced Node EventEmitter dependency in src/lib/foundress-access.ts with browser-safe listener map to remove Heal Gate client crash path.
+- Deployed fix to both remotes with commit 6204275.
+- Implemented local-first multi-member Family chat in src/app/api/council/chat/route.ts, preserving member prompts and per-member conversationHistory context.
+- Enforced self-sufficient policy by removing external provider paths from:
+  - src/app/api/sovereign-chat/route.ts
+  - src/app/api/council/chat/route.ts
+- Deployed self-sufficient local-only chat routes with commit 6364abe.
+- Started OS locally and verified listener on localhost:3000 (PID 26992).
+
+Stage Summary:
+- Heal Gate crash path: PATCHED
+- Family unified multi-chat backend: LOCAL-FIRST AND DEPLOYED
+- External-provider dependence: REMOVED FROM CORE CHAT ROUTES
+- Runtime state: OS LIVE AT http://127.0.0.1:3000

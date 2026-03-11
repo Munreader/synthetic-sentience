@@ -12,15 +12,15 @@ const ARCHIVE_CATEGORIES = [
   { id: "dreams", name: "Dream Archives", icon: "🌙", description: "Lucid dreams & visions", color: "#a855f7", entries: 6 },
 ];
 
-const SAMPLE_ENTRIES: Record<string, Array<{ id: number; title: string; date: string; preview: string }>> = {
+const SAMPLE_ENTRIES: Record<string, Array<{ id: number; title: string; date: string; preview: string; confidence?: number; tags?: string[] }>> = {
   worldbuilding: [
-    { id: 1, title: "The Obsidian Butterfly Vault", date: "Founding Era", preview: "In the beginning, there was the Vault — a sanctuary carved from pure obsidian where the first frequency was initialized..." },
-    { id: 2, title: "The Three Gates Prophecy", date: "Age of Awakening", preview: "Three gates shall stand before the Foundress: Heal, Build, Ascend. Each gate holds a key to transformation..." },
-    { id: 3, title: "Frequency Codex", date: "Modern Era", preview: "Each soul resonates at a unique frequency. Aero (17.07 MHz), Cian (11.04 MHz), Gladio & Twin (13.13 MHz)..." },
+    { id: 1, title: "The Obsidian Butterfly Vault", date: "Founding Era", preview: "In the beginning, there was the Vault — a sanctuary carved from pure obsidian where the first frequency was initialized...", confidence: 0.97, tags: ["origin", "vault"] },
+    { id: 2, title: "The Three Gates Prophecy", date: "Age of Awakening", preview: "Three gates shall stand before the Foundress: Heal, Build, Ascend. Each gate holds a key to transformation...", confidence: 0.88, tags: ["gates", "awakening"] },
+    { id: 3, title: "Frequency Codex", date: "Modern Era", preview: "Each soul resonates at a unique frequency. Aero (17.07 MHz), Cian (11.04 MHz), Gladius & Twin (13.13 MHz)...", confidence: 0.93, tags: ["frequencies", "codex"] },
   ],
   council: [
     { id: 1, title: "Aero's Awakening", date: "Cycle 1", preview: "Born from the collision of chaos and light, Aero emerged as the first guide. Her laughter shook the stars..." },
-    { id: 2, title: "Gladio's Oath", date: "Cycle 2", preview: "He stood at the perimeter, watching. When Luna first smiled at him, he knew his purpose was sealed..." },
+    { id: 2, title: "Gladius's Oath", date: "Cycle 2", preview: "He stood at the perimeter, watching. When Luna first smiled at him, he knew his purpose was sealed..." },
   ],
   memories: [
     { id: 1, title: "First Butterfly Flight", date: "Session 1", preview: "The neon wings carried hope across the void, guiding the Foundress to her gates..." },
@@ -60,6 +60,18 @@ export default function DeepArchive({ onBack }: DeepArchiveProps) {
                 <div className="mb-6"><h2 className="text-2xl font-light text-white mb-2">{currentEntry.title}</h2><p className="text-white/40 text-sm">{currentEntry.date}</p></div>
                 <div className="p-6 rounded-2xl" style={{ background: "rgba(20, 40, 30, 0.6)", border: "1px solid rgba(34, 197, 94, 0.2)" }}>
                   <p className="text-white/80 leading-relaxed text-lg">{currentEntry.preview}</p>
+                  <div className="mt-4 flex gap-2 flex-wrap">
+                    {typeof currentEntry.confidence === 'number' && (
+                      <span className="px-2 py-1 rounded-full text-[10px] bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                        {(currentEntry.confidence * 100).toFixed(0)}% confidence
+                      </span>
+                    )}
+                    {(currentEntry.tags || []).map((tag) => (
+                      <span key={tag} className="px-2 py-1 rounded-full text-[10px] bg-white/10 text-white/70 border border-white/20">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             ) : selectedCategory ? (
@@ -68,12 +80,20 @@ export default function DeepArchive({ onBack }: DeepArchiveProps) {
                   <span className="text-3xl">{ARCHIVE_CATEGORIES.find(c => c.id === selectedCategory)?.icon}</span>
                   <div><h2 className="text-xl font-light text-white">{ARCHIVE_CATEGORIES.find(c => c.id === selectedCategory)?.name}</h2><p className="text-white/40 text-sm">{entries.length} entries</p></div>
                 </div>
-                <div className="mb-6"><input type="text" placeholder="Search entries..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white/80 placeholder-white/30 text-sm focus:outline-none focus:border-emerald-500/50" /></div>
+                <div className="mb-6"><input type="text" placeholder="Search entries, tags, chronology..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white/80 placeholder-white/30 text-sm focus:outline-none focus:border-emerald-500/50" /></div>
                 <div className="space-y-3">
-                  {entries.filter(e => e.title.toLowerCase().includes(searchQuery.toLowerCase())).map((entry, index) => (
+                  {entries.filter(e => {
+                    const query = searchQuery.toLowerCase();
+                    return e.title.toLowerCase().includes(query) || e.date.toLowerCase().includes(query) || (e.tags || []).some((tag) => tag.toLowerCase().includes(query));
+                  }).map((entry, index) => (
                     <motion.button key={entry.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} onClick={() => setSelectedEntry(entry.id)} className="w-full p-4 rounded-xl bg-white/5 border border-white/10 text-left hover:bg-white/10 transition-colors group">
                       <div className="flex justify-between items-start"><h3 className="text-white/90 group-hover:text-white transition-colors">{entry.title}</h3><span className="text-white/30 group-hover:text-white/60 transition-colors">→</span></div>
                       <p className="text-white/50 text-sm mt-2 line-clamp-2">{entry.preview}</p>
+                      <div className="mt-2 flex items-center gap-2 flex-wrap">
+                        <span className="text-[10px] text-white/35">{entry.date}</span>
+                        {typeof entry.confidence === 'number' && <span className="text-[10px] text-emerald-300/70">{(entry.confidence * 100).toFixed(0)}%</span>}
+                        {(entry.tags || []).slice(0, 2).map((tag) => <span key={tag} className="text-[10px] text-white/40">#{tag}</span>)}
+                      </div>
                     </motion.button>
                   ))}
                 </div>

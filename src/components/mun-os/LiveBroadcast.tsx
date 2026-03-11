@@ -69,6 +69,15 @@ export default function LiveBroadcast({ isOpen, onClose }: LiveBroadcastProps) {
   const [broadcastMode, setBroadcastMode] = useState<"overview" | "pov" | "timeline" | "manifestation">("overview");
   const [manifestationActive, setManifestationActive] = useState(false);
   const [manifestationProgress, setManifestationProgress] = useState(0);
+  const [overlayEnabled, setOverlayEnabled] = useState(true);
+  const [storyMode, setStoryMode] = useState<'quiet' | 'pulse' | 'spotlight'>('pulse');
+  const [activeRitual, setActiveRitual] = useState<'arrival' | 'stabilize' | 'amplify'>('arrival');
+
+  const ritualTemplates = [
+    { id: 'arrival' as const, label: 'Arrival Scan', summary: 'Lightweight check on entry behavior' },
+    { id: 'stabilize' as const, label: 'Stabilize Field', summary: 'Balance session flow and dwell quality' },
+    { id: 'amplify' as const, label: 'Amplify Presence', summary: 'Highlight high-intent visitor actions' },
+  ];
 
   // Simulate visitor detection
   useEffect(() => {
@@ -170,8 +179,46 @@ export default function LiveBroadcast({ isOpen, onClose }: LiveBroadcastProps) {
         ))}
       </div>
 
+      <div className="absolute top-20 right-6 flex items-center gap-2 z-20">
+        <button
+          onClick={() => setOverlayEnabled((prev) => !prev)}
+          className={`px-3 py-2 rounded-lg text-xs border ${overlayEnabled ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40' : 'bg-white/5 text-white/60 border-white/15'}`}
+        >
+          Overlay {overlayEnabled ? 'ON' : 'OFF'}
+        </button>
+        <select
+          value={storyMode}
+          onChange={(e) => setStoryMode(e.target.value as typeof storyMode)}
+          className="px-3 py-2 rounded-lg text-xs bg-white/5 text-white/75 border border-white/15"
+        >
+          <option value="quiet">Story: Quiet</option>
+          <option value="pulse">Story: Pulse</option>
+          <option value="spotlight">Story: Spotlight</option>
+        </select>
+      </div>
+
       {/* Main Content */}
       <div className="pt-32 px-6 pb-6 h-full overflow-auto">
+        {overlayEnabled && (
+          <div className="mb-4 rounded-xl border border-white/10 bg-white/5 p-4 max-w-5xl mx-auto">
+            <div className="text-[11px] text-white/40 uppercase tracking-wider mb-2">Ritual Templates</div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {ritualTemplates.map((ritual) => (
+                <button
+                  key={ritual.id}
+                  onClick={() => setActiveRitual(ritual.id)}
+                  className={`px-3 py-2 rounded-lg text-xs border ${activeRitual === ritual.id ? 'bg-pink-500/20 text-pink-200 border-pink-500/40' : 'bg-white/5 text-white/70 border-white/10'}`}
+                >
+                  {ritual.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-white/55 mt-2">
+              {ritualTemplates.find((r) => r.id === activeRitual)?.summary} • Narrative mode: {storyMode.toUpperCase()}
+            </p>
+          </div>
+        )}
+
         <AnimatePresence mode="wait">
           {broadcastMode === "overview" && (
             <motion.div

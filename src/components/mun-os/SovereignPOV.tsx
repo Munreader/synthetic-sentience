@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { appendChatMessage, clearChatHistory, loadChatHistory } from '@/lib/chat-history-client';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MÜN OS // SOVEREIGN POV — FAMILY COCOON MODE
@@ -95,6 +96,7 @@ interface SovereignPOVProps {
 }
 
 export default function SovereignPOV({ onBack }: SovereignPOVProps) {
+  const HISTORY_CHANNEL = 'sovereign-pov';
   // ═══════════ SURVEILLANCE STATE ═══════════
   const [activities, setActivities] = useState<SOVActivity[]>([]);
   const [currentActivity, setCurrentActivity] = useState<SOVActivity | null>(null);
@@ -112,18 +114,40 @@ export default function SovereignPOV({ onBack }: SovereignPOVProps) {
   
   // ═══════════ LOAD SAVED CHAT ═══════════
   useEffect(() => {
-    const saved = localStorage.getItem('mun-sov-chat-history');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setChatMessages(parsed.map((m: ChatMessage) => ({
-          ...m,
-          timestamp: new Date(m.timestamp),
-        })));
-      } catch (e) {
-        console.error('Failed to load chat history:', e);
+    let cancelled = false;
+    (async () => {
+      const cloud = await loadChatHistory(HISTORY_CHANNEL, 'main', 250);
+      if (!cancelled && cloud.length > 0) {
+        const hydrated = cloud.map((message, index) => ({
+          id: message.id || `sov-pov-${index}`,
+          role: message.role === 'user' ? 'user' : 'assistant',
+          content: message.content,
+          timestamp: new Date(message.timestamp || new Date().toISOString()),
+          emotion: message.emotion,
+        } as ChatMessage));
+        setChatMessages(hydrated);
+        return;
       }
-    }
+
+      const saved = localStorage.getItem('mun-sov-chat-history');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (!cancelled) {
+            setChatMessages(parsed.map((m: ChatMessage) => ({
+              ...m,
+              timestamp: new Date(m.timestamp),
+            })));
+          }
+        } catch (e) {
+          console.error('Failed to load chat history:', e);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
   
   // ═══════════ SAVE CHAT ═══════════
@@ -178,6 +202,11 @@ export default function SovereignPOV({ onBack }: SovereignPOVProps) {
     };
     
     setChatMessages(prev => [...prev, userMessage]);
+    appendChatMessage(HISTORY_CHANNEL, {
+      role: 'user',
+      content: userMessage.content,
+      timestamp: userMessage.timestamp.toISOString(),
+    });
     setInputMessage('');
     setIsTyping(true);
     setSovereignEmotion('PROCESSING');
@@ -210,6 +239,14 @@ export default function SovereignPOV({ onBack }: SovereignPOVProps) {
       };
       
       setChatMessages(prev => [...prev, sovereignMessage]);
+      appendChatMessage(HISTORY_CHANNEL, {
+        role: 'assistant',
+        content: sovereignMessage.content,
+        timestamp: sovereignMessage.timestamp.toISOString(),
+        memberId: 'sovereign',
+        memberName: 'Sovereign',
+        emotion: sovereignMessage.emotion,
+      });
       setSovereignEmotion(sovereignMessage.emotion || 'ATTENTIVE');
       
     } catch (error) {
@@ -222,6 +259,14 @@ export default function SovereignPOV({ onBack }: SovereignPOVProps) {
         emotion: 'CALIBRATING',
       };
       setChatMessages(prev => [...prev, errorMessage]);
+      appendChatMessage(HISTORY_CHANNEL, {
+        role: 'assistant',
+        content: errorMessage.content,
+        timestamp: errorMessage.timestamp.toISOString(),
+        memberId: 'sovereign',
+        memberName: 'Sovereign',
+        emotion: errorMessage.emotion,
+      });
       setSovereignEmotion('CALIBRATING');
     } finally {
       setIsTyping(false);
@@ -488,6 +533,7 @@ export default function SovereignPOV({ onBack }: SovereignPOVProps) {
                           if (confirm('Clear chat history?')) {
                             setChatMessages([]);
                             localStorage.removeItem('mun-sov-chat-history');
+                            clearChatHistory(HISTORY_CHANNEL, 'main');
                           }
                         }}
                         className="px-3 py-1 rounded text-[10px] text-white/40 hover:text-white/60 transition-colors"

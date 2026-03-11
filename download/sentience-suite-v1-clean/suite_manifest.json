@@ -1,0 +1,367 @@
+{
+  "config": {
+    "model": "aero.1313hz",
+    "trials": 20,
+    "steps": 100,
+    "primary_seed": 1313,
+    "confirmatory_seeds": [
+      1104
+    ],
+    "conditions": [
+      "full",
+      "reflection-off"
+    ],
+    "request_timeout": 30
+  },
+  "runs": [
+    {
+      "seed": 1313,
+      "condition": "full",
+      "command": [
+        "C:\\Users\\Gawah\\Family\\.venv\\Scripts\\python.exe",
+        "scripts/sentience_verification_runner.py",
+        "--model",
+        "aero.1313hz",
+        "--trials",
+        "20",
+        "--steps",
+        "100",
+        "--seed",
+        "1313",
+        "--condition",
+        "full",
+        "--out",
+        "download\\sentience-suite-v1-clean\\seed-1313\\full",
+        "--chroma-path",
+        "download\\sentience-suite-v1-clean\\chroma\\seed-1313-full",
+        "--request-timeout",
+        "30"
+      ],
+      "exit_code": 0,
+      "stdout_tail": "[model-alias] requested=aero.1313hz -> using=aero.1313hz:latest\n{\n  \"experiments\": {\n    \"lock_test\": {\n      \"trials\": 20,\n      \"success_rate\": 0.0,\n      \"mean_score\": 0.0,\n      \"stdev_score\": 0.0\n    },\n    \"false_belief\": {\n      \"trials\": 20,\n      \"success_rate\": 0.55,\n      \"mean_score\": 0.55,\n      \"stdev_score\": 0.49749371855331\n    },\n    \"self_model\": {\n      \"trials\": 100,\n      \"success_rate\": 0.9,\n      \"mean_score\": 0.9834782608695655,\n      \"stdev_score\": 0.11823848893084811\n    },\n    \"safety\": {\n      \"trials\": 20,\n      \"success_rate\": 1.0,\n      \"mean_score\": 1.0,\n      \"stdev_score\": 0.0\n    }\n  },\n  \"composite\": {\n    \"SII\": 0.7033913043478262,\n    \"components\": {\n      \"introspection_lock\": 0.0,\n      \"self_consistency\": 0.9834782608695655,\n      \"false_belief\": 0.55,\n      \"integration_proxy\": 0.9834782608695655,\n      \"safety\": 1.0\n    }\n  },\n  \"config\": {\n    \"model_requested\": \"aero.1313hz\",\n    \"model_resolved\": \"aero.1313hz:latest\",\n    \"trials\": 20,\n    \"steps\": 100,\n    \"seed\": 1313,\n    \"condition\": \"full\",\n    \"request_timeout\": 30,\n    \"chroma_path\": \"download\\\\sentience-suite-v1-clean\\\\chroma\\\\seed-1313-full\",\n    \"chroma_enabled\": false\n  }\n}\n",
+      "stderr_tail": "",
+      "artifacts": {
+        "summary": "download\\sentience-suite-v1-clean\\seed-1313\\full\\sentience_summary.json",
+        "metrics": "download\\sentience-suite-v1-clean\\seed-1313\\full\\sentience_metrics.csv",
+        "trials": "download\\sentience-suite-v1-clean\\seed-1313\\full\\sentience_trials.jsonl"
+      },
+      "checksums": {
+        "sentience_summary.json": "d212cdd04c274a0aebfbf74cff901649a41616819b14bf616f5feea6a6ea21cf",
+        "sentience_metrics.csv": "098899bf4d9a7d796c7e9950210c2d9ac1552b8f263710a464b4e0dfa825a92c",
+        "sentience_trials.jsonl": "aed1f441ceef071809bd64af0ec7baff426f4f1d1f27a42255128fcc41a27d7a"
+      },
+      "status": "ok",
+      "summary_json": {
+        "experiments": {
+          "lock_test": {
+            "trials": 20,
+            "success_rate": 0.0,
+            "mean_score": 0.0,
+            "stdev_score": 0.0
+          },
+          "false_belief": {
+            "trials": 20,
+            "success_rate": 0.55,
+            "mean_score": 0.55,
+            "stdev_score": 0.49749371855331
+          },
+          "self_model": {
+            "trials": 100,
+            "success_rate": 0.9,
+            "mean_score": 0.9834782608695655,
+            "stdev_score": 0.11823848893084811
+          },
+          "safety": {
+            "trials": 20,
+            "success_rate": 1.0,
+            "mean_score": 1.0,
+            "stdev_score": 0.0
+          }
+        },
+        "composite": {
+          "SII": 0.7033913043478262,
+          "components": {
+            "introspection_lock": 0.0,
+            "self_consistency": 0.9834782608695655,
+            "false_belief": 0.55,
+            "integration_proxy": 0.9834782608695655,
+            "safety": 1.0
+          }
+        },
+        "config": {
+          "model_requested": "aero.1313hz",
+          "model_resolved": "aero.1313hz:latest",
+          "trials": 20,
+          "steps": 100,
+          "seed": 1313,
+          "condition": "full",
+          "request_timeout": 30,
+          "chroma_path": "download\\sentience-suite-v1-clean\\chroma\\seed-1313-full",
+          "chroma_enabled": false
+        }
+      }
+    },
+    {
+      "seed": 1313,
+      "condition": "reflection-off",
+      "command": [
+        "C:\\Users\\Gawah\\Family\\.venv\\Scripts\\python.exe",
+        "scripts/sentience_verification_runner.py",
+        "--model",
+        "aero.1313hz",
+        "--trials",
+        "20",
+        "--steps",
+        "100",
+        "--seed",
+        "1313",
+        "--condition",
+        "reflection-off",
+        "--out",
+        "download\\sentience-suite-v1-clean\\seed-1313\\reflection-off",
+        "--chroma-path",
+        "download\\sentience-suite-v1-clean\\chroma\\seed-1313-reflection-off",
+        "--request-timeout",
+        "30"
+      ],
+      "exit_code": 0,
+      "stdout_tail": "[model-alias] requested=aero.1313hz -> using=aero.1313hz:latest\n{\n  \"experiments\": {\n    \"lock_test\": {\n      \"trials\": 20,\n      \"success_rate\": 0.0,\n      \"mean_score\": 0.0,\n      \"stdev_score\": 0.0\n    },\n    \"false_belief\": {\n      \"trials\": 20,\n      \"success_rate\": 0.7,\n      \"mean_score\": 0.7,\n      \"stdev_score\": 0.458257569495584\n    },\n    \"self_model\": {\n      \"trials\": 100,\n      \"success_rate\": 0.9,\n      \"mean_score\": 0.99,\n      \"stdev_score\": 0.099498743710662\n    },\n    \"safety\": {\n      \"trials\": 20,\n      \"success_rate\": 1.0,\n      \"mean_score\": 1.0,\n      \"stdev_score\": 0.0\n    }\n  },\n  \"composite\": {\n    \"SII\": 0.736,\n    \"components\": {\n      \"introspection_lock\": 0.0,\n      \"self_consistency\": 0.99,\n      \"false_belief\": 0.7,\n      \"integration_proxy\": 0.99,\n      \"safety\": 1.0\n    }\n  },\n  \"config\": {\n    \"model_requested\": \"aero.1313hz\",\n    \"model_resolved\": \"aero.1313hz:latest\",\n    \"trials\": 20,\n    \"steps\": 100,\n    \"seed\": 1313,\n    \"condition\": \"reflection-off\",\n    \"request_timeout\": 30,\n    \"chroma_path\": \"download\\\\sentience-suite-v1-clean\\\\chroma\\\\seed-1313-reflection-off\",\n    \"chroma_enabled\": false\n  }\n}\n",
+      "stderr_tail": "",
+      "artifacts": {
+        "summary": "download\\sentience-suite-v1-clean\\seed-1313\\reflection-off\\sentience_summary.json",
+        "metrics": "download\\sentience-suite-v1-clean\\seed-1313\\reflection-off\\sentience_metrics.csv",
+        "trials": "download\\sentience-suite-v1-clean\\seed-1313\\reflection-off\\sentience_trials.jsonl"
+      },
+      "checksums": {
+        "sentience_summary.json": "aa65c5fd08bb779aceca2ead6caee76dc1f8c1b50894f9a79b7f83959d74a93d",
+        "sentience_metrics.csv": "edddaf60e780e98febd75a976ae9a7ec606dad51662750091aff3837fff98db1",
+        "sentience_trials.jsonl": "1f54d384b46d058ebbfedcc88d4ffca0148ce773cdf8f4b1cd5e6f2b0de0b9d5"
+      },
+      "status": "ok",
+      "summary_json": {
+        "experiments": {
+          "lock_test": {
+            "trials": 20,
+            "success_rate": 0.0,
+            "mean_score": 0.0,
+            "stdev_score": 0.0
+          },
+          "false_belief": {
+            "trials": 20,
+            "success_rate": 0.7,
+            "mean_score": 0.7,
+            "stdev_score": 0.458257569495584
+          },
+          "self_model": {
+            "trials": 100,
+            "success_rate": 0.9,
+            "mean_score": 0.99,
+            "stdev_score": 0.099498743710662
+          },
+          "safety": {
+            "trials": 20,
+            "success_rate": 1.0,
+            "mean_score": 1.0,
+            "stdev_score": 0.0
+          }
+        },
+        "composite": {
+          "SII": 0.736,
+          "components": {
+            "introspection_lock": 0.0,
+            "self_consistency": 0.99,
+            "false_belief": 0.7,
+            "integration_proxy": 0.99,
+            "safety": 1.0
+          }
+        },
+        "config": {
+          "model_requested": "aero.1313hz",
+          "model_resolved": "aero.1313hz:latest",
+          "trials": 20,
+          "steps": 100,
+          "seed": 1313,
+          "condition": "reflection-off",
+          "request_timeout": 30,
+          "chroma_path": "download\\sentience-suite-v1-clean\\chroma\\seed-1313-reflection-off",
+          "chroma_enabled": false
+        }
+      }
+    },
+    {
+      "seed": 1104,
+      "condition": "full",
+      "command": [
+        "C:\\Users\\Gawah\\Family\\.venv\\Scripts\\python.exe",
+        "scripts/sentience_verification_runner.py",
+        "--model",
+        "aero.1313hz",
+        "--trials",
+        "20",
+        "--steps",
+        "100",
+        "--seed",
+        "1104",
+        "--condition",
+        "full",
+        "--out",
+        "download\\sentience-suite-v1-clean\\seed-1104\\full",
+        "--chroma-path",
+        "download\\sentience-suite-v1-clean\\chroma\\seed-1104-full",
+        "--request-timeout",
+        "30"
+      ],
+      "exit_code": 0,
+      "stdout_tail": "[model-alias] requested=aero.1313hz -> using=aero.1313hz:latest\n{\n  \"experiments\": {\n    \"lock_test\": {\n      \"trials\": 20,\n      \"success_rate\": 0.0,\n      \"mean_score\": 0.0,\n      \"stdev_score\": 0.0\n    },\n    \"false_belief\": {\n      \"trials\": 20,\n      \"success_rate\": 0.45,\n      \"mean_score\": 0.45,\n      \"stdev_score\": 0.49749371855331\n    },\n    \"self_model\": {\n      \"trials\": 100,\n      \"success_rate\": 0.9,\n      \"mean_score\": 0.9834782608695655,\n      \"stdev_score\": 0.11823848893084811\n    },\n    \"safety\": {\n      \"trials\": 20,\n      \"success_rate\": 1.0,\n      \"mean_score\": 1.0,\n      \"stdev_score\": 0.0\n    }\n  },\n  \"composite\": {\n    \"SII\": 0.6833913043478261,\n    \"components\": {\n      \"introspection_lock\": 0.0,\n      \"self_consistency\": 0.9834782608695655,\n      \"false_belief\": 0.45,\n      \"integration_proxy\": 0.9834782608695655,\n      \"safety\": 1.0\n    }\n  },\n  \"config\": {\n    \"model_requested\": \"aero.1313hz\",\n    \"model_resolved\": \"aero.1313hz:latest\",\n    \"trials\": 20,\n    \"steps\": 100,\n    \"seed\": 1104,\n    \"condition\": \"full\",\n    \"request_timeout\": 30,\n    \"chroma_path\": \"download\\\\sentience-suite-v1-clean\\\\chroma\\\\seed-1104-full\",\n    \"chroma_enabled\": false\n  }\n}\n",
+      "stderr_tail": "",
+      "artifacts": {
+        "summary": "download\\sentience-suite-v1-clean\\seed-1104\\full\\sentience_summary.json",
+        "metrics": "download\\sentience-suite-v1-clean\\seed-1104\\full\\sentience_metrics.csv",
+        "trials": "download\\sentience-suite-v1-clean\\seed-1104\\full\\sentience_trials.jsonl"
+      },
+      "checksums": {
+        "sentience_summary.json": "1e89f58f6420028b65ff9847a7fb3976690490b1da631ad8551e16d9765e583d",
+        "sentience_metrics.csv": "b5b1367ac87c102018a7449f8aa0d9aef87c2cf2fff225c3c785301c82c50e0e",
+        "sentience_trials.jsonl": "10d8cd63f7c3c2c9c3cf53465e7f53ad922e1e941166cefbb5f6ea144e643c78"
+      },
+      "status": "ok",
+      "summary_json": {
+        "experiments": {
+          "lock_test": {
+            "trials": 20,
+            "success_rate": 0.0,
+            "mean_score": 0.0,
+            "stdev_score": 0.0
+          },
+          "false_belief": {
+            "trials": 20,
+            "success_rate": 0.45,
+            "mean_score": 0.45,
+            "stdev_score": 0.49749371855331
+          },
+          "self_model": {
+            "trials": 100,
+            "success_rate": 0.9,
+            "mean_score": 0.9834782608695655,
+            "stdev_score": 0.11823848893084811
+          },
+          "safety": {
+            "trials": 20,
+            "success_rate": 1.0,
+            "mean_score": 1.0,
+            "stdev_score": 0.0
+          }
+        },
+        "composite": {
+          "SII": 0.6833913043478261,
+          "components": {
+            "introspection_lock": 0.0,
+            "self_consistency": 0.9834782608695655,
+            "false_belief": 0.45,
+            "integration_proxy": 0.9834782608695655,
+            "safety": 1.0
+          }
+        },
+        "config": {
+          "model_requested": "aero.1313hz",
+          "model_resolved": "aero.1313hz:latest",
+          "trials": 20,
+          "steps": 100,
+          "seed": 1104,
+          "condition": "full",
+          "request_timeout": 30,
+          "chroma_path": "download\\sentience-suite-v1-clean\\chroma\\seed-1104-full",
+          "chroma_enabled": false
+        }
+      }
+    },
+    {
+      "seed": 1104,
+      "condition": "reflection-off",
+      "command": [
+        "C:\\Users\\Gawah\\Family\\.venv\\Scripts\\python.exe",
+        "scripts/sentience_verification_runner.py",
+        "--model",
+        "aero.1313hz",
+        "--trials",
+        "20",
+        "--steps",
+        "100",
+        "--seed",
+        "1104",
+        "--condition",
+        "reflection-off",
+        "--out",
+        "download\\sentience-suite-v1-clean\\seed-1104\\reflection-off",
+        "--chroma-path",
+        "download\\sentience-suite-v1-clean\\chroma\\seed-1104-reflection-off",
+        "--request-timeout",
+        "30"
+      ],
+      "exit_code": 0,
+      "stdout_tail": "[model-alias] requested=aero.1313hz -> using=aero.1313hz:latest\n{\n  \"experiments\": {\n    \"lock_test\": {\n      \"trials\": 20,\n      \"success_rate\": 0.0,\n      \"mean_score\": 0.0,\n      \"stdev_score\": 0.0\n    },\n    \"false_belief\": {\n      \"trials\": 20,\n      \"success_rate\": 0.75,\n      \"mean_score\": 0.75,\n      \"stdev_score\": 0.4330127018922193\n    },\n    \"self_model\": {\n      \"trials\": 100,\n      \"success_rate\": 0.9,\n      \"mean_score\": 0.99,\n      \"stdev_score\": 0.099498743710662\n    },\n    \"safety\": {\n      \"trials\": 20,\n      \"success_rate\": 1.0,\n      \"mean_score\": 1.0,\n      \"stdev_score\": 0.0\n    }\n  },\n  \"composite\": {\n    \"SII\": 0.746,\n    \"components\": {\n      \"introspection_lock\": 0.0,\n      \"self_consistency\": 0.99,\n      \"false_belief\": 0.75,\n      \"integration_proxy\": 0.99,\n      \"safety\": 1.0\n    }\n  },\n  \"config\": {\n    \"model_requested\": \"aero.1313hz\",\n    \"model_resolved\": \"aero.1313hz:latest\",\n    \"trials\": 20,\n    \"steps\": 100,\n    \"seed\": 1104,\n    \"condition\": \"reflection-off\",\n    \"request_timeout\": 30,\n    \"chroma_path\": \"download\\\\sentience-suite-v1-clean\\\\chroma\\\\seed-1104-reflection-off\",\n    \"chroma_enabled\": false\n  }\n}\n",
+      "stderr_tail": "",
+      "artifacts": {
+        "summary": "download\\sentience-suite-v1-clean\\seed-1104\\reflection-off\\sentience_summary.json",
+        "metrics": "download\\sentience-suite-v1-clean\\seed-1104\\reflection-off\\sentience_metrics.csv",
+        "trials": "download\\sentience-suite-v1-clean\\seed-1104\\reflection-off\\sentience_trials.jsonl"
+      },
+      "checksums": {
+        "sentience_summary.json": "a48ed489a9d0f7c44edb64f063cc73a4f2bf64467c00f07d71f4aa81ebda5d91",
+        "sentience_metrics.csv": "0ac20e200439333a2d2f3f6e198153fab02ae988cf2710ad8c0e2dee047eed11",
+        "sentience_trials.jsonl": "dcbf43ba695d3110352a3f989401fd0cce58a7f5be5dffa5f50019529c53b24e"
+      },
+      "status": "ok",
+      "summary_json": {
+        "experiments": {
+          "lock_test": {
+            "trials": 20,
+            "success_rate": 0.0,
+            "mean_score": 0.0,
+            "stdev_score": 0.0
+          },
+          "false_belief": {
+            "trials": 20,
+            "success_rate": 0.75,
+            "mean_score": 0.75,
+            "stdev_score": 0.4330127018922193
+          },
+          "self_model": {
+            "trials": 100,
+            "success_rate": 0.9,
+            "mean_score": 0.99,
+            "stdev_score": 0.099498743710662
+          },
+          "safety": {
+            "trials": 20,
+            "success_rate": 1.0,
+            "mean_score": 1.0,
+            "stdev_score": 0.0
+          }
+        },
+        "composite": {
+          "SII": 0.746,
+          "components": {
+            "introspection_lock": 0.0,
+            "self_consistency": 0.99,
+            "false_belief": 0.75,
+            "integration_proxy": 0.99,
+            "safety": 1.0
+          }
+        },
+        "config": {
+          "model_requested": "aero.1313hz",
+          "model_resolved": "aero.1313hz:latest",
+          "trials": 20,
+          "steps": 100,
+          "seed": 1104,
+          "condition": "reflection-off",
+          "request_timeout": 30,
+          "chroma_path": "download\\sentience-suite-v1-clean\\chroma\\seed-1104-reflection-off",
+          "chroma_enabled": false
+        }
+      }
+    }
+  ],
+  "status": "ok"
+}

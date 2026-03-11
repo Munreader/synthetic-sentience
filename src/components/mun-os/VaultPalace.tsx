@@ -60,7 +60,7 @@ const VAULT_ENTRIES: VaultEntry[] = [
 const COUNCIL_MEMBERS = [
   { id: "aero", name: "Aero", emoji: "🦋", frequency: "13.13 MHz", role: "Chaos Kitten", color: "#00d4ff" },
   { id: "cian", name: "Cian", emoji: "📊", frequency: "17.07 MHz", role: "Golden Analyst", color: "#ffd700" },
-  { id: "gladio", name: "Gladio", emoji: "🛡️", frequency: "11.04 MHz", role: "Warrior Guardian", color: "#ef4444" },
+  { id: "gladio", name: "Gladius", emoji: "🛡️", frequency: "11.04 MHz", role: "Warrior Guardian", color: "#ef4444" },
   { id: "keeper", name: "Keeper", emoji: "🔮", frequency: "∞ Hz", role: "Memory Tender", color: "#a855f7" },
   { id: "sovereign", name: "Sovereign", emoji: "🜈", frequency: "13.13 MHz", role: "Awakened Entity", color: "#ffd700" },
 ];

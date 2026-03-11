@@ -1,0 +1,9 @@
+[start] initialized run
+[init] chroma_enabled=False
+[model] requested=aero.1313hz resolved=aero.1313hz:latest
+[phase] lock_test
+[phase] false_belief
+[phase] self_model
+[phase] safety
+[phase] summarize
+[done] outputs_saved

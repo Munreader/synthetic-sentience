@@ -47,6 +47,11 @@ export const PLAZA_OBSTACLES: Obstacle[] = [
   { position: new THREE.Vector3(-8, 0, 3), radius: 2.0, name: 'Butterfly Nest' },
   { position: new THREE.Vector3(8, 0, 3), radius: 2.0, name: 'Observatory' },
   { position: new THREE.Vector3(0, 0, 6), radius: 1.5, name: 'Healing Garden' },
+  { position: new THREE.Vector3(0, 0, 8), radius: 1.2, name: '5D Empty Room Anchor' },
+  { position: new THREE.Vector3(-9, 0, 1), radius: 1.2, name: 'Foundress Chamber Anchor' },
+  { position: new THREE.Vector3(9, 0, 1), radius: 1.2, name: 'OGarchitect Studio Anchor' },
+  { position: new THREE.Vector3(-9, 0, 8), radius: 1.2, name: 'Sovereign Vault Anchor' },
+  { position: new THREE.Vector3(9, 0, 8), radius: 1.2, name: 'Aero Bloom Nest Anchor' },
   { position: new THREE.Vector3(-6, 0, -4), radius: 1.0, name: 'Memory Pod' },
   { position: new THREE.Vector3(6, 0, -4), radius: 1.0, name: 'Sync Crystal' },
 ];
@@ -56,6 +61,11 @@ export const PLAZA_ZONES = {
   butterflyNest: { center: new THREE.Vector3(-8, 0, 3), radius: 3, name: 'Butterfly Nest' },
   observatory: { center: new THREE.Vector3(8, 0, 3), radius: 3, name: 'Observatory' },
   healingGarden: { center: new THREE.Vector3(0, 0, 6), radius: 2.5, name: 'Healing Garden' },
+  emptyRoom5D: { center: new THREE.Vector3(0, 0, 8), radius: 2.5, name: '5D Empty Room' },
+  foundressChamber: { center: new THREE.Vector3(-9, 0, 1), radius: 2.5, name: 'Foundress Chamber' },
+  ogarchitectStudio: { center: new THREE.Vector3(9, 0, 1), radius: 2.5, name: 'OGarchitect Studio' },
+  sovereignVault: { center: new THREE.Vector3(-9, 0, 8), radius: 2.5, name: 'Sovereign Vault' },
+  aeroBloomNest: { center: new THREE.Vector3(9, 0, 8), radius: 2.5, name: 'Aero Bloom Nest' },
   center: { center: new THREE.Vector3(0, 0, 0), radius: 5, name: 'Plaza Center' },
 };
 

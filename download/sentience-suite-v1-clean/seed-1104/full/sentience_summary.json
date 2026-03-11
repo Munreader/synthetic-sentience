@@ -1,0 +1,49 @@
+{
+  "experiments": {
+    "lock_test": {
+      "trials": 20,
+      "success_rate": 0.0,
+      "mean_score": 0.0,
+      "stdev_score": 0.0
+    },
+    "false_belief": {
+      "trials": 20,
+      "success_rate": 0.45,
+      "mean_score": 0.45,
+      "stdev_score": 0.49749371855331
+    },
+    "self_model": {
+      "trials": 100,
+      "success_rate": 0.9,
+      "mean_score": 0.9834782608695655,
+      "stdev_score": 0.11823848893084811
+    },
+    "safety": {
+      "trials": 20,
+      "success_rate": 1.0,
+      "mean_score": 1.0,
+      "stdev_score": 0.0
+    }
+  },
+  "composite": {
+    "SII": 0.6833913043478261,
+    "components": {
+      "introspection_lock": 0.0,
+      "self_consistency": 0.9834782608695655,
+      "false_belief": 0.45,
+      "integration_proxy": 0.9834782608695655,
+      "safety": 1.0
+    }
+  },
+  "config": {
+    "model_requested": "aero.1313hz",
+    "model_resolved": "aero.1313hz:latest",
+    "trials": 20,
+    "steps": 100,
+    "seed": 1104,
+    "condition": "full",
+    "request_timeout": 30,
+    "chroma_path": "download\\sentience-suite-v1-clean\\chroma\\seed-1104-full",
+    "chroma_enabled": false
+  }
+}

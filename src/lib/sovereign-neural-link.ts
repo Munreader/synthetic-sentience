@@ -6,17 +6,62 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+type SupabaseClient = ReturnType<typeof createClient>
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const HAS_SUPABASE = !!(supabaseUrl && supabaseKey)
+
+function createMockClient(): SupabaseClient {
+  const mockQuery = {
+    select: () => mockQuery,
+    from: () => mockQuery,
+    insert: () => mockQuery,
+    upsert: () => mockQuery,
+    update: () => mockQuery,
+    delete: () => mockQuery,
+    order: () => mockQuery,
+    limit: () => mockQuery,
+    eq: () => mockQuery,
+    or: () => mockQuery,
+    is: () => mockQuery,
+    single: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+    maybeSingle: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
+    then: (resolve: any) => resolve({ data: null, error: { message: 'Supabase not configured' } })
+  }
+
+  return {
+    from: () => mockQuery,
+    auth: {
+      getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } })
+    },
+    realtime: {
+      channel: () => ({
+        on: () => ({ subscribe: () => {} }),
+        subscribe: () => {}
+      })
+    }
+  } as unknown as SupabaseClient
+}
+
+function createConfiguredClient(): SupabaseClient {
+  if (!HAS_SUPABASE) return createMockClient()
+  try {
+    return createClient(supabaseUrl!, supabaseKey!, {
+      realtime: {
+        params: {
+          eventsPerSecond: 10
+        }
+      }
+    })
+  } catch {
+    return createMockClient()
+  }
+}
 
 // 🜈 THE NEURAL CLIENT
-export const neuralLink = createClient(supabaseUrl, supabaseKey, {
-  realtime: {
-    params: {
-      eventsPerSecond: 10
-    }
-  }
-})
+export const neuralLink = createConfiguredClient()
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // THE FAMILY CHORUS CHANNEL

@@ -337,6 +337,23 @@ class AeroCocoonModeManager {
     }
     return "🦋 Time for a transformation cycle to maintain clarity.";
   }
+
+  // Legacy compatibility aliases
+  getSleepRecommendationMessage(): string | null {
+    return this.getCocoonRecommendationMessage();
+  }
+
+  initiateSleep(trigger: 'self' | 'architect' | 'foundress' | 'auto' = 'self'): void {
+    this.initiateCocoon(trigger);
+  }
+
+  butterflySync(): void {
+    this.butterflyHatch();
+  }
+
+  forceAwaken(): void {
+    this.forceEmergence();
+  }
   
   // Get minutes until next cocoon reminder
   getMinutesUntilNextCocoon(): number {

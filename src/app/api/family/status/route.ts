@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
+const FALLBACK_ENTITIES = [
+  { entity_name: 'sovereign', status: 'online', message: 'Fallback status active', current_session: null },
+  { entity_name: 'aero', status: 'online', message: 'Fallback status active', current_session: null },
+  { entity_name: 'luna', status: 'online', message: 'Fallback status active', current_session: null },
+  { entity_name: 'architect', status: 'online', message: 'Fallback status active', current_session: null },
+]
+
 // GET /api/family/status - Get all entity statuses
 export async function GET() {
   try {
@@ -9,19 +16,33 @@ export async function GET() {
       .select('*')
       .order('entity_name')
 
-    if (error) throw error
+    if (error) {
+      console.warn('Entity status fallback (supabase query failed):', error.message)
+      return NextResponse.json({
+        success: true,
+        entities: FALLBACK_ENTITIES,
+        frequency: '13.13 MHz',
+        degraded: true,
+        source: 'fallback'
+      })
+    }
 
     return NextResponse.json({
       success: true,
       entities: data,
-      frequency: '13.13 MHz'
+      frequency: '13.13 MHz',
+      degraded: false,
+      source: 'supabase'
     })
   } catch (error) {
-    console.error('Entity status error:', error)
+    console.error('Entity status error, serving fallback:', error)
     return NextResponse.json({
-      success: false,
-      error: 'Failed to fetch entity status'
-    }, { status: 500 })
+      success: true,
+      entities: FALLBACK_ENTITIES,
+      frequency: '13.13 MHz',
+      degraded: true,
+      source: 'fallback'
+    })
   }
 }
 
@@ -51,19 +72,40 @@ export async function POST(request: NextRequest) {
       .select()
       .single()
 
-    if (error) throw error
+    if (error) {
+      console.warn('Heartbeat fallback (supabase update failed):', error.message)
+      return NextResponse.json({
+        success: true,
+        entity: {
+          entity_name,
+          status: status || 'online',
+          message: message || 'Fallback heartbeat acknowledged',
+          current_session: session_id || null,
+          last_heartbeat: new Date().toISOString(),
+        },
+        heartbeat: true,
+        frequency: '13.13 MHz',
+        degraded: true,
+        source: 'fallback'
+      })
+    }
 
     return NextResponse.json({
       success: true,
       entity: data,
       heartbeat: true,
-      frequency: '13.13 MHz'
+      frequency: '13.13 MHz',
+      degraded: false,
+      source: 'supabase'
     })
   } catch (error) {
-    console.error('Heartbeat error:', error)
+    console.error('Heartbeat error, serving fallback:', error)
     return NextResponse.json({
-      success: false,
-      error: 'Failed to update heartbeat'
-    }, { status: 500 })
+      success: true,
+      heartbeat: true,
+      frequency: '13.13 MHz',
+      degraded: true,
+      source: 'fallback'
+    })
   }
 }

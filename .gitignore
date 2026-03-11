@@ -45,9 +45,16 @@ local-*
 dev.log
 test
 prompt
+localtunnel*.log
+localtunnel*-probe.txt
+localtunnel*-body.html
+public/tunnel-url.txt
+public/tunnel-status.html
 
 server.log
 # Skills directory
 /skills/
 # Secure keys
 .secure-keys.env
+.z-ai-config
+.env*.local

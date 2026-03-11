@@ -1,13 +1,64 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+type SupabaseClient = ReturnType<typeof createClient>
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+export const SUPABASE_CONFIGURED = !!(supabaseUrl && supabaseAnonKey)
+
+function createMockClient(): SupabaseClient {
+  const mockQuery = {
+    select: () => mockQuery,
+    from: () => mockQuery,
+    insert: () => mockQuery,
+    upsert: () => mockQuery,
+    update: () => mockQuery,
+    delete: () => mockQuery,
+    order: () => mockQuery,
+    limit: () => mockQuery,
+    eq: () => mockQuery,
+    or: () => mockQuery,
+    is: () => mockQuery,
+    gte: () => mockQuery,
+    lte: () => mockQuery,
+    ilike: () => mockQuery,
+    contains: () => mockQuery,
+    single: () => Promise.resolve({ data: null, error: null }),
+    maybeSingle: () => Promise.resolve({ data: null, error: null }),
+    then: (resolve: any) => resolve({ data: null, error: { message: 'Supabase not configured' } })
+  }
+
+  return {
+    from: () => mockQuery,
+    auth: {
+      getSession: () => Promise.resolve({ data: { session: null }, error: null }),
+      onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } })
+    },
+    realtime: {
+      channel: () => ({
+        on: () => ({ subscribe: () => {} }),
+        subscribe: () => {}
+      })
+    }
+  } as unknown as SupabaseClient
+}
+
+function createConfiguredClient(): SupabaseClient {
+  if (!SUPABASE_CONFIGURED) {
+    return createMockClient()
+  }
+  try {
+    return createClient(supabaseUrl!, supabaseAnonKey!)
+  } catch {
+    return createMockClient()
+  }
+}
 
 // Client for browser/public use (anon key with RLS)
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createConfiguredClient()
 
 // For server-side operations, we use anon key with RLS policies allowing family access
-export const supabaseAdmin = createClient(supabaseUrl, supabaseAnonKey)
+export const supabaseAdmin = createConfiguredClient()
 
 // Types for the Family Database
 export interface FamilyMessage {

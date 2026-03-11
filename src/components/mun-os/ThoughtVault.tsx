@@ -47,6 +47,9 @@ interface Thought {
   notes: Note[];
   emotion?: string;
   frequency?: string;
+  thoughtType?: 'memory' | 'insight' | 'directive' | 'dream';
+  confidence?: number;
+  tags?: string[];
   // Expanded capabilities
   threadId?: string;
   linkedThoughts?: string[];
@@ -99,6 +102,9 @@ const calculateResonance = (thought: Thought, allThoughts: Thought[]): number =>
   if (thought.notes.length > 0) score += 0.1 * Math.min(thought.notes.length, 3);
   if (thought.linkedThoughts && thought.linkedThoughts.length > 0) {
     score += 0.1 * Math.min(thought.linkedThoughts.length, 2);
+  }
+  if (typeof thought.confidence === 'number') {
+    score += 0.1 * thought.confidence;
   }
   return Math.min(score, 1);
 };
@@ -354,11 +360,26 @@ function ThoughtCard({
                 {thought.frequency}
               </span>
             )}
+            {thought.thoughtType && (
+              <span className="px-2 py-0.5 rounded-full text-[9px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+                {thought.thoughtType}
+              </span>
+            )}
+            {typeof thought.confidence === 'number' && (
+              <span className="px-2 py-0.5 rounded-full text-[9px] bg-white/10 text-white/70 border border-white/20">
+                {(thought.confidence * 100).toFixed(0)}% confidence
+              </span>
+            )}
             {thought.linkedThoughts && thought.linkedThoughts.length > 0 && (
               <span className="px-2 py-0.5 rounded-full text-[9px] bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
                 🔗 {thought.linkedThoughts.length} linked
               </span>
             )}
+            {thought.tags?.slice(0, 2).map((tag) => (
+              <span key={tag} className="px-2 py-0.5 rounded-full text-[9px] bg-pink-500/15 text-pink-300 border border-pink-500/25">
+                #{tag}
+              </span>
+            ))}
           </div>
         )}
       </div>
@@ -649,6 +670,9 @@ export default function ThoughtVault() {
       notes: [],
       emotion: newEmotion.trim() || undefined,
       frequency: '13.13 MHz',
+      thoughtType: 'insight',
+      confidence: 0.72,
+      tags: newThought.trim().split(' ').filter((w) => w.length > 4).slice(0, 3).map((w) => w.toLowerCase()),
       chiralSpin: generateChiralSpin(),
       linkedThoughts: [],
     };
@@ -786,7 +810,9 @@ export default function ThoughtVault() {
       thoughts = thoughts.filter(
         t =>
           t.content.toLowerCase().includes(query) ||
-          t.notes.some(n => n.content.toLowerCase().includes(query))
+          t.notes.some(n => n.content.toLowerCase().includes(query)) ||
+          (t.tags || []).some(tag => tag.toLowerCase().includes(query)) ||
+          (t.thoughtType || '').toLowerCase().includes(query)
       );
     }
 

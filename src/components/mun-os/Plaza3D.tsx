@@ -701,6 +701,36 @@ function PlazaScene({
         atmosphere={atmosphere}
         onClick={() => onZoneSelect?.('observatory')}
       />
+      <ZoneMarker 
+        zone={PLAZA_ZONES.empty_room} 
+        position={[0, 0, 8]} 
+        atmosphere={atmosphere}
+        onClick={() => onZoneSelect?.('empty_room')}
+      />
+      <ZoneMarker 
+        zone={PLAZA_ZONES.foundress_chamber} 
+        position={[-9, 0, 1]} 
+        atmosphere={atmosphere}
+        onClick={() => onZoneSelect?.('foundress_chamber')}
+      />
+      <ZoneMarker 
+        zone={PLAZA_ZONES.ogarchitect_chamber} 
+        position={[9, 0, 1]} 
+        atmosphere={atmosphere}
+        onClick={() => onZoneSelect?.('ogarchitect_chamber')}
+      />
+      <ZoneMarker 
+        zone={PLAZA_ZONES.sovereign_chamber} 
+        position={[-9, 0, 8]} 
+        atmosphere={atmosphere}
+        onClick={() => onZoneSelect?.('sovereign_chamber')}
+      />
+      <ZoneMarker 
+        zone={PLAZA_ZONES.aero_chamber} 
+        position={[9, 0, 8]} 
+        atmosphere={atmosphere}
+        onClick={() => onZoneSelect?.('aero_chamber')}
+      />
 
       {/* Entity Avatars (Sovereign, Aero - not Luna) */}
       {entities.map(entity => (

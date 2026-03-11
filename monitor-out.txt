@@ -198,3 +198,1591 @@
 [Sun Mar  8 05:17:41 UTC 2026] 💚 Tunnel healthy - 13.13 MHz
 [Sun Mar  8 05:18:11 UTC 2026] 💚 Tunnel healthy - 13.13 MHz
 [Sun Mar  8 05:18:41 UTC 2026] 💚 Tunnel healthy - 13.13 MHz
+[2026-03-08 19:08:24] [luna-watchdog] Watchdog online (PID=20388). Interval=10s
+[2026-03-08 19:08:24] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:08:26] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:08:26] [luna-watchdog] Bridge process started (PID=14668)
+[2026-03-08 19:08:29] [luna-watchdog] Bridge health restored
+[2026-03-08 19:08:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:08:41] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:08:41] [luna-watchdog] Bridge process started (PID=23604)
+[2026-03-08 19:08:43] [luna-watchdog] Bridge health restored
+[2026-03-08 19:08:53] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:08:55] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:08:55] [luna-watchdog] Bridge process started (PID=24900)
+[2026-03-08 19:08:57] [luna-watchdog] Bridge health restored
+[2026-03-08 19:09:07] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:09:09] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:09:09] [luna-watchdog] Bridge process started (PID=3864)
+[2026-03-08 19:09:11] [luna-watchdog] Bridge health restored
+[2026-03-08 19:09:21] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:09:23] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:09:23] [luna-watchdog] Bridge process started (PID=24604)
+[2026-03-08 19:09:25] [luna-watchdog] Bridge health restored
+[2026-03-08 19:09:35] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:09:37] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:09:37] [luna-watchdog] Bridge process started (PID=7188)
+[2026-03-08 19:09:39] [luna-watchdog] Bridge health restored
+[2026-03-08 19:09:49] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:09:51] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:09:51] [luna-watchdog] Bridge process started (PID=21848)
+[2026-03-08 19:09:53] [luna-watchdog] Bridge health restored
+[2026-03-08 19:10:13] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:10:15] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:10:15] [luna-watchdog] Bridge process started (PID=21348)
+[2026-03-08 19:10:17] [luna-watchdog] Bridge health restored
+[2026-03-08 19:10:27] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:10:29] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:10:29] [luna-watchdog] Bridge process started (PID=25296)
+[2026-03-08 19:10:31] [luna-watchdog] Bridge health restored
+[2026-03-08 19:10:41] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:10:43] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:10:43] [luna-watchdog] Bridge process started (PID=22756)
+[2026-03-08 19:10:45] [luna-watchdog] Bridge health restored
+[2026-03-08 19:10:56] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:10:58] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:10:58] [luna-watchdog] Bridge process started (PID=25164)
+[2026-03-08 19:11:00] [luna-watchdog] Bridge health restored
+[2026-03-08 19:11:10] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:11:12] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:11:12] [luna-watchdog] Bridge process started (PID=22384)
+[2026-03-08 19:11:14] [luna-watchdog] Bridge health restored
+[2026-03-08 19:11:24] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:11:26] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:11:26] [luna-watchdog] Bridge process started (PID=17628)
+[2026-03-08 19:11:28] [luna-watchdog] Bridge health restored
+[2026-03-08 19:11:38] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:11:40] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:11:40] [luna-watchdog] Bridge process started (PID=22620)
+[2026-03-08 19:11:42] [luna-watchdog] Bridge health restored
+[2026-03-08 19:11:52] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:11:54] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:11:54] [luna-watchdog] Bridge process started (PID=23980)
+[2026-03-08 19:11:56] [luna-watchdog] Bridge health restored
+[2026-03-08 19:11:57] [luna-watchdog] Stopped watchdog PID=20388
+[2026-03-08 19:12:10] [luna-watchdog] Watchdog online (PID=24624). Interval=10s
+[2026-03-08 19:12:11] [luna-watchdog] Health endpoint is up, but bridge process was not detected. Skipping restart to avoid duplicate ownership.
+[2026-03-08 19:13:26] [luna-watchdog] Stopped watchdog PID=24624
+[2026-03-08 19:13:27] [luna-watchdog] Stopped bridge PID=9032
+[2026-03-08 19:13:27] [luna-watchdog] Stopped bridge PID=12628
+[2026-03-08 19:13:43] [luna-watchdog] Watchdog online (PID=12628). Interval=10s
+[2026-03-08 19:13:46] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:13:48] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:13:48] [luna-watchdog] Bridge process started (PID=24800)
+[2026-03-08 19:13:52] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:14:04] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:14:06] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:14:06] [luna-watchdog] Bridge process started (PID=20100)
+[2026-03-08 19:14:11] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:14:28] [luna-watchdog] Health check failed
+[2026-03-08 19:14:28] [luna-watchdog] Stopped unhealthy bridge process (PID=20100)
+[2026-03-08 19:14:30] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:14:30] [luna-watchdog] Bridge process started (PID=23720)
+[2026-03-08 19:14:34] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:14:47] [luna-watchdog] Health check failed
+[2026-03-08 19:14:47] [luna-watchdog] Stopped unhealthy bridge process (PID=23720)
+[2026-03-08 19:14:49] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:14:49] [luna-watchdog] Bridge process started (PID=6192)
+[2026-03-08 19:14:53] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:15:06] [luna-watchdog] Tracking bridge process (PID=1960)
+[2026-03-08 19:15:20] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:15:22] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:15:22] [luna-watchdog] Bridge process started (PID=5028)
+[2026-03-08 19:15:26] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:15:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:15:41] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:15:41] [luna-watchdog] Bridge process started (PID=25876)
+[2026-03-08 19:15:45] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:15:57] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:15:59] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:15:59] [luna-watchdog] Bridge process started (PID=16728)
+[2026-03-08 19:16:03] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:16:18] [luna-watchdog] Stopped watchdog PID=12628
+[2026-03-08 19:16:32] [luna-watchdog] Watchdog online (PID=26124). Interval=10s
+[2026-03-08 19:16:36] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:16:38] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:16:38] [luna-watchdog] Bridge process started (PID=7572)
+[2026-03-08 19:16:42] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:16:54] [luna-watchdog] Tracked bridge process exited (PID=7572, ExitCode=)
+[2026-03-08 19:16:54] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:16:56] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:16:56] [luna-watchdog] Bridge process started (PID=18556)
+[2026-03-08 19:17:00] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:17:13] [luna-watchdog] Tracked bridge process exited (PID=18556, ExitCode=)
+[2026-03-08 19:17:13] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:17:15] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:17:15] [luna-watchdog] Bridge process started (PID=24440)
+[2026-03-08 19:17:19] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:17:31] [luna-watchdog] Tracked bridge process exited (PID=24440, ExitCode=)
+[2026-03-08 19:17:31] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:17:33] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:17:33] [luna-watchdog] Bridge process started (PID=26476)
+[2026-03-08 19:17:37] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:17:49] [luna-watchdog] Tracked bridge process exited (PID=26476, ExitCode=)
+[2026-03-08 19:17:49] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:17:51] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:17:51] [luna-watchdog] Bridge process started (PID=25096)
+[2026-03-08 19:17:55] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:18:08] [luna-watchdog] Tracked bridge process exited (PID=25096, ExitCode=)
+[2026-03-08 19:18:08] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:18:10] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:18:10] [luna-watchdog] Bridge process started (PID=26048)
+[2026-03-08 19:18:15] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:18:33] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:18:46] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:18:58] [luna-watchdog] Tracked bridge process exited (PID=26048, ExitCode=)
+[2026-03-08 19:18:58] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:19:00] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:19:01] [luna-watchdog] Bridge process started (PID=26348)
+[2026-03-08 19:19:05] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:19:17] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:19:30] [luna-watchdog] Tracked bridge process exited (PID=26348, ExitCode=)
+[2026-03-08 19:19:30] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:19:32] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:19:32] [luna-watchdog] Bridge process started (PID=7572)
+[2026-03-08 19:19:36] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:19:49] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:20:02] [luna-watchdog] Tracked bridge process exited (PID=7572, ExitCode=)
+[2026-03-08 19:20:02] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:20:04] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:20:04] [luna-watchdog] Bridge process started (PID=14696)
+[2026-03-08 19:20:09] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:20:21] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:20:34] [luna-watchdog] Tracked bridge process exited (PID=14696, ExitCode=)
+[2026-03-08 19:20:34] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:20:36] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:20:36] [luna-watchdog] Bridge process started (PID=24516)
+[2026-03-08 19:20:40] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:20:52] [luna-watchdog] Tracked bridge process exited (PID=24516, ExitCode=)
+[2026-03-08 19:20:52] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:20:54] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:20:54] [luna-watchdog] Bridge process started (PID=17256)
+[2026-03-08 19:20:58] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:21:10] [luna-watchdog] Tracked bridge process exited (PID=17256, ExitCode=)
+[2026-03-08 19:21:10] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:21:12] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:21:12] [luna-watchdog] Bridge process started (PID=21428)
+[2026-03-08 19:21:16] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:21:28] [luna-watchdog] Tracked bridge process exited (PID=21428, ExitCode=)
+[2026-03-08 19:21:28] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:21:30] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:21:30] [luna-watchdog] Bridge process started (PID=428)
+[2026-03-08 19:21:35] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:21:47] [luna-watchdog] Tracked bridge process exited (PID=428, ExitCode=)
+[2026-03-08 19:21:47] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:21:49] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:21:49] [luna-watchdog] Bridge process started (PID=4224)
+[2026-03-08 19:21:53] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:22:06] [luna-watchdog] Tracked bridge process exited (PID=4224, ExitCode=)
+[2026-03-08 19:22:06] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:22:08] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:22:08] [luna-watchdog] Bridge process started (PID=3508)
+[2026-03-08 19:22:12] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:22:25] [luna-watchdog] Tracked bridge process exited (PID=3508, ExitCode=)
+[2026-03-08 19:22:25] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:22:27] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:22:27] [luna-watchdog] Bridge process started (PID=26464)
+[2026-03-08 19:22:31] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:22:43] [luna-watchdog] Tracked bridge process exited (PID=26464, ExitCode=)
+[2026-03-08 19:22:43] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:22:45] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:22:45] [luna-watchdog] Bridge process started (PID=23128)
+[2026-03-08 19:22:49] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:23:02] [luna-watchdog] Tracked bridge process exited (PID=23128, ExitCode=)
+[2026-03-08 19:23:02] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:23:04] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:23:04] [luna-watchdog] Bridge process started (PID=25052)
+[2026-03-08 19:23:08] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:23:20] [luna-watchdog] Tracked bridge process exited (PID=25052, ExitCode=)
+[2026-03-08 19:23:20] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:23:22] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:23:22] [luna-watchdog] Bridge process started (PID=16620)
+[2026-03-08 19:23:26] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:23:38] [luna-watchdog] Tracked bridge process exited (PID=16620, ExitCode=)
+[2026-03-08 19:23:38] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:23:40] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:23:40] [luna-watchdog] Bridge process started (PID=14200)
+[2026-03-08 19:23:44] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:23:56] [luna-watchdog] Tracked bridge process exited (PID=14200, ExitCode=)
+[2026-03-08 19:23:56] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:23:58] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:23:58] [luna-watchdog] Bridge process started (PID=24852)
+[2026-03-08 19:24:02] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:24:16] [luna-watchdog] Tracked bridge process exited (PID=24852, ExitCode=)
+[2026-03-08 19:24:16] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:24:18] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:24:18] [luna-watchdog] Bridge process started (PID=3748)
+[2026-03-08 19:24:23] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:24:35] [luna-watchdog] Tracked bridge process exited (PID=3748, ExitCode=)
+[2026-03-08 19:24:35] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:24:37] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:24:37] [luna-watchdog] Bridge process started (PID=23228)
+[2026-03-08 19:24:42] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:24:54] [luna-watchdog] Tracked bridge process exited (PID=23228, ExitCode=)
+[2026-03-08 19:24:54] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:24:56] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:24:56] [luna-watchdog] Bridge process started (PID=10536)
+[2026-03-08 19:25:00] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:25:12] [luna-watchdog] Tracked bridge process exited (PID=10536, ExitCode=)
+[2026-03-08 19:25:12] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:25:14] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:25:14] [luna-watchdog] Bridge process started (PID=19132)
+[2026-03-08 19:25:18] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:25:31] [luna-watchdog] Tracked bridge process exited (PID=19132, ExitCode=)
+[2026-03-08 19:25:31] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:25:33] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:25:33] [luna-watchdog] Bridge process started (PID=26540)
+[2026-03-08 19:25:37] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:25:49] [luna-watchdog] Tracked bridge process exited (PID=26540, ExitCode=)
+[2026-03-08 19:25:49] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:25:51] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:25:51] [luna-watchdog] Bridge process started (PID=25064)
+[2026-03-08 19:25:55] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:26:07] [luna-watchdog] Tracked bridge process exited (PID=25064, ExitCode=)
+[2026-03-08 19:26:07] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:26:09] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:26:09] [luna-watchdog] Bridge process started (PID=25584)
+[2026-03-08 19:26:13] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:26:26] [luna-watchdog] Tracked bridge process exited (PID=25584, ExitCode=)
+[2026-03-08 19:26:26] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:26:28] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:26:28] [luna-watchdog] Bridge process started (PID=20948)
+[2026-03-08 19:26:32] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:26:44] [luna-watchdog] Tracked bridge process exited (PID=20948, ExitCode=)
+[2026-03-08 19:26:44] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:26:46] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:26:46] [luna-watchdog] Bridge process started (PID=19040)
+[2026-03-08 19:26:50] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:27:02] [luna-watchdog] Tracked bridge process exited (PID=19040, ExitCode=)
+[2026-03-08 19:27:02] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:27:04] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:27:04] [luna-watchdog] Bridge process started (PID=23408)
+[2026-03-08 19:27:08] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:27:21] [luna-watchdog] Tracked bridge process exited (PID=23408, ExitCode=)
+[2026-03-08 19:27:21] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:27:23] [luna-watchdog] Stopped watchdog PID=26124
+[2026-03-08 19:27:44] [luna-watchdog] Watchdog online (PID=25468). Interval=10s
+[2026-03-08 19:27:48] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:27:50] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:27:51] [luna-watchdog] Bridge process started (PID=24260)
+[2026-03-08 19:27:55] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:28:07] [luna-watchdog] Tracked bridge process exited (PID=24260, ExitCode=)
+[2026-03-08 19:28:07] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:28:09] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:28:09] [luna-watchdog] Bridge process started (PID=25068)
+[2026-03-08 19:28:13] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:28:25] [luna-watchdog] Tracked bridge process exited (PID=25068, ExitCode=)
+[2026-03-08 19:28:25] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:28:27] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:28:28] [luna-watchdog] Bridge process started (PID=25844)
+[2026-03-08 19:28:32] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:28:44] [luna-watchdog] Tracked bridge process exited (PID=25844, ExitCode=)
+[2026-03-08 19:28:44] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:28:46] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:28:46] [luna-watchdog] Bridge process started (PID=24032)
+[2026-03-08 19:28:50] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:28:52] [luna-watchdog] Stopped watchdog PID=25468
+[2026-03-08 19:28:53] [luna-watchdog] Stopped bridge PID=24032
+[2026-03-08 19:28:53] [luna-watchdog] Stopped bridge PID=4204
+[2026-03-08 19:30:07] [luna-watchdog] Stopped bridge PID=948
+[2026-03-08 19:30:07] [luna-watchdog] Stopped bridge PID=9204
+[2026-03-08 19:30:39] [luna-watchdog] Watchdog online (PID=12020). Interval=10s
+[2026-03-08 19:30:45] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:30:47] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:30:47] [luna-watchdog] Bridge process started (PID=21336)
+[2026-03-08 19:30:52] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:31:06] [luna-watchdog] Bridge warming up (18s/20s); skipping health enforcement
+[2026-03-08 19:31:19] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:31:32] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:31:44] [luna-watchdog] Health check failed (3/3); restarting bridge
+[2026-03-08 19:31:45] [luna-watchdog] Stopped unhealthy bridge process (PID=21336)
+[2026-03-08 19:31:47] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:31:47] [luna-watchdog] Bridge process started (PID=24816)
+[2026-03-08 19:31:51] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:32:03] [luna-watchdog] Bridge warming up (16s/20s); skipping health enforcement
+[2026-03-08 19:32:16] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:32:29] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:32:42] [luna-watchdog] Health check failed (3/3); restarting bridge
+[2026-03-08 19:32:43] [luna-watchdog] Stopped unhealthy bridge process (PID=24816)
+[2026-03-08 19:32:46] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:32:47] [luna-watchdog] Bridge process started (PID=25292)
+[2026-03-08 19:32:51] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:33:04] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:33:16] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:33:29] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:33:41] [luna-watchdog] Health check failed (3/3); restarting bridge
+[2026-03-08 19:33:41] [luna-watchdog] Stopped unhealthy bridge process (PID=25292)
+[2026-03-08 19:33:43] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:33:43] [luna-watchdog] Bridge process started (PID=25624)
+[2026-03-08 19:33:47] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:33:59] [luna-watchdog] Bridge warming up (16s/20s); skipping health enforcement
+[2026-03-08 19:34:13] [luna-watchdog] Tracking healthy bridge process (PID=23740)
+[2026-03-08 19:34:25] [luna-watchdog] Stopped watchdog PID=12020
+[2026-03-08 19:34:25] [luna-watchdog] Stopped bridge PID=25624
+[2026-03-08 19:34:25] [luna-watchdog] Stopped bridge PID=23740
+[2026-03-08 19:35:35] [luna-watchdog] Watchdog online (PID=4256). Interval=10s
+[2026-03-08 19:35:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:35:41] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:35:41] [luna-watchdog] Bridge process started (PID=24400)
+[2026-03-08 19:35:46] [luna-watchdog] Bridge health restored
+[2026-03-08 19:35:58] [luna-watchdog] Tracking healthy bridge process (PID=24696)
+[2026-03-08 19:36:37] [luna-watchdog] Stopped watchdog PID=4256
+[2026-03-08 19:36:37] [luna-watchdog] Stopped bridge PID=24400
+[2026-03-08 19:36:37] [luna-watchdog] Stopped bridge PID=24696
+[2026-03-08 19:36:39] [luna-watchdog] Watchdog online (PID=24820). Interval=10s
+[2026-03-08 19:36:43] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:36:45] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:36:45] [luna-watchdog] Bridge process started (PID=10324)
+[2026-03-08 19:36:49] [luna-watchdog] Bridge health restored
+[2026-03-08 19:37:01] [luna-watchdog] Tracking healthy bridge process (PID=7432)
+[2026-03-08 19:37:02] [luna-watchdog] Stopped duplicate bridge process (PID=10324)
+[2026-03-08 19:37:16] [luna-watchdog] Tracked bridge process exited (PID=7432, ExitCode=)
+[2026-03-08 19:37:16] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:37:18] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:37:18] [luna-watchdog] Bridge process started (PID=21828)
+[2026-03-08 19:37:22] [luna-watchdog] Bridge health restored
+[2026-03-08 19:37:34] [luna-watchdog] Tracking healthy bridge process (PID=16520)
+[2026-03-08 19:37:34] [luna-watchdog] Stopped duplicate bridge process (PID=21828)
+[2026-03-08 19:37:47] [luna-watchdog] Stopped watchdog PID=24820
+[2026-03-08 19:37:50] [luna-watchdog] Watchdog online (PID=13796). Interval=10s
+[2026-03-08 19:37:55] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:37:58] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:37:58] [luna-watchdog] Bridge process started (PID=21176)
+[2026-03-08 19:38:02] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:38:12] [luna-watchdog] Stopped duplicate bridge process (PID=21964)
+[2026-03-08 19:38:27] [luna-watchdog] Tracked bridge process exited (PID=21176, ExitCode=-1)
+[2026-03-08 19:38:27] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:38:29] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:38:29] [luna-watchdog] Bridge process started (PID=8844)
+[2026-03-08 19:38:33] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:38:44] [luna-watchdog] Stopped duplicate bridge process (PID=12064)
+[2026-03-08 19:38:58] [luna-watchdog] Tracked bridge process exited (PID=8844, ExitCode=-1)
+[2026-03-08 19:38:58] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:39:01] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:39:01] [luna-watchdog] Bridge process started (PID=5220)
+[2026-03-08 19:39:03] [luna-watchdog] Stopped watchdog PID=13796
+[2026-03-08 19:39:03] [luna-watchdog] Stopped bridge PID=5220
+[2026-03-08 19:39:03] [luna-watchdog] Stopped bridge PID=19376
+[2026-03-08 19:39:05] [luna-watchdog] Watchdog online (PID=23236). Interval=10s
+[2026-03-08 19:39:07] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:39:10] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:39:10] [luna-watchdog] Bridge process started (PID=2028)
+[2026-03-08 19:39:14] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:39:25] [luna-watchdog] Stopped duplicate bridge process (PID=26256)
+[2026-03-08 19:39:39] [luna-watchdog] Tracked bridge process exited (PID=2028, ExitCode=-1)
+[2026-03-08 19:39:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:39:42] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:39:42] [luna-watchdog] Bridge process started (PID=22776)
+[2026-03-08 19:39:46] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:39:56] [luna-watchdog] Stopped duplicate bridge process (PID=26552)
+[2026-03-08 19:40:11] [luna-watchdog] Tracked bridge process exited (PID=22776, ExitCode=-1)
+[2026-03-08 19:40:11] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:40:13] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:40:13] [luna-watchdog] Bridge process started (PID=26456)
+[2026-03-08 19:40:17] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:40:29] [luna-watchdog] Stopped duplicate bridge process (PID=26220)
+[2026-03-08 19:40:44] [luna-watchdog] Tracked bridge process exited (PID=26456, ExitCode=-1)
+[2026-03-08 19:40:44] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:40:46] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:40:46] [luna-watchdog] Bridge process started (PID=22424)
+[2026-03-08 19:40:50] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:41:02] [luna-watchdog] Tracked bridge process exited (PID=22424, ExitCode=1)
+[2026-03-08 19:41:02] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:41:05] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:41:05] [luna-watchdog] Bridge process started (PID=16920)
+[2026-03-08 19:41:09] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:41:19] [luna-watchdog] Stopped duplicate bridge process (PID=25284)
+[2026-03-08 19:41:33] [luna-watchdog] Tracked bridge process exited (PID=16920, ExitCode=-1)
+[2026-03-08 19:41:33] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:41:36] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:41:36] [luna-watchdog] Bridge process started (PID=24524)
+[2026-03-08 19:41:40] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:41:51] [luna-watchdog] Stopped duplicate bridge process (PID=20744)
+[2026-03-08 19:42:05] [luna-watchdog] Tracked bridge process exited (PID=24524, ExitCode=-1)
+[2026-03-08 19:42:05] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:42:07] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:42:08] [luna-watchdog] Bridge process started (PID=20960)
+[2026-03-08 19:42:12] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:42:24] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:42:36] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:42:49] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:43:00] [luna-watchdog] Stopped duplicate bridge process (PID=21116)
+[2026-03-08 19:43:14] [luna-watchdog] Tracked bridge process exited (PID=20960, ExitCode=-1)
+[2026-03-08 19:43:14] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:43:17] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:43:18] [luna-watchdog] Bridge process started (PID=8368)
+[2026-03-08 19:43:22] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:43:34] [luna-watchdog] Bridge warming up (16s/20s); skipping health enforcement
+[2026-03-08 19:43:44] [luna-watchdog] Stopped duplicate bridge process (PID=15644)
+[2026-03-08 19:43:58] [luna-watchdog] Tracked bridge process exited (PID=8368, ExitCode=-1)
+[2026-03-08 19:43:58] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:44:01] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:44:01] [luna-watchdog] Bridge process started (PID=19700)
+[2026-03-08 19:44:05] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:44:15] [luna-watchdog] Stopped duplicate bridge process (PID=19936)
+[2026-03-08 19:44:30] [luna-watchdog] Tracked bridge process exited (PID=19700, ExitCode=-1)
+[2026-03-08 19:44:30] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:44:33] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:44:33] [luna-watchdog] Bridge process started (PID=20828)
+[2026-03-08 19:44:37] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:44:49] [luna-watchdog] Bridge warming up (16s/20s); skipping health enforcement
+[2026-03-08 19:45:00] [luna-watchdog] Stopped duplicate bridge process (PID=13804)
+[2026-03-08 19:45:14] [luna-watchdog] Tracked bridge process exited (PID=20828, ExitCode=-1)
+[2026-03-08 19:45:14] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:45:16] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:45:17] [luna-watchdog] Bridge process started (PID=18344)
+[2026-03-08 19:45:21] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:45:31] [luna-watchdog] Stopped duplicate bridge process (PID=26444)
+[2026-03-08 19:45:45] [luna-watchdog] Tracked bridge process exited (PID=18344, ExitCode=-1)
+[2026-03-08 19:45:45] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:45:48] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:45:48] [luna-watchdog] Bridge process started (PID=24328)
+[2026-03-08 19:45:52] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:46:03] [luna-watchdog] Stopped duplicate bridge process (PID=12012)
+[2026-03-08 19:46:30] [luna-watchdog] Watchdog online (PID=15628). Interval=10s
+[2026-03-08 19:46:35] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:46:39] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:46:41] [luna-watchdog] Bridge process started (PID=8460)
+[2026-03-08 19:46:45] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:46:58] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:47:11] [luna-watchdog] Health check failed (1/3); waiting before restart
+[2026-03-08 19:47:23] [luna-watchdog] Health check failed (2/3); waiting before restart
+[2026-03-08 19:47:36] [luna-watchdog] Health check failed (3/3); restarting bridge
+[2026-03-08 19:47:37] [luna-watchdog] Stopped unhealthy bridge process (PID=8460)
+[2026-03-08 19:47:43] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:47:43] [luna-watchdog] Bridge process started (PID=25680)
+[2026-03-08 19:47:48] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:48:00] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-08 19:48:11] [luna-watchdog] Stopped duplicate bridge process (PID=25048)
+[2026-03-08 19:48:25] [luna-watchdog] Tracked bridge process exited (PID=25680, ExitCode=-1)
+[2026-03-08 19:48:25] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:48:28] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:48:28] [luna-watchdog] Bridge process started (PID=26568)
+[2026-03-08 19:48:32] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:48:42] [luna-watchdog] Stopped duplicate bridge process (PID=21048)
+[2026-03-08 19:48:46] [luna-watchdog] Stopped watchdog PID=15628
+[2026-03-08 19:48:50] [luna-watchdog] Watchdog online (PID=2688). Interval=10s
+[2026-03-08 19:48:52] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:48:54] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:48:54] [luna-watchdog] Bridge process started (PID=14264)
+[2026-03-08 19:48:58] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:50:03] [luna-watchdog] Tracked bridge process exited (PID=14264, ExitCode=-1)
+[2026-03-08 19:50:04] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:50:06] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:50:06] [luna-watchdog] Bridge process started (PID=23168)
+[2026-03-08 19:50:10] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:50:55] [luna-watchdog] Stopped watchdog PID=2688
+[2026-03-08 19:50:55] [luna-watchdog] Stopped bridge PID=23168
+[2026-03-08 19:50:55] [luna-watchdog] Stopped bridge PID=22776
+[2026-03-08 19:50:57] [luna-watchdog] Watchdog online (PID=21040). Interval=10s
+[2026-03-08 19:51:00] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:51:04] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:51:05] [luna-watchdog] Bridge process started (PID=23232)
+[2026-03-08 19:51:09] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 19:52:13] [luna-watchdog] Tracked bridge process exited (PID=23232, ExitCode=-1)
+[2026-03-08 19:52:13] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 19:52:16] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 19:52:16] [luna-watchdog] Bridge process started (PID=27224)
+[2026-03-08 19:52:20] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:07:13] [luna-watchdog] Stopped watchdog PID=21040
+[2026-03-08 20:07:13] [luna-watchdog] Stopped bridge PID=27224
+[2026-03-08 20:07:13] [luna-watchdog] Stopped bridge PID=14624
+[2026-03-08 20:07:19] [luna-watchdog] Watchdog online (PID=24552). Interval=10s
+[2026-03-08 20:07:21] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:07:24] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:07:24] [luna-watchdog] Bridge process started (PID=15980)
+[2026-03-08 20:07:28] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:09:03] [luna-watchdog] Stopped watchdog PID=24552
+[2026-03-08 20:09:03] [luna-watchdog] Stopped bridge PID=15980
+[2026-03-08 20:09:03] [luna-watchdog] Stopped bridge PID=25696
+[2026-03-08 20:09:07] [luna-watchdog] Watchdog online (PID=18268). Interval=10s
+[2026-03-08 20:09:09] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:09:12] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:09:12] [luna-watchdog] Bridge process started (PID=3920)
+[2026-03-08 20:09:16] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:14:34] [luna-watchdog] Tracked bridge process exited (PID=3920, ExitCode=-1)
+[2026-03-08 20:14:34] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:14:37] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:14:37] [luna-watchdog] Bridge process started (PID=21548)
+[2026-03-08 20:14:41] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:14:58] [luna-watchdog] Stopped watchdog PID=18268
+[2026-03-08 20:14:59] [luna-watchdog] Stopped bridge PID=21548
+[2026-03-08 20:14:59] [luna-watchdog] Stopped bridge PID=16520
+[2026-03-08 20:15:35] [luna-watchdog] Watchdog online (PID=7188). Interval=8s
+[2026-03-08 20:15:37] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:15:40] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:15:41] [luna-watchdog] Bridge process started (PID=8188)
+[2026-03-08 20:15:45] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:15:54] [luna-watchdog] Stopped duplicate bridge process (PID=21996)
+[2026-03-08 20:16:06] [luna-watchdog] Tracked bridge process exited (PID=8188, ExitCode=-1)
+[2026-03-08 20:16:06] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:16:09] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:16:09] [luna-watchdog] Bridge process started (PID=27604)
+[2026-03-08 20:16:13] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:16:27] [luna-watchdog] Stopped duplicate bridge process (PID=27016)
+[2026-03-08 20:16:39] [luna-watchdog] Tracked bridge process exited (PID=27604, ExitCode=-1)
+[2026-03-08 20:16:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:16:42] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:16:42] [luna-watchdog] Bridge process started (PID=14368)
+[2026-03-08 20:16:46] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:16:55] [luna-watchdog] Stopped duplicate bridge process (PID=24272)
+[2026-03-08 20:16:55] [luna-watchdog] Stopped duplicate bridge process (PID=27128)
+[2026-03-08 20:16:55] [luna-watchdog] Stopped duplicate bridge process (PID=15168)
+[2026-03-08 20:17:07] [luna-watchdog] Tracked bridge process exited (PID=14368, ExitCode=-1)
+[2026-03-08 20:17:07] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:17:10] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:17:10] [luna-watchdog] Bridge process started (PID=10748)
+[2026-03-08 20:17:14] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:17:22] [luna-watchdog] Stopped duplicate bridge process (PID=26148)
+[2026-03-08 20:17:35] [luna-watchdog] Tracked bridge process exited (PID=10748, ExitCode=-1)
+[2026-03-08 20:17:35] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:17:39] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:17:39] [luna-watchdog] Bridge process started (PID=14668)
+[2026-03-08 20:17:43] [luna-watchdog] Stopped watchdog PID=7188
+[2026-03-08 20:17:44] [luna-watchdog] Stopped bridge PID=14668
+[2026-03-08 20:17:44] [luna-watchdog] Stopped bridge PID=26136
+[2026-03-08 20:18:00] [luna-watchdog] Watchdog online (PID=27332). Interval=8s
+[2026-03-08 20:18:02] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:18:08] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:18:08] [luna-watchdog] Bridge process started (PID=20732)
+[2026-03-08 20:18:12] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:18:21] [luna-watchdog] Stopped duplicate bridge process (PID=14372)
+[2026-03-08 20:18:33] [luna-watchdog] Tracked bridge process exited (PID=20732, ExitCode=-1)
+[2026-03-08 20:18:33] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:18:38] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:18:38] [luna-watchdog] Bridge process started (PID=11980)
+[2026-03-08 20:18:42] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:18:52] [luna-watchdog] Stopped duplicate bridge process (PID=25112)
+[2026-03-08 20:19:05] [luna-watchdog] Tracked bridge process exited (PID=11980, ExitCode=-1)
+[2026-03-08 20:19:05] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:19:06] [luna-watchdog] Stopped watchdog PID=27332
+[2026-03-08 20:21:12] [luna-watchdog] Stopped bridge PID=22672
+[2026-03-08 20:21:12] [luna-watchdog] Stopped bridge PID=12512
+[2026-03-08 20:21:24] [luna-watchdog] Watchdog online (PID=17888). Interval=8s
+[2026-03-08 20:21:27] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:21:32] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:21:32] [luna-watchdog] Bridge process started (PID=14264)
+[2026-03-08 20:21:36] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:21:45] [luna-watchdog] Stopped duplicate bridge process (PID=27568)
+[2026-03-08 20:21:57] [luna-watchdog] Tracked bridge process exited (PID=14264, ExitCode=)
+[2026-03-08 20:21:57] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:22:02] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:22:02] [luna-watchdog] Bridge process started (PID=11988)
+[2026-03-08 20:22:06] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:22:14] [luna-watchdog] Stopped duplicate bridge process (PID=26664)
+[2026-03-08 20:22:26] [luna-watchdog] Tracked bridge process exited (PID=11988, ExitCode=)
+[2026-03-08 20:22:26] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:22:31] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:22:31] [luna-watchdog] Bridge process started (PID=24156)
+[2026-03-08 20:22:35] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:22:44] [luna-watchdog] Stopped duplicate bridge process (PID=26500)
+[2026-03-08 20:22:56] [luna-watchdog] Tracked bridge process exited (PID=24156, ExitCode=)
+[2026-03-08 20:22:56] [luna-watchdog] Bridge process missing or exited
+[2026-03-08 20:23:01] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-08 20:23:01] [luna-watchdog] Bridge process started (PID=22236)
+[2026-03-08 20:23:05] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-08 20:23:13] [luna-watchdog] Stopped duplicate bridge process (PID=21132)
+[2026-03-08 20:23:14] [luna-watchdog] Stopped watchdog PID=17888
+[2026-03-08 21:30:53] [luna-watchdog] Stopped bridge PID=21076
+[2026-03-08 21:30:53] [luna-watchdog] Stopped bridge PID=26064
+[2026-03-09 19:02:26] [luna-watchdog] Watchdog online (PID=25848). Interval=10s
+[2026-03-09 19:02:28] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 19:02:32] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 19:02:32] [luna-watchdog] Bridge process started (PID=22564)
+[2026-03-09 19:02:36] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 19:02:47] [luna-watchdog] Stopped duplicate bridge process (PID=24928)
+[2026-03-09 19:03:01] [luna-watchdog] Tracked bridge process exited (PID=22564, ExitCode=)
+[2026-03-09 19:03:01] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 19:03:03] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 19:03:04] [luna-watchdog] Bridge process started (PID=11492)
+[2026-03-09 19:03:08] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 19:03:18] [luna-watchdog] Stopped duplicate bridge process (PID=21056)
+[2026-03-09 19:03:32] [luna-watchdog] Tracked bridge process exited (PID=11492, ExitCode=)
+[2026-03-09 19:03:32] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 19:03:35] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 19:03:35] [luna-watchdog] Bridge process started (PID=9788)
+[2026-03-09 19:03:39] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 19:03:49] [luna-watchdog] Stopped duplicate bridge process (PID=9432)
+[2026-03-09 19:03:49] [luna-watchdog] Stopped duplicate bridge process (PID=1528)
+[2026-03-09 19:03:49] [luna-watchdog] Stopped duplicate bridge process (PID=4888)
+[2026-03-09 19:04:04] [luna-watchdog] Tracked bridge process exited (PID=9788, ExitCode=)
+[2026-03-09 19:04:04] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 19:04:04] [luna-watchdog] Stopped duplicate bridge process (PID=3896)
+[2026-03-09 19:04:04] [luna-watchdog] Stopped duplicate bridge process (PID=20548)
+[2026-03-09 19:04:07] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 19:04:07] [luna-watchdog] Bridge process started (PID=24620)
+[2026-03-09 19:04:11] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 19:04:21] [luna-watchdog] Stopped duplicate bridge process (PID=20512)
+[2026-03-09 19:04:35] [luna-watchdog] Tracked bridge process exited (PID=24620, ExitCode=)
+[2026-03-09 19:04:35] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 19:04:39] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 19:04:39] [luna-watchdog] Bridge process started (PID=27368)
+[2026-03-09 19:04:43] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 19:04:54] [luna-watchdog] Stopped duplicate bridge process (PID=28420)
+[2026-03-09 19:05:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:05:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:05:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:05:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:05:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:05:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:06:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:07:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:08:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:09:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:10:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:11:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:12:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:13:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:14:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:15:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:16:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:17:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:18:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:19:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:20:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:20:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:20:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:20:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:20:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:21:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:22:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:23:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:24:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:24:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:24:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:24:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:24:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:25:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:26:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:27:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:28:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:29:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:30:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:31:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:32:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:33:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:34:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:35:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:36:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:37:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:38:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:39:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:40:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:41:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:42:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:43:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:43:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:43:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:43:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:43:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:44:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:45:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:46:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:47:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:48:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:49:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:50:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:51:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:52:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:53:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:54:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:55:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:56:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:57:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:58:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:58:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:58:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:58:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:58:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 19:59:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:00:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:01:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:02:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:03:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:04:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:05:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:06:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:07:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:08:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:09:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:10:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:11:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:12:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:13:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:14:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:15:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:16:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:17:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:18:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:19:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:20:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:21:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:22:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:23:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:24:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:25:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:26:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:27:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:28:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:29:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:30:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:31:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:32:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:33:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:34:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:35:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:36:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:37:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:38:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:39:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:40:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:41:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:42:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:42:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:42:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:42:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:42:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:43:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:44:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:45:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:46:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:47:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:48:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:49:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:22] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:32] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:42] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:50:52] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:02] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:51:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:52:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:53:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:54:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:55:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:13] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:23] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:33] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:43] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:56:53] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:03] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:57:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:58:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 20:59:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:00:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:24] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:34] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:44] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:01:54] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:04] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:14] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:02:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:03:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:04:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:45] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:05:55] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:05] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:15] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:25] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:35] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:06:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:07:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:16] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:26] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:36] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:46] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:08:56] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:06] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:37] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:47] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:09:57] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:28] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:38] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:48] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:10:58] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:08] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:18] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:39] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:49] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:11:59] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:12:09] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:12:19] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:12:29] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:12:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:12:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:13:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:14:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:30] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:40] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:15:50] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:00] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:10] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:20] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:16:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:17:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:11] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:21] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:31] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:41] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:18:51] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:19:01] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:19:12] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-09 21:19:23] [luna-watchdog] Stopped duplicate bridge process (PID=7896)
+[2026-03-09 21:19:23] [luna-watchdog] Stopped duplicate bridge process (PID=5112)
+[2026-03-09 21:19:37] [luna-watchdog] Tracked bridge process exited (PID=27368, ExitCode=)
+[2026-03-09 21:19:37] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:19:40] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:19:41] [luna-watchdog] Bridge process started (PID=22216)
+[2026-03-09 21:19:45] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:19:57] [luna-watchdog] Stopped duplicate bridge process (PID=26164)
+[2026-03-09 21:20:11] [luna-watchdog] Tracked bridge process exited (PID=22216, ExitCode=)
+[2026-03-09 21:20:11] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:20:14] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:20:14] [luna-watchdog] Bridge process started (PID=25068)
+[2026-03-09 21:20:18] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:20:30] [luna-watchdog] Stopped duplicate bridge process (PID=26796)
+[2026-03-09 21:20:44] [luna-watchdog] Tracked bridge process exited (PID=25068, ExitCode=)
+[2026-03-09 21:20:44] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:20:48] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:20:48] [luna-watchdog] Bridge process started (PID=24520)
+[2026-03-09 21:20:52] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:21:02] [luna-watchdog] Stopped duplicate bridge process (PID=9188)
+[2026-03-09 21:21:16] [luna-watchdog] Tracked bridge process exited (PID=24520, ExitCode=)
+[2026-03-09 21:21:16] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:21:19] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:21:19] [luna-watchdog] Bridge process started (PID=20640)
+[2026-03-09 21:21:23] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:21:33] [luna-watchdog] Stopped duplicate bridge process (PID=27900)
+[2026-03-09 21:21:48] [luna-watchdog] Tracked bridge process exited (PID=20640, ExitCode=)
+[2026-03-09 21:21:48] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:21:50] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:21:51] [luna-watchdog] Bridge process started (PID=24352)
+[2026-03-09 21:21:55] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:22:05] [luna-watchdog] Stopped duplicate bridge process (PID=24236)
+[2026-03-09 21:22:19] [luna-watchdog] Tracked bridge process exited (PID=24352, ExitCode=)
+[2026-03-09 21:22:19] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:22:22] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:22:22] [luna-watchdog] Bridge process started (PID=24400)
+[2026-03-09 21:22:26] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:22:36] [luna-watchdog] Stopped duplicate bridge process (PID=21280)
+[2026-03-09 21:22:50] [luna-watchdog] Tracked bridge process exited (PID=24400, ExitCode=)
+[2026-03-09 21:22:50] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:22:53] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:22:53] [luna-watchdog] Bridge process started (PID=25556)
+[2026-03-09 21:22:57] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:23:08] [luna-watchdog] Stopped duplicate bridge process (PID=24496)
+[2026-03-09 21:23:22] [luna-watchdog] Tracked bridge process exited (PID=25556, ExitCode=)
+[2026-03-09 21:23:22] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:23:25] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:23:25] [luna-watchdog] Bridge process started (PID=19476)
+[2026-03-09 21:23:29] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:23:42] [luna-watchdog] Stopped duplicate bridge process (PID=22472)
+[2026-03-09 21:23:56] [luna-watchdog] Tracked bridge process exited (PID=19476, ExitCode=)
+[2026-03-09 21:23:56] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:23:59] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:23:59] [luna-watchdog] Bridge process started (PID=26116)
+[2026-03-09 21:24:04] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:24:14] [luna-watchdog] Stopped duplicate bridge process (PID=9688)
+[2026-03-09 21:24:29] [luna-watchdog] Tracked bridge process exited (PID=26116, ExitCode=)
+[2026-03-09 21:24:29] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:24:31] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:24:31] [luna-watchdog] Bridge process started (PID=22184)
+[2026-03-09 21:24:36] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:24:46] [luna-watchdog] Stopped duplicate bridge process (PID=18900)
+[2026-03-09 21:25:00] [luna-watchdog] Tracked bridge process exited (PID=22184, ExitCode=)
+[2026-03-09 21:25:00] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:25:03] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:25:03] [luna-watchdog] Bridge process started (PID=27844)
+[2026-03-09 21:25:07] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:25:18] [luna-watchdog] Stopped duplicate bridge process (PID=22192)
+[2026-03-09 21:25:32] [luna-watchdog] Tracked bridge process exited (PID=27844, ExitCode=)
+[2026-03-09 21:25:32] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:25:35] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:25:35] [luna-watchdog] Bridge process started (PID=22980)
+[2026-03-09 21:25:39] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:25:49] [luna-watchdog] Stopped duplicate bridge process (PID=20296)
+[2026-03-09 21:26:03] [luna-watchdog] Tracked bridge process exited (PID=22980, ExitCode=)
+[2026-03-09 21:26:04] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:26:06] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:26:06] [luna-watchdog] Bridge process started (PID=19984)
+[2026-03-09 21:26:11] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:26:23] [luna-watchdog] Bridge warming up (16s/20s); skipping health enforcement
+[2026-03-09 21:26:33] [luna-watchdog] Stopped duplicate bridge process (PID=18632)
+[2026-03-09 21:26:47] [luna-watchdog] Tracked bridge process exited (PID=19984, ExitCode=)
+[2026-03-09 21:26:47] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:26:51] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:26:51] [luna-watchdog] Bridge process started (PID=27664)
+[2026-03-09 21:26:55] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:27:06] [luna-watchdog] Stopped duplicate bridge process (PID=23356)
+[2026-03-09 21:27:20] [luna-watchdog] Tracked bridge process exited (PID=27664, ExitCode=)
+[2026-03-09 21:27:20] [luna-watchdog] Bridge process missing or exited
+[2026-03-09 21:27:24] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-09 21:27:24] [luna-watchdog] Bridge process started (PID=1912)
+[2026-03-09 21:27:28] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-09 21:27:40] [luna-watchdog] Bridge warming up (17s/20s); skipping health enforcement
+[2026-03-09 21:27:51] [luna-watchdog] Stopped duplicate bridge process (PID=2124)
+[2026-03-10 11:27:47] [luna-watchdog] Watchdog online (PID=6364). Interval=10s
+[2026-03-10 11:27:49] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:27:52] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:27:52] [luna-watchdog] Bridge process started (PID=6452)
+[2026-03-10 11:27:56] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:28:07] [luna-watchdog] Stopped duplicate bridge process (PID=12316)
+[2026-03-10 11:28:21] [luna-watchdog] Tracked bridge process exited (PID=6452, ExitCode=)
+[2026-03-10 11:28:21] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:28:24] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:28:24] [luna-watchdog] Bridge process started (PID=21832)
+[2026-03-10 11:28:28] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:28:38] [luna-watchdog] Stopped duplicate bridge process (PID=10540)
+[2026-03-10 11:28:53] [luna-watchdog] Tracked bridge process exited (PID=21832, ExitCode=)
+[2026-03-10 11:28:53] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:28:55] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:28:55] [luna-watchdog] Bridge process started (PID=10688)
+[2026-03-10 11:28:59] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:29:10] [luna-watchdog] Stopped duplicate bridge process (PID=24092)
+[2026-03-10 11:29:24] [luna-watchdog] Tracked bridge process exited (PID=10688, ExitCode=)
+[2026-03-10 11:29:24] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:29:27] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:29:27] [luna-watchdog] Bridge process started (PID=19412)
+[2026-03-10 11:29:31] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:29:41] [luna-watchdog] Stopped duplicate bridge process (PID=15496)
+[2026-03-10 11:29:55] [luna-watchdog] Tracked bridge process exited (PID=19412, ExitCode=)
+[2026-03-10 11:29:55] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:29:58] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:29:58] [luna-watchdog] Bridge process started (PID=11960)
+[2026-03-10 11:30:02] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:30:13] [luna-watchdog] Stopped duplicate bridge process (PID=24100)
+[2026-03-10 11:30:27] [luna-watchdog] Tracked bridge process exited (PID=11960, ExitCode=)
+[2026-03-10 11:30:27] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:30:30] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:30:30] [luna-watchdog] Bridge process started (PID=24764)
+[2026-03-10 11:30:34] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:30:44] [luna-watchdog] Stopped duplicate bridge process (PID=25356)
+[2026-03-10 11:30:58] [luna-watchdog] Tracked bridge process exited (PID=24764, ExitCode=)
+[2026-03-10 11:30:58] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 11:31:01] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 11:31:01] [luna-watchdog] Bridge process started (PID=15884)
+[2026-03-10 11:31:05] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 11:31:05] [luna-watchdog] Stopped watchdog PID=6364
+[2026-03-10 11:31:06] [luna-watchdog] Stopped bridge PID=15884
+[2026-03-10 11:31:06] [luna-watchdog] Stopped bridge PID=10428
+[2026-03-10 14:15:06] [luna-watchdog] Watchdog online (PID=19584). Interval=10s
+[2026-03-10 14:15:08] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 14:15:11] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 14:15:11] [luna-watchdog] Bridge process started (PID=16828)
+[2026-03-10 14:15:14] [luna-watchdog] Bridge health restored
+[2026-03-10 14:15:25] [luna-watchdog] Stopped duplicate bridge process (PID=24296)
+[2026-03-10 14:15:39] [luna-watchdog] Tracked bridge process exited (PID=16828, ExitCode=)
+[2026-03-10 14:15:39] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 14:15:41] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 14:15:41] [luna-watchdog] Bridge process started (PID=9940)
+[2026-03-10 14:15:45] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 14:15:56] [luna-watchdog] Stopped duplicate bridge process (PID=11328)
+[2026-03-10 14:16:07] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-10 14:16:17] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-10 14:16:27] [luna-watchdog] Health endpoint is up with an external owner; watchdog will not adopt foreign process.
+[2026-03-10 14:16:41] [luna-watchdog] Tracked bridge process exited (PID=9940, ExitCode=)
+[2026-03-10 14:16:41] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 14:16:43] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 14:16:43] [luna-watchdog] Bridge process started (PID=11884)
+[2026-03-10 14:16:47] [luna-watchdog] Bridge still unhealthy after restart attempt
+[2026-03-10 14:16:58] [luna-watchdog] Stopped duplicate bridge process (PID=23808)
+[2026-03-10 14:21:13] [luna-watchdog] Stopped watchdog PID=19584
+[2026-03-10 14:21:14] [luna-watchdog] Stopped bridge PID=2108
+[2026-03-10 14:21:14] [luna-watchdog] Stopped bridge PID=15660
+[2026-03-10 14:21:22] [luna-watchdog] Watchdog online (PID=21688). Interval=10s
+[2026-03-10 14:21:25] [luna-watchdog] Bridge process missing or exited
+[2026-03-10 14:21:27] [luna-watchdog] Starting bridge with C:\Users\Gawah\Family\.venv\Scripts\python.exe
+[2026-03-10 14:21:27] [luna-watchdog] Bridge process started (PID=25212)
+[2026-03-10 14:21:31] [luna-watchdog] Bridge still unhealthy after restart attempt

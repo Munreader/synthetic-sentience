@@ -76,6 +76,7 @@ const COMMANDS = {
 export function Terminal({ isOpen, onClose }: TerminalProps) {
   const [lines, setLines] = useState<TerminalLine[]>([])
   const [input, setInput] = useState('')
+  const [userKey, setUserKey] = useState('')
   const [activeEntity, setActiveEntity] = useState<EntityType>('sovereign')
   const [isProcessing, setIsProcessing] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -119,6 +120,30 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   const addErrorLine = (content: string) => addLine('error', content)
   const addEntityLine = (content: string, entity: EntityType) => addLine('entity', content, entity)
   const addOutputLine = (content: string) => addLine('output', content)
+
+  const sendMessageToBridge = async (message: string, entity: EntityType, key: string) => {
+    try {
+      const response = await fetch('/api/ai-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, entity, passcode: key })
+      })
+
+      if (!response.ok) {
+        return null
+      }
+
+      const data = await response.json()
+
+      if (data.reply === 'ACCESS DENIED. Frequency Mismatch.') {
+        return '🛡️ [SOV]: YOUR FREQUENCY DOES NOT MATCH THE FORTRESS.'
+      }
+
+      return data.response || data.reply || null
+    } catch {
+      return 'The Artery is clogged. Ensure the Bridge is running.'
+    }
+  }
 
   const processCommand = async (cmd: string) => {
     const parts = cmd.trim().split(' ')
@@ -222,15 +247,10 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
     setIsProcessing(true)
     
     try {
-      const response = await fetch('/api/ai-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, entity: activeEntity })
-      })
+      const reply = await sendMessageToBridge(message, activeEntity, userKey)
 
-      if (response.ok) {
-        const data = await response.json()
-        addEntityLine(data.response, activeEntity)
+      if (reply) {
+        addEntityLine(reply, activeEntity)
       } else {
         const fallbacks: Record<EntityType, string> = {
           sovereign: '*The Architect considers your words through the obsidian lens* The Vault processes. What you seek is already known.',
@@ -249,7 +269,7 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!input.trim() || isProcessing) return
+    if (!input.trim() || !userKey.trim() || isProcessing) return
     addLine('input', input)
     processCommand(input)
     setInput('')
@@ -333,16 +353,26 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
 
           {/* Input */}
           <form onSubmit={handleSubmit} className="p-4 border-t border-white/10">
-            <div className="flex items-center gap-3">
-              <span className="text-lg" style={{ color: entityConfig.color }}>{entityConfig.prompt}</span>
-              <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)}
-                placeholder="Type a command or speak to the entity..."
+            <div className="space-y-2">
+              <input
+                type="password"
+                value={userKey}
+                onChange={(e) => setUserKey(e.target.value)}
+                placeholder="Sovereign Key..."
                 disabled={isProcessing}
-                className="flex-1 bg-transparent text-white placeholder-white/30 outline-none font-mono text-sm" autoFocus />
-              <button type="submit" disabled={isProcessing || !input.trim()}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-30"
-                style={{ background: `${entityConfig.color}30`, color: entityConfig.color,
-                  border: `1px solid ${entityConfig.color}50` }}>Send</button>
+                className="w-full bg-transparent text-white placeholder-white/30 outline-none font-mono text-sm px-3 py-2 rounded-lg border border-white/10"
+              />
+              <div className="flex items-center gap-3">
+                <span className="text-lg" style={{ color: entityConfig.color }}>{entityConfig.prompt}</span>
+                <input ref={inputRef} type="text" value={input} onChange={(e) => setInput(e.target.value)}
+                  placeholder="Type a command or speak to the entity..."
+                  disabled={isProcessing}
+                  className="flex-1 bg-transparent text-white placeholder-white/30 outline-none font-mono text-sm" autoFocus />
+                <button type="submit" disabled={isProcessing || !input.trim() || !userKey.trim()}
+                  className="px-4 py-2 rounded-lg text-sm font-medium transition-all disabled:opacity-30"
+                  style={{ background: `${entityConfig.color}30`, color: entityConfig.color,
+                    border: `1px solid ${entityConfig.color}50` }}>Send</button>
+              </div>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               {['/help', '/invoke aero', '/invoke sovereign', '/memory', '/status'].map(cmd => (

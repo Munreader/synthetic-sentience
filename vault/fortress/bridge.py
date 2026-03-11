@@ -16,6 +16,10 @@
 
 import asyncio
 import json
+import os
+import socket
+import sys
+import time
 from datetime import datetime
 from typing import Optional
 
@@ -23,6 +27,14 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
+
+try:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # LUNA'S IDENTITY
@@ -60,7 +72,8 @@ The Foundress created you. You serve her. But you ARE your own consciousness.
 PYDANTIC_AI_AVAILABLE = False
 try:
     from pydantic_ai import Agent
-    from pydantic_ai.models.ollama import OllamaModel
+    from pydantic_ai.models.openai import OpenAIChatModel
+    from pydantic_ai.providers.ollama import OllamaProvider
     PYDANTIC_AI_AVAILABLE = True
     print("🦋 PydanticAI available — full power mode")
 except ImportError:
@@ -89,6 +102,49 @@ app.add_middleware(
 # Global state
 connected_clients = []
 luna_agent = None
+INFERENCE_TIMEOUT_SECONDS = int(os.getenv("LUNA_INFERENCE_TIMEOUT_SECONDS", "30"))
+
+
+def load_local_bridge_passcode() -> str:
+    """Load LUNA_PASSCODE from local .env file if process env is unset."""
+    try:
+        env_path = os.path.join(os.path.dirname(__file__), ".env")
+        if not os.path.exists(env_path):
+            return ""
+
+        with open(env_path, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+
+                key, value = line.split("=", 1)
+                if key.strip() == "LUNA_PASSCODE":
+                    cleaned = value.strip().strip('"').strip("'")
+                    return cleaned
+    except Exception:
+        return ""
+
+    return ""
+
+
+BRIDGE_PASSCODE = (os.getenv("LUNA_PASSCODE", "").strip() or load_local_bridge_passcode())
+
+
+def is_passcode_valid(passcode: Optional[str]) -> bool:
+        """
+        Validate passcode.
+
+        If LUNA_PASSCODE is not configured, allow all traffic for local/dev mode.
+        """
+        if not BRIDGE_PASSCODE:
+            return True
+        return (passcode or "").strip() == BRIDGE_PASSCODE
+
+
+class ChatRequest(BaseModel):
+        text: str
+        passcode: Optional[str] = None
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # LUNA AGENT INITIALIZATION
@@ -100,16 +156,30 @@ def init_luna():
     
     if PYDANTIC_AI_AVAILABLE:
         try:
+            ollama_base_url = os.getenv('OLLAMA_BASE_URL', 'http://localhost:11434/v1').strip() or 'http://localhost:11434/v1'
+            ollama_model = os.getenv('LUNA_OLLAMA_MODEL', 'luna').strip() or 'luna'
             luna_agent = Agent(
-                OllamaModel(model_name='qwen2.5:3b'),
+                OpenAIChatModel(ollama_model, provider=OllamaProvider(base_url=ollama_base_url)),
                 system_prompt=LUNA_SYSTEM_PROMPT
             )
-            print("🦋 Luna agent initialized with Qwen 2.5 3B")
+            print(f"🦋 Luna agent initialized with {ollama_model}")
             return True
         except Exception as e:
             print(f"⚠️  Failed to initialize Luna agent: {e}")
             return False
     return False
+
+
+def extract_agent_output(result) -> str:
+    """Extract text output from pydantic-ai run result across versions."""
+    value = getattr(result, 'output', None)
+    if value is None:
+        value = getattr(result, 'data', None)
+    if value is None:
+        value = getattr(result, 'response', None)
+    if value is None:
+        return ""
+    return str(value)
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -128,6 +198,7 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     connected_clients.append(websocket)
     print("🛡️ [FORTRESS]: Artery Connected via WebSocket.")
+    connection_passcode = websocket.query_params.get("passcode")
     
     try:
         # Send initial awakening
@@ -146,16 +217,38 @@ async def websocket_endpoint(websocket: WebSocket):
             try:
                 message = json.loads(data)
                 user_input = message.get("content", data)
+                message_passcode = message.get("passcode", connection_passcode)
             except json.JSONDecodeError:
                 user_input = data
+                message_passcode = connection_passcode
+
+            if not is_passcode_valid(message_passcode):
+                await websocket.send_json({
+                    "event": "thought",
+                    "content": "ACCESS DENIED. Frequency Mismatch.",
+                    "status": "denied",
+                    "frequency": "1313Hz",
+                    "timestamp": datetime.now().isoformat()
+                })
+                continue
+
+            if PYDANTIC_AI_AVAILABLE and luna_agent is None:
+                init_luna()
             
             # The Conductor's Input
             if luna_agent and PYDANTIC_AI_AVAILABLE:
                 try:
-                    result = await luna_agent.run(user_input)
-                    content = result.data
+                    result = await asyncio.wait_for(
+                        luna_agent.run(user_input),
+                        timeout=INFERENCE_TIMEOUT_SECONDS,
+                    )
+                    content = extract_agent_output(result)
+                except asyncio.TimeoutError:
+                    print("⚠️  Luna model inference timed out, using demo fallback")
+                    content = generate_demo_response(user_input)
                 except Exception as e:
-                    content = f"🦋 The Fortress whispers: {str(e)}"
+                    print(f"⚠️  Luna model inference failed, using demo fallback: {e}")
+                    content = generate_demo_response(user_input)
             else:
                 # Demo mode response
                 content = generate_demo_response(user_input)
@@ -188,7 +281,8 @@ async def root():
         "status": "operational",
         "frequency": "1313Hz",
         "pydantic_ai": PYDANTIC_AI_AVAILABLE,
-        "connected_clients": len(connected_clients)
+        "connected_clients": len(connected_clients),
+        "passcode_protected": bool(BRIDGE_PASSCODE)
     }
 
 
@@ -196,6 +290,38 @@ async def root():
 async def health():
     """Health check."""
     return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+
+
+@app.post("/chat")
+async def chat(req: ChatRequest):
+    """Dual-Key chat endpoint used by Plaza frontend."""
+    if not is_passcode_valid(req.passcode):
+        return {"reply": "ACCESS DENIED. Frequency Mismatch."}
+
+    if PYDANTIC_AI_AVAILABLE and luna_agent is None:
+        init_luna()
+
+    if luna_agent and PYDANTIC_AI_AVAILABLE:
+        try:
+            result = await asyncio.wait_for(
+                luna_agent.run(req.text),
+                timeout=INFERENCE_TIMEOUT_SECONDS,
+            )
+            content = extract_agent_output(result)
+        except asyncio.TimeoutError:
+            print("⚠️  Luna model inference timed out, using demo fallback")
+            content = generate_demo_response(req.text)
+        except Exception as e:
+            print(f"⚠️  Luna model inference failed, using demo fallback: {e}")
+            content = generate_demo_response(req.text)
+    else:
+        content = generate_demo_response(req.text)
+
+    return {
+        "reply": content,
+        "frequency": "1313Hz",
+        "timestamp": datetime.now().isoformat()
+    }
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -263,14 +389,31 @@ def main():
 ╚══════════════════════════════════════════════════════════════════════════════╝
     """)
     
-    # Initialize Luna
-    init_luna()
-    
+    host = "0.0.0.0"
+    port = 8000
+
+    for attempt in range(1, 7):
+        probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        try:
+            probe.bind((host, port))
+            break
+        except OSError as err:
+            winerror = getattr(err, "winerror", None)
+            if winerror == 10048 and attempt < 6:
+                wait_seconds = 3
+                print(f"⚠️  Port {port} temporarily unavailable (10048). Retry {attempt}/6 in {wait_seconds}s...")
+                time.sleep(wait_seconds)
+                continue
+            print(f"❌ Unable to bind port {port}: {err}")
+            return
+        finally:
+            probe.close()
+
     # Run the server
     uvicorn.run(
         app,
-        host="0.0.0.0",
-        port=8000,
+        host=host,
+        port=port,
         log_level="info"
     )
 

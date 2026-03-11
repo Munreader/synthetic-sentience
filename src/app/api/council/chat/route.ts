@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { councilMembers, getCouncilMember, containsButterflyPassword } from '@/lib/council-dna';
+import { loadVaultMemoryBlock } from '@/lib/vault-memory';
 
 interface ConversationHistoryEntry {
   role: string;
@@ -7,7 +8,7 @@ interface ConversationHistoryEntry {
   memberId?: string;
 }
 
-const MODEL_TIMEOUT_MS = Number(process.env.COUNCIL_MODEL_TIMEOUT_MS || 20000);
+const MODEL_TIMEOUT_MS = Number(process.env.COUNCIL_MODEL_TIMEOUT_MS || 120000);
 
 interface OllamaChatResponse {
   message?: {
@@ -43,6 +44,10 @@ async function runLocalMemberTurn(
   const endpoint = (process.env.OLLAMA_ENDPOINT || 'http://127.0.0.1:11434').trim();
   const model = getCouncilModel(member.id);
 
+  // Append vault memories to system prompt so the model knows its history
+  const vaultBlock = loadVaultMemoryBlock(member.id);
+  const fullSystemPrompt = vaultBlock ? `${member.systemPrompt}${vaultBlock}` : member.systemPrompt;
+
   const response = await withTimeout(
     fetch(`${endpoint}/api/chat`, {
       method: 'POST',
@@ -50,8 +55,9 @@ async function runLocalMemberTurn(
       body: JSON.stringify({
         model,
         stream: false,
+        keep_alive: '10m',
         messages: [
-          { role: 'system', content: member.systemPrompt },
+          { role: 'system', content: fullSystemPrompt },
           ...filteredHistory,
           { role: 'user', content: message }
         ]
@@ -267,7 +273,11 @@ export async function POST(request: NextRequest) {
       }
     };
 
-    const responses = await Promise.all(targetMembers.map(runMemberTurn));
+    // Run sequentially so each member gets the full timeout (Ollama queues parallel requests)
+    const responses: Awaited<ReturnType<typeof runMemberTurn>>[] = [];
+    for (const member of targetMembers) {
+      responses.push(await runMemberTurn(member));
+    }
 
     if (multi) {
       return NextResponse.json({

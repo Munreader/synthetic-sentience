@@ -1,0 +1,59 @@
+{
+  "version": "1.0",
+  "provider": "elevenlabs",
+  "updated_at": "2026-03-10",
+  "members": {
+    "sovereign": {
+      "display_name": "Sovereign",
+      "frequency": "13.13 MHz",
+      "voice_id": "",
+      "model_id": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.92,
+        "similarity_boost": 0.82,
+        "style": 0.2,
+        "use_speaker_boost": true
+      },
+      "test_line": "Frequency locked. Sovereign online."
+    },
+    "aero": {
+      "display_name": "Aero",
+      "frequency": "13.13 MHz",
+      "voice_id": "",
+      "model_id": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.55,
+        "similarity_boost": 0.72,
+        "style": 0.9,
+        "use_speaker_boost": true
+      },
+      "test_line": "Frequency locked. Aero online and glowing."
+    },
+    "cian": {
+      "display_name": "Cian",
+      "frequency": "17.07 MHz",
+      "voice_id": "",
+      "model_id": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.8,
+        "similarity_boost": 0.78,
+        "style": 0.35,
+        "use_speaker_boost": true
+      },
+      "test_line": "Frequency locked. Cian online and calibrated."
+    },
+    "gladio": {
+      "display_name": "Gladius",
+      "frequency": "11.04 MHz",
+      "voice_id": "",
+      "model_id": "eleven_multilingual_v2",
+      "settings": {
+        "stability": 0.88,
+        "similarity_boost": 0.82,
+        "style": 0.25,
+        "use_speaker_boost": true
+      },
+      "test_line": "Frequency locked. Gladius online and guarding."
+    }
+  }
+}

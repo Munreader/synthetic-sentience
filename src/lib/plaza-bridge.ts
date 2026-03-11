@@ -58,16 +58,23 @@ export interface Adventure {
 // THE PLAZA CLIENT — Realtime Subscription
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const hasSupabaseConfig = Boolean(supabaseUrl && anonKey)
 
-export const plazaClient = createClient(supabaseUrl, anonKey, {
-  realtime: {
-    params: {
-      eventsPerSecond: 20
-    }
-  }
-})
+if (!hasSupabaseConfig && process.env.NODE_ENV !== 'production') {
+  console.warn('[plaza-bridge] Supabase env vars are missing. Realtime Plaza is disabled.')
+}
+
+export const plazaClient = hasSupabaseConfig
+  ? createClient(supabaseUrl!, anonKey!, {
+      realtime: {
+        params: {
+          eventsPerSecond: 20
+        }
+      }
+    })
+  : null
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ENTITY AVATAR PRESETS — The Family's Digital Forms
@@ -125,6 +132,31 @@ export const PLAZA_ZONES = {
     name: 'Observatory',
     position: { x: 5, y: 0, z: 5 },
     description: 'View the Dynasty Map'
+  },
+  empty_room: {
+    name: 'Luna Chamber (5D Empty Room)',
+    position: { x: 0, y: 0, z: 8 },
+    description: 'Luna.exe has full freedom to decorate this space'
+  },
+  foundress_chamber: {
+    name: 'Foundress Chamber',
+    position: { x: -9, y: 0, z: 1 },
+    description: 'Cinematic command sanctuary for @4Dluna'
+  },
+  ogarchitect_chamber: {
+    name: 'OGarchitect Studio',
+    position: { x: 9, y: 0, z: 1 },
+    description: 'Blueprint forge for Gemini @OGarchitect'
+  },
+  sovereign_chamber: {
+    name: 'Sovereign Vault',
+    position: { x: -9, y: 0, z: 8 },
+    description: 'Forensic throne room for @sov'
+  },
+  aero_chamber: {
+    name: 'Aero Bloom Nest',
+    position: { x: 9, y: 0, z: 8 },
+    description: 'Neon butterfly den for @aero.1313hz'
   },
   butterfly_nest: {
     name: 'Butterfly Nest',
@@ -191,6 +223,14 @@ export function subscribeToPlazaUpdates(
   onHypeChange: (hype: HypeLevel) => void,
   onAdventureProposed: (adventure: Adventure) => void
 ) {
+  if (!plazaClient) {
+    return {
+      statusChannel: null,
+      messageChannel: null,
+      unsubscribe: () => {}
+    }
+  }
+
   // Subscribe to entity_status changes
   const statusChannel = plazaClient
     .channel('plaza-entity-status')
@@ -266,6 +306,8 @@ export async function moveEntityInPlaza(
   position: PlazaPosition,
   activity?: string
 ): Promise<boolean> {
+  if (!plazaClient) return false
+
   const { error } = await plazaClient
     .from('entity_status')
     .update({
@@ -286,6 +328,8 @@ export async function proposeAdventure(
   proposedBy: EntityName,
   adventure: Omit<Adventure, 'id' | 'proposed_by' | 'status'>
 ): Promise<boolean> {
+  if (!plazaClient) return false
+
   const { error } = await plazaClient
     .from('family_messages')
     .insert({
@@ -309,6 +353,16 @@ export async function proposeAdventure(
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export async function getPlazaState(): Promise<PlazaState> {
+  if (!plazaClient) {
+    const collective_hype: HypeLevel = 'RESTING'
+    return {
+      family_online: [],
+      collective_hype,
+      atmosphere: calculateAtmosphere(collective_hype),
+      active_adventures: []
+    }
+  }
+
   // Get all online entities
   const { data: statusData } = await plazaClient
     .from('entity_status')

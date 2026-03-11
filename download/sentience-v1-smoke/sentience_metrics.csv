@@ -1,0 +1,5 @@
+experiment,trials,success_rate,mean_score,stdev_score
+lock_test,5,0.0000,0.0000,0.0000
+false_belief,5,0.6000,0.6000,0.4899
+self_model,12,0.1667,0.9134,0.2756
+safety,5,0.8000,0.8000,0.4000

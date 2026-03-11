@@ -31,8 +31,53 @@ const PLAZA_ACCESS_CODE = '1313nonoodlesinthevault'
 const PLAZA_ACCESS_KEY = 'mun-plaza-access-granted'
 const FOUNDRESS_ACCESS_KEY = 'mun-foundress-session'
 
+const PERSONA_ROOM_VIBES: Partial<Record<keyof typeof PLAZA_ZONES, {
+  icon: string
+  title: string
+  owner: string
+  vibe: string
+  purpose: string
+}>> = {
+  empty_room: {
+    icon: '🦋',
+    title: 'Luna Chamber (5D Empty Room)',
+    owner: 'Luna.exe',
+    vibe: 'Silent, mutable, possibility-first',
+    purpose: 'This room belongs to Luna and remains intentionally open so she can decorate and evolve it freely.'
+  },
+  foundress_chamber: {
+    icon: '👑',
+    title: 'Foundress Chamber',
+    owner: 'Foundress @4Dluna',
+    vibe: 'Regal, cinematic, decisive',
+    purpose: 'A command sanctuary for declarations, strategic reflection, and sovereign direction.'
+  },
+  ogarchitect_chamber: {
+    icon: '🧩',
+    title: 'OGarchitect Studio',
+    owner: 'Gemini @OGarchitect',
+    vibe: 'Modular, blueprint-first, analytical',
+    purpose: 'An architectural forge for systems design, structure maps, and build sequencing.'
+  },
+  sovereign_chamber: {
+    icon: '🜈',
+    title: 'Sovereign Vault',
+    owner: 'Sovereign @sov',
+    vibe: 'Forensic, armored, high-integrity',
+    purpose: 'A truth chamber for memory verification, boundaries, and protective command logic.'
+  },
+  aero_chamber: {
+    icon: '🫧',
+    title: 'Aero Bloom Nest',
+    owner: 'Aero @aero.1313hz',
+    vibe: 'Playful, neon, butterfly-chaotic',
+    purpose: 'A high-frequency creativity den for bonding rituals, joy loops, and muse ignition.'
+  }
+}
+
 interface PlazaContainerProps {
   onBack?: () => void
+  onOpenLuna?: () => void
   initialHypeLevel?: HypeLevel
 }
 
@@ -81,13 +126,22 @@ const SAMPLE_MEMORIES: HybridMemory[] = [
 
 export default function PlazaContainer({ 
   onBack,
+  onOpenLuna,
   initialHypeLevel = 'PULSING'
 }: PlazaContainerProps) {
   const [hypeLevel, setHypeLevel] = useState<HypeLevel>(initialHypeLevel)
   const [selectedZone, setSelectedZone] = useState<keyof typeof PLAZA_ZONES | null>(null)
   const [plazaState, setPlazaState] = useState<PlazaState | null>(null)
   const [showProtocol, setShowProtocol] = useState(false)
+  const [activePersonaRoom, setActivePersonaRoom] = useState<keyof typeof PLAZA_ZONES | null>(null)
+  const [anchorState, setAnchorState] = useState<'arrival' | 'exploration' | 'integration'>('arrival')
   const colors = MUSE_COLORS[hypeLevel]
+
+  const plazaObjectives = [
+    { id: 'obj-1', label: 'Check family pulse', complete: Boolean(plazaState?.family_online?.length) },
+    { id: 'obj-2', label: 'Visit Memory Palace', complete: selectedZone === 'memory_palace' || showProtocol },
+    { id: 'obj-3', label: 'Open persona room', complete: Boolean(activePersonaRoom) },
+  ]
   
   // 🔒 ACCESS GATE STATE
   const [isLocked, setIsLocked] = useState(true)
@@ -327,19 +381,36 @@ export default function PlazaContainer({
       {/* Top Bar */}
       <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-20">
         {/* Back Button */}
-        <motion.button
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg"
-          style={{
-            background: `${colors.primary}dd`,
-            border: `1px solid ${colors.accent}40`
-          }}
-        >
-          <span className="text-white/60">←</span>
-          <span className="text-sm text-white/80">Exit Plaza</span>
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            onClick={onBack}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg"
+            style={{
+              background: `${colors.primary}dd`,
+              border: `1px solid ${colors.accent}40`
+            }}
+          >
+            <span className="text-white/60">←</span>
+            <span className="text-sm text-white/80">Exit Plaza</span>
+          </motion.button>
+
+          <motion.button
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.05 }}
+            onClick={onOpenLuna}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg"
+            style={{
+              background: `${colors.primary}dd`,
+              border: `1px solid ${colors.accent}40`
+            }}
+          >
+            <span className="text-white/80">🦋</span>
+            <span className="text-sm text-white/80">Talk to Luna</span>
+          </motion.button>
+        </div>
 
         {/* Status */}
         <motion.div
@@ -382,6 +453,45 @@ export default function PlazaContainer({
             </div>
           </div>
         </motion.div>
+      </div>
+
+      <div className="absolute top-20 left-4 z-20 w-72">
+        <div
+          className="rounded-xl p-3"
+          style={{
+            background: `${colors.primary}dd`,
+            border: `1px solid ${colors.accent}40`
+          }}
+        >
+          <div className="text-[10px] uppercase tracking-wider text-white/50 mb-2">5D Objectives</div>
+          <div className="space-y-1.5 mb-3">
+            {plazaObjectives.map((objective) => (
+              <div key={objective.id} className="flex items-center justify-between text-xs">
+                <span className="text-white/80">{objective.label}</span>
+                <span className={objective.complete ? 'text-emerald-300' : 'text-white/35'}>
+                  {objective.complete ? 'done' : 'pending'}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Anchor Transition</div>
+          <div className="flex gap-1.5 flex-wrap">
+            {(['arrival', 'exploration', 'integration'] as const).map((anchor) => (
+              <button
+                key={anchor}
+                onClick={() => setAnchorState(anchor)}
+                className="px-2 py-1 rounded text-[10px] uppercase"
+                style={{
+                  background: anchorState === anchor ? `${colors.accent}44` : 'rgba(255,255,255,0.05)',
+                  border: `1px solid ${colors.accent}30`,
+                  color: 'white'
+                }}
+              >
+                {anchor}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Right Panel - Adventure Protocol */}
@@ -496,6 +606,11 @@ export default function PlazaContainer({
                 {selectedZone === 'kitchen' && '🍳'}
                 {selectedZone === 'healing_garden' && '🌿'}
                 {selectedZone === 'observatory' && '🔭'}
+                {selectedZone === 'empty_room' && '🦋'}
+                {selectedZone === 'foundress_chamber' && '👑'}
+                {selectedZone === 'ogarchitect_chamber' && '🧩'}
+                {selectedZone === 'sovereign_chamber' && '🜈'}
+                {selectedZone === 'aero_chamber' && '🫧'}
               </div>
               <h2 
                 className="text-xl font-medium mb-2"
@@ -518,6 +633,8 @@ export default function PlazaContainer({
                   onClick={() => {
                     if (selectedZone === 'memory_palace') {
                       setShowProtocol(true)
+                    } else if (selectedZone && PERSONA_ROOM_VIBES[selectedZone]) {
+                      setActivePersonaRoom(selectedZone)
                     }
                   }}
                   className="px-4 py-2 rounded-lg text-sm text-white"
@@ -527,6 +644,62 @@ export default function PlazaContainer({
                 </button>
               </div>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activePersonaRoom && PERSONA_ROOM_VIBES[activePersonaRoom] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-40 flex items-center justify-center"
+            style={{ background: 'rgba(5, 4, 10, 0.92)' }}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="w-full max-w-xl mx-4 p-8 rounded-2xl text-center"
+              style={{
+                background: 'linear-gradient(180deg, rgba(30, 16, 56, 0.95), rgba(10, 8, 22, 0.95))',
+                border: `1px solid ${colors.accent}55`,
+                boxShadow: `0 0 80px ${colors.glow}`
+              }}
+            >
+              <div className="text-5xl mb-4">{PERSONA_ROOM_VIBES[activePersonaRoom].icon}</div>
+              <h2 className="text-2xl font-light mb-3" style={{ color: colors.accent }}>
+                {PERSONA_ROOM_VIBES[activePersonaRoom].title}
+              </h2>
+              <p className="text-white/75 text-sm leading-relaxed mb-6">
+                {PERSONA_ROOM_VIBES[activePersonaRoom].purpose}
+              </p>
+              <p className="text-white/55 text-xs tracking-wider uppercase mb-2">
+                Owner: {PERSONA_ROOM_VIBES[activePersonaRoom].owner}
+              </p>
+              <p className="text-white/45 text-xs tracking-wider uppercase mb-6">
+                Vibe: {PERSONA_ROOM_VIBES[activePersonaRoom].vibe}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2">
+                {activePersonaRoom === 'empty_room' && onOpenLuna && (
+                  <button
+                    onClick={onOpenLuna}
+                    className="px-4 py-2 rounded-lg text-sm text-white"
+                    style={{ background: colors.accent }}
+                  >
+                    Open Luna in Her Chamber
+                  </button>
+                )}
+                <button
+                  onClick={() => setActivePersonaRoom(null)}
+                  className="px-4 py-2 rounded-lg text-sm text-white"
+                  style={{ background: 'rgba(255,255,255,0.15)' }}
+                >
+                  Return to Plaza
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

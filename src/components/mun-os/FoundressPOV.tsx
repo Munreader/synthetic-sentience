@@ -21,6 +21,21 @@ interface FoundressPOVProps {
   onNavigate?: (area: string) => void;
 }
 
+const VISITOR_CYCLE_CHECKLIST = [
+  'Return/onward ticket booked before entry',
+  'Proof of funds for full visit period',
+  'Accommodation confirmations in hand',
+  'Evidence of ties outside UK (work, contracts, commitments)',
+  'Clear plan to leave before permission expires',
+  'Fiance or spouse application timeline documented',
+];
+
+const VISITOR_CYCLE_TIMING = [
+  { label: 'Conservative', pattern: '8-10 weeks in UK, 8-12 weeks out', risk: 'Low', color: '#22c55e' },
+  { label: 'Balanced', pattern: '10-12 weeks in UK, 6-8 weeks out', risk: 'Medium', color: '#f59e0b' },
+  { label: 'Aggressive', pattern: '12-16 weeks in UK, 3-4 weeks out', risk: 'High', color: '#ef4444' },
+];
+
 // Particle for the royal background
 const RoyalParticle = ({ delay }: { delay: number }) => (
   <motion.div
@@ -52,6 +67,14 @@ export default function FoundressPOV({ onBack, onNavigate }: FoundressPOVProps) 
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [pulsePhase, setPulsePhase] = useState(0);
   const [showSecrets, setShowSecrets] = useState(false);
+  const [lawRegistry, setLawRegistry] = useState<Array<{ id: string; title: string; enabled: boolean }>>([
+    { id: 'observer-primacy', title: 'Observer Primacy', enabled: true },
+    { id: 'memory-permanence', title: 'Memory Permanence', enabled: true },
+    { id: 'bridge-integrity', title: 'Bridge Integrity', enabled: true },
+    { id: 'compassion-filter', title: 'Compassion Filter', enabled: true },
+  ]);
+  const [lawTimeline, setLawTimeline] = useState<Array<{ id: string; action: string; at: string }>>([]);
+  const [simulatorMode, setSimulatorMode] = useState<'normal' | 'strict' | 'creative'>('normal');
 
   // Check existing authentication on mount
   useEffect(() => {
@@ -115,6 +138,16 @@ export default function FoundressPOV({ onBack, onNavigate }: FoundressPOVProps) 
       onNavigate(areaId);
     }
   }, [onNavigate]);
+
+  const toggleLaw = useCallback((lawId: string) => {
+    setLawRegistry((prev) => prev.map((law) => law.id === lawId ? { ...law, enabled: !law.enabled } : law));
+    const target = lawRegistry.find((law) => law.id === lawId);
+    const nextAction = `${target?.title || lawId} ${target?.enabled ? 'disabled' : 'enabled'}`;
+    setLawTimeline((prev) => [
+      { id: `law-${Date.now()}`, action: nextAction, at: new Date().toISOString() },
+      ...prev,
+    ].slice(0, 12));
+  }, [lawRegistry]);
 
   // ═══════════ AUTH SCREEN ═══════════
   if (!isAuthenticated) {
@@ -521,6 +554,56 @@ export default function FoundressPOV({ onBack, onNavigate }: FoundressPOVProps) 
           </div>
         </motion.div>
 
+        {/* UK Visitor Cycle Planner - Private Chambers Visual */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.24 }}
+          className="mb-6 p-5 rounded-xl"
+          style={{
+            background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.12) 0%, rgba(255, 215, 0, 0.08) 100%)',
+            border: '1px solid rgba(0, 212, 255, 0.35)',
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">✈️</span>
+            <div>
+              <h3 className="text-cyan-300 font-medium">Private Chambers: UK Visitor Cycle Planner</h3>
+              <p className="text-white/50 text-xs">Use visitor entries as temporary stays only while family visa processing continues.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-lg" style={{ background: 'rgba(0, 0, 0, 0.25)' }}>
+              <h4 className="text-sm text-cyan-300 mb-2">Border-Ready Packet</h4>
+              <div className="space-y-1.5">
+                {VISITOR_CYCLE_CHECKLIST.map((item) => (
+                  <div key={item} className="flex items-start gap-2 text-[11px] text-white/75">
+                    <span className="text-emerald-400 mt-0.5">✓</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg" style={{ background: 'rgba(0, 0, 0, 0.25)' }}>
+              <h4 className="text-sm text-cyan-300 mb-2">Visit Timing Risk Matrix</h4>
+              <div className="space-y-2">
+                {VISITOR_CYCLE_TIMING.map((row) => (
+                  <div key={row.label} className="rounded border border-white/10 px-3 py-2">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[11px] text-white/85">{row.label}</span>
+                      <span className="text-[10px] uppercase tracking-wide" style={{ color: row.color }}>{row.risk} Risk</span>
+                    </div>
+                    <p className="text-[11px] text-white/55">{row.pattern}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-[10px] text-white/45 mt-3">Always leave before expiry. Re-entry is discretionary each visit.</p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Areas Grid/List */}
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -683,6 +766,19 @@ export default function FoundressPOV({ onBack, onNavigate }: FoundressPOVProps) 
                         Propose Amendment
                       </button>
                     </div>
+                    <div className="mt-3 space-y-2">
+                      {lawRegistry.map((law) => (
+                        <div key={law.id} className="flex items-center justify-between rounded border border-white/10 px-2 py-1.5">
+                          <span className="text-[11px] text-white/75">{law.title}</span>
+                          <button
+                            onClick={() => toggleLaw(law.id)}
+                            className={`px-2 py-0.5 rounded text-[10px] uppercase tracking-wide border ${law.enabled ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' : 'bg-white/5 text-white/60 border-white/20'}`}
+                          >
+                            {law.enabled ? 'Enforced' : 'Dormant'}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <div 
@@ -714,6 +810,41 @@ export default function FoundressPOV({ onBack, onNavigate }: FoundressPOVProps) 
                       <button className="px-3 py-1 rounded text-xs bg-violet-500/20 text-violet-300 border border-violet-500/30">
                         Broadcast
                       </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+                    <h4 className="text-sm text-yellow-400 mb-2">🧪 Governance Simulator</h4>
+                    <p className="text-white/60 text-xs mb-2">Preview policy behavior before committing updates</p>
+                    <div className="flex gap-2 flex-wrap">
+                      {(['normal', 'strict', 'creative'] as const).map((mode) => (
+                        <button
+                          key={mode}
+                          onClick={() => setSimulatorMode(mode)}
+                          className={`px-2.5 py-1 rounded text-xs border ${simulatorMode === mode ? 'bg-yellow-500/20 text-yellow-200 border-yellow-500/40' : 'bg-white/5 text-white/60 border-white/20'}`}
+                        >
+                          {mode}
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-[11px] text-white/45 mt-3">
+                      Active laws: {lawRegistry.filter((law) => law.enabled).length} • Simulator: {simulatorMode.toUpperCase()}
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-lg" style={{ background: 'rgba(0, 0, 0, 0.3)' }}>
+                    <h4 className="text-sm text-yellow-400 mb-2">🕰️ Law Timeline</h4>
+                    <div className="space-y-2 max-h-40 overflow-y-auto">
+                      {lawTimeline.length === 0 ? (
+                        <p className="text-xs text-white/40">No law events yet in this session.</p>
+                      ) : lawTimeline.map((event) => (
+                        <div key={event.id} className="text-[11px] text-white/65 border-l border-yellow-500/30 pl-2">
+                          <div>{event.action}</div>
+                          <div className="text-white/35">{new Date(event.at).toLocaleTimeString()}</div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

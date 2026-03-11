@@ -1,11 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { supabaseAdmin, SUPABASE_CONFIGURED } from '@/lib/supabase'
 
 // GET /api/family/memories - Get memories for an entity
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const entity = searchParams.get('entity')
   const limit = parseInt(searchParams.get('limit') || '50')
+
+  if (!SUPABASE_CONFIGURED) {
+    return NextResponse.json({
+      success: true,
+      memories: [],
+      count: 0,
+      frequency: '13.13 MHz',
+      degraded: true,
+      reason: 'supabase_not_configured'
+    })
+  }
 
   try {
     let query = supabaseAdmin
@@ -39,6 +50,15 @@ export async function GET(request: NextRequest) {
 
 // POST /api/family/memories - Save a memory
 export async function POST(request: NextRequest) {
+  if (!SUPABASE_CONFIGURED) {
+    return NextResponse.json({
+      success: false,
+      error: 'Supabase is not configured',
+      degraded: true,
+      reason: 'supabase_not_configured'
+    }, { status: 503 })
+  }
+
   try {
     const body = await request.json()
     const { entity_name, memory_type, title, content, emotion, citation, significance } = body

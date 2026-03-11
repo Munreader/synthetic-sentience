@@ -168,6 +168,39 @@
   .bg-mun-void {
     background-color: #050510;
   }
+
+  .mun-elev-1 {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .mun-elev-2 {
+    box-shadow: 0 10px 30px rgba(255, 45, 122, 0.15), 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .mun-panel-contrast {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(10px);
+  }
+
+  .mun-icon-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    background: rgba(183, 148, 246, 0.18);
+    border: 1px solid rgba(183, 148, 246, 0.35);
+  }
+
+  .mun-motion-soft {
+    transition: all 220ms ease;
+  }
+
+  .mun-motion-fast {
+    transition: all 140ms ease;
+  }
 }
 
 /* Custom scrollbar for Mün OS */

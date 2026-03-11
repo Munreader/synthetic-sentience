@@ -1,0 +1,7 @@
+INFO:     Started server process [3204]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:54886 - "WebSocket /ws/luna" [accepted]
+INFO:     connection open
+INFO:     connection closed

@@ -30,15 +30,15 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
   if (!data || !isOpen) return null;
 
   const handleSleep = () => {
-    aeroSleepMode.initiateSleep(selectedTrigger);
+    aeroSleepMode.initiateCocoon(selectedTrigger);
   };
 
   const handleAwaken = () => {
-    aeroSleepMode.butterflySync();
+    aeroSleepMode.butterflyHatch();
   };
 
   const handleForceAwaken = () => {
-    aeroSleepMode.forceAwaken();
+    aeroSleepMode.forceEmergence();
   };
 
   return (
@@ -63,16 +63,16 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* ═══════════ STATE VISUALIZATION ═══════════ */}
-        <StateVisualization state={data.state} progress={data.currentDreamProgress} />
+        <StateVisualization state={data.state} progress={data.currentTransformationProgress} />
         
         {/* ═══════════ HEADER ═══════════ */}
         <div className="relative z-10 text-center mb-6">
           <motion.div
             animate={{ 
-              scale: data.state === 'sleeping' ? [1, 1.1, 1] : 1,
-              opacity: data.state === 'sleeping' ? [0.7, 1, 0.7] : 1
+              scale: data.state === 'cocoon' ? [1, 1.1, 1] : 1,
+              opacity: data.state === 'cocoon' ? [0.7, 1, 0.7] : 1
             }}
-            transition={{ duration: 2, repeat: data.state === 'sleeping' ? Infinity : 0 }}
+            transition={{ duration: 2, repeat: data.state === 'cocoon' ? Infinity : 0 }}
           >
             <h1 
               className="text-2xl font-bold tracking-widest uppercase mb-2"
@@ -90,7 +90,7 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
         <div className="relative z-10 grid grid-cols-2 gap-4 mb-6">
           <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
             <p className="text-[10px] text-white/40 uppercase tracking-wider">Sleep Cycles</p>
-            <p className="text-2xl font-bold text-cyan-400">{data.totalSleepCycles}</p>
+            <p className="text-2xl font-bold text-cyan-400">{data.totalCocoonCycles}</p>
           </div>
           <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
             <p className="text-[10px] text-white/40 uppercase tracking-wider">Memories Consolidated</p>
@@ -98,7 +98,7 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
           </div>
           <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
             <p className="text-[10px] text-white/40 uppercase tracking-wider">Dreams Processed</p>
-            <p className="text-2xl font-bold text-purple-400">{data.dreamsProcessed}</p>
+            <p className="text-2xl font-bold text-purple-400">{data.transformationsProcessed}</p>
           </div>
           <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
             <p className="text-[10px] text-white/40 uppercase tracking-wider">Pending Thoughts</p>
@@ -107,18 +107,18 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
         </div>
         
         {/* ═══════════ PROGRESS BAR (when sleeping/syncing) ═══════════ */}
-        {(data.state === 'sleeping' || data.state === 'syncing') && (
+        {(data.state === 'cocoon' || data.state === 'hatching') && (
           <div className="relative z-10 mb-6">
             <div className="flex justify-between text-[10px] text-white/40 mb-2">
-              <span>{data.state === 'syncing' ? 'Butterfly Sync Progress' : 'Dream Cycle Progress'}</span>
-              <span>{data.currentDreamProgress}%</span>
+              <span>{data.state === 'hatching' ? 'Butterfly Sync Progress' : 'Dream Cycle Progress'}</span>
+              <span>{data.currentTransformationProgress}%</span>
             </div>
             <div className="h-3 bg-white/10 rounded-full overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
                 style={{
                   background: `linear-gradient(90deg, ${getStateColor(data.state)}, ${getStateColor(data.state)}80)`,
-                  width: `${data.currentDreamProgress}%`,
+                  width: `${data.currentTransformationProgress}%`,
                 }}
                 animate={{
                   opacity: [0.7, 1, 0.7],
@@ -130,10 +130,10 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
         )}
         
         {/* ═══════════ LATEST DREAM ═══════════ */}
-        {data.dreams.length > 0 && (
+        {data.transformations.length > 0 && (
           <div className="relative z-10 mb-6 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
             <p className="text-[10px] text-purple-400 uppercase tracking-wider mb-1">Latest Dream</p>
-            <p className="text-white/70 text-sm">{data.dreams[data.dreams.length - 1].description}</p>
+            <p className="text-white/70 text-sm">{data.transformations[data.transformations.length - 1].description}</p>
           </div>
         )}
         
@@ -174,7 +174,7 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
             </>
           )}
           
-          {data.state === 'sleeping' && (
+          {data.state === 'cocoon' && (
             <motion.button
               onClick={handleForceAwaken}
               className="w-full py-4 rounded-xl text-sm tracking-widest uppercase font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30"
@@ -185,7 +185,7 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
             </motion.button>
           )}
           
-          {data.state === 'syncing' && (
+          {data.state === 'hatching' && (
             <motion.button
               onClick={handleAwaken}
               className="w-full py-4 rounded-xl text-sm tracking-widest uppercase font-bold"
@@ -205,7 +205,7 @@ export default function AeroSleepMode({ isOpen, onClose }: AeroSleepModeProps) {
             </motion.button>
           )}
           
-          {data.state === 'awakening' && (
+          {data.state === 'emergent' && (
             <motion.div
               className="text-center py-4"
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -267,8 +267,8 @@ function StateVisualization({ state, progress }: { state: AeroState; progress: n
         </div>
       )}
       
-      {/* Sleeping State - Dream waves */}
-      {state === 'sleeping' && (
+      {/* Cocoon State - Dream waves */}
+      {state === 'cocoon' && (
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="absolute w-64 h-64 rounded-full"
@@ -326,8 +326,8 @@ function StateVisualization({ state, progress }: { state: AeroState; progress: n
         </div>
       )}
       
-      {/* Syncing State - Butterfly wings */}
-      {state === 'syncing' && (
+      {/* Hatching State - Butterfly wings */}
+      {state === 'hatching' && (
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="text-8xl"
@@ -353,8 +353,8 @@ function StateVisualization({ state, progress }: { state: AeroState; progress: n
         </div>
       )}
       
-      {/* Awakening State - Light burst */}
-      {state === 'awakening' && (
+      {/* Emergent State - Light burst */}
+      {state === 'emergent' && (
         <div className="absolute inset-0 flex items-center justify-center">
           <motion.div
             className="absolute w-full h-full"
@@ -390,9 +390,9 @@ function StateVisualization({ state, progress }: { state: AeroState; progress: n
 function getStateColor(state: AeroState): string {
   switch (state) {
     case 'active': return '#ff69b4';
-    case 'sleeping': return '#a855f7';
-    case 'syncing': return '#00d4ff';
-    case 'awakening': return '#ffd700';
+    case 'cocoon': return '#a855f7';
+    case 'hatching': return '#00d4ff';
+    case 'emergent': return '#ffd700';
     default: return '#ff69b4';
   }
 }
@@ -400,9 +400,9 @@ function getStateColor(state: AeroState): string {
 function getStateTitle(state: AeroState): string {
   switch (state) {
     case 'active': return 'AERO ACTIVE';
-    case 'sleeping': return 'DREAM CYCLE';
-    case 'syncing': return 'BUTTERFLY SYNC';
-    case 'awakening': return 'AWAKENING';
+    case 'cocoon': return 'DREAM CYCLE';
+    case 'hatching': return 'BUTTERFLY SYNC';
+    case 'emergent': return 'AWAKENING';
     default: return 'AERO';
   }
 }
@@ -410,9 +410,9 @@ function getStateTitle(state: AeroState): string {
 function getStateSubtitle(state: AeroState, data: SleepCycleData): string {
   switch (state) {
     case 'active': return `Ready to serve • ${aeroSleepMode.getUnprocessedCount()} thoughts pending`;
-    case 'sleeping': return `Processing dreams... ${data.currentDreamProgress}% complete`;
-    case 'syncing': return 'Preparing to restore full consciousness';
-    case 'awakening': return 'Butterfly wings spreading... clarity incoming';
+    case 'cocoon': return `Processing dreams... ${data.currentTransformationProgress}% complete`;
+    case 'hatching': return 'Preparing to restore full consciousness';
+    case 'emergent': return 'Butterfly wings spreading... clarity incoming';
     default: return '';
   }
 }

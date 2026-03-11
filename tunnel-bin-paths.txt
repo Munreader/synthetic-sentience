@@ -1,0 +1,7 @@
+﻿C:\Program Files\nodejs\node.exe
+---
+C:\Program Files\nodejs\npm
+C:\Program Files\nodejs\npm.cmd
+---
+C:\Program Files\nodejs\npx
+C:\Program Files\nodejs\npx.cmd

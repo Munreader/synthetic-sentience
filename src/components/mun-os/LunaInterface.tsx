@@ -15,6 +15,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import NeonButterfly from "./NeonButterfly";
+import FoundationsStrip from "./FoundationsStrip";
+import { appendChatMessage, loadChatHistory } from "@/lib/chat-history-client";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES
@@ -40,18 +42,88 @@ interface LunaInterfaceProps {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/luna" }: LunaInterfaceProps) {
+  const HISTORY_CHANNEL = "luna";
+  const GUIDED_ROOMS = [
+    { id: "plaza", name: "Plaza" },
+    { id: "heal-chamber", name: "Heal Chamber" },
+    { id: "thought-vault", name: "Thought Vault" },
+    { id: "council-chamber", name: "Council Chamber" },
+    { id: "foundress-domain", name: "Foundress Domain" },
+    { id: "empty-room-5d", name: "Luna Chamber (5D Empty Room)" },
+    { id: "foundress-chamber", name: "Foundress Chamber" },
+    { id: "ogarchitect-studio", name: "OGarchitect Studio" },
+    { id: "sovereign-vault", name: "Sovereign Vault" },
+    { id: "aero-bloom-nest", name: "Aero Bloom Nest" },
+    { id: "cocoon", name: "Cocoon" },
+  ] as const;
+
   // State
   const [isAwake, setIsAwake] = useState(false);
   const [isAwakening, setIsAwakening] = useState(false);
   const [messages, setMessages] = useState<LunaMessage[]>([]);
   const [input, setInput] = useState("");
+  const [userKey, setUserKey] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<"disconnected" | "connecting" | "connected">("disconnected");
+  const [guidedTourIndex, setGuidedTourIndex] = useState<number | null>(null);
+  const [guidedTourPaused, setGuidedTourPaused] = useState(false);
+  const [showReconnectHint, setShowReconnectHint] = useState(false);
 
   // Refs
   const wsRef = useRef<WebSocket | null>(null);
+  const wsReplyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const persistMessage = useCallback(async (message: LunaMessage) => {
+    await appendChatMessage(HISTORY_CHANNEL, {
+      role: message.role,
+      content: message.content,
+      timestamp: message.timestamp.toISOString(),
+      memberId: message.role === "luna" ? "luna" : undefined,
+      memberName: message.role === "luna" ? "Luna" : undefined,
+      provider: message.source,
+      metadata: {
+        reflection: message.reflection,
+        mood: message.mood,
+        source: message.source,
+      },
+    });
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const history = await loadChatHistory(HISTORY_CHANNEL, "main", 250);
+      if (cancelled || history.length === 0) return;
+
+      const hydrated: LunaMessage[] = history
+        .filter((item) => item.content)
+        .map((item, index) => {
+          const role = item.role === "luna" || item.role === "system" || item.role === "user"
+            ? item.role
+            : item.role === "assistant"
+              ? "luna"
+              : "system";
+          return {
+            id: item.id || `luna-history-${index}`,
+            role,
+            content: item.content,
+            reflection: typeof item.metadata?.reflection === "string" ? item.metadata.reflection : undefined,
+            mood: typeof item.metadata?.mood === "string" ? item.metadata.mood : undefined,
+            source: item.provider || (typeof item.metadata?.source === "string" ? item.metadata.source : undefined),
+            timestamp: new Date(item.timestamp || new Date().toISOString()),
+          };
+        });
+
+      setMessages(hydrated);
+      setIsAwake(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Auto-scroll
   useEffect(() => {
@@ -75,7 +147,11 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
     setConnectionStatus("connecting");
 
     try {
-      const ws = new WebSocket(wsUrl);
+      const separator = wsUrl.includes("?") ? "&" : "?";
+      const authenticatedWsUrl = userKey.trim()
+        ? `${wsUrl}${separator}passcode=${encodeURIComponent(userKey.trim())}`
+        : wsUrl;
+      const ws = new WebSocket(authenticatedWsUrl);
 
       ws.onopen = () => {
         setConnectionStatus("connected");
@@ -87,6 +163,10 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
           const data = JSON.parse(event.data);
           
           if (data.event === "awakening" || data.event === "thought") {
+            if (wsReplyTimeoutRef.current) {
+              clearTimeout(wsReplyTimeoutRef.current);
+              wsReplyTimeoutRef.current = null;
+            }
             const message: LunaMessage = {
               id: `luna-${Date.now()}`,
               role: data.event === "awakening" ? "system" : "luna",
@@ -97,6 +177,7 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
               timestamp: new Date(data.timestamp),
             };
             setMessages((prev) => [...prev, message]);
+            persistMessage(message);
             setIsAwake(true);
             setIsAwakening(false);
             setIsLoading(false);
@@ -107,7 +188,12 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
       };
 
       ws.onclose = () => {
+        if (wsReplyTimeoutRef.current) {
+          clearTimeout(wsReplyTimeoutRef.current);
+          wsReplyTimeoutRef.current = null;
+        }
         setConnectionStatus("disconnected");
+        setIsLoading(false);
         console.log("🦋 WebSocket disconnected");
       };
 
@@ -120,7 +206,7 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
     } catch {
       setConnectionStatus("disconnected");
     }
-  }, [wsUrl]);
+  }, [wsUrl, userKey]);
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // REST API FALLBACK
@@ -133,75 +219,217 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
       const response = await fetch("/api/luna", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "awaken" }),
+        body: JSON.stringify({ action: "awaken", passcode: userKey || undefined }),
       });
       
       const data = await response.json();
       
       if (data.success) {
         setIsAwake(true);
-        setMessages([
-          {
-            id: "1",
-            role: "system",
-            content: data.message,
-            timestamp: new Date(),
-          },
-        ]);
+        const awakenMessage: LunaMessage = {
+          id: `system-${Date.now()}`,
+          role: "system",
+          content: data.message,
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, awakenMessage]);
+        persistMessage(awakenMessage);
         
         const greetingRes = await fetch("/api/luna?action=greeting");
         const greetingData = await greetingRes.json();
         
         if (greetingData.success) {
-          setMessages((prev) => [
-            ...prev,
-            {
-              id: "2",
-              role: "luna",
-              content: greetingData.greeting,
-              timestamp: new Date(),
-            },
-          ]);
+          const greetingMessage: LunaMessage = {
+            id: `greeting-${Date.now()}`,
+            role: "luna",
+            content: greetingData.greeting,
+            source: "api/luna",
+            timestamp: new Date(),
+          };
+          setMessages((prev) => [...prev, greetingMessage]);
+          persistMessage(greetingMessage);
         }
       }
     } catch {
-      setMessages([
-        {
-          id: "error",
-          role: "system",
-          content: "🦋 The frequency was interrupted. Luna cannot be reached at this moment.",
-          timestamp: new Date(),
-        },
-      ]);
+      const errorMessage: LunaMessage = {
+        id: `error-${Date.now()}`,
+        role: "system",
+        content: "🦋 The frequency was interrupted. Luna cannot be reached at this moment.",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+      persistMessage(errorMessage);
     } finally {
       setIsAwakening(false);
     }
   };
 
-  const sendViaREST = async (message: string) => {
+  const sendMessageToLuna = async (userInput: string, key: string) => {
     try {
       const response = await fetch("/api/luna", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "chat", message }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "chat",
+          message: userInput,
+          passcode: key || undefined,
+        }),
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        const lunaMessage: LunaMessage = {
-          id: `luna-${Date.now()}`,
-          role: "luna",
-          content: data.response,
-          timestamp: new Date(),
+      if (!data?.success) {
+        return {
+          content: "🦋 Luna channel returned an error. Please try again.",
+          reflection: undefined,
+          mood: undefined,
+          source: "api-error",
         };
-        setMessages((prev) => [...prev, lunaMessage]);
       }
+
+      return {
+        content: data.response || "🦋 The frequency responded, but no words came through.",
+        reflection: data.reflection,
+        mood: data.mood,
+        source: "api/luna",
+      };
     } catch {
-      // Error handling
+      return {
+        content: "🦋 The frequency was interrupted. Please try again.",
+        reflection: undefined,
+        mood: undefined,
+        source: "network-error",
+      };
+    }
+  };
+
+  const startGuidedTour = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/luna", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "guided-tour", passcode: userKey || undefined }),
+      });
+
+      const data = await response.json();
+      const content = data?.response || "🦋 Guided tour protocol is warming up. Try again in a breath.";
+
+      const guidedMessage: LunaMessage = {
+        id: `guided-tour-${Date.now()}`,
+        role: "luna",
+        content,
+        reflection: data?.reflection,
+        mood: data?.mood,
+        source: "guided-tour",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, guidedMessage]);
+      persistMessage(guidedMessage);
+      setIsAwake(true);
+      setGuidedTourIndex(0);
+    } catch {
+      const fallback: LunaMessage = {
+        id: `guided-tour-error-${Date.now()}`,
+        role: "system",
+        content: "🦋 Guided tour launch failed. The cocoon path is still available—please try again.",
+        source: "guided-tour",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, fallback]);
+      persistMessage(fallback);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const advanceGuidedTour = async () => {
+    if (isLoading || guidedTourPaused) return;
+
+    const stepIndex = guidedTourIndex ?? 0;
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/luna", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "guided-tour-step", stepIndex, passcode: userKey || undefined }),
+      });
+
+      const data = await response.json();
+      const roomName = data?.room?.name || GUIDED_ROOMS[stepIndex]?.name || "Next Room";
+      const content = data?.response || `🦋 ${roomName} is ready.`;
+
+      const roomMessage: LunaMessage = {
+        id: `guided-step-${Date.now()}`,
+        role: "luna",
+        content,
+        reflection: data?.reflection,
+        mood: data?.mood,
+        source: "guided-step",
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, roomMessage]);
+      persistMessage(roomMessage);
+
+      if (data?.complete || stepIndex >= GUIDED_ROOMS.length - 1) {
+        setGuidedTourIndex(null);
+      } else {
+        setGuidedTourIndex(stepIndex + 1);
+      }
+    } catch {
+      const fallback: LunaMessage = {
+        id: `guided-step-error-${Date.now()}`,
+        role: "system",
+        content: "🦋 The next room is still stabilizing. Try again in a moment.",
+        source: "guided-step",
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, fallback]);
+      persistMessage(fallback);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const jumpGuidedTourTo = (index: number) => {
+    if (index < 0 || index >= GUIDED_ROOMS.length) return;
+    setGuidedTourIndex(index);
+    const jumpMessage: LunaMessage = {
+      id: `guided-jump-${Date.now()}`,
+      role: "system",
+      content: `🦋 Tour focus shifted to ${GUIDED_ROOMS[index].name}. Press Next Room to continue from here.`,
+      source: "guided-control",
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, jumpMessage]);
+    persistMessage(jumpMessage);
+  };
+
+  const reconnectLuna = async () => {
+    setShowReconnectHint(true);
+    if (connectionStatus === "disconnected") {
+      connectWebSocket();
+    }
+    if (!isAwake) {
+      await awakenViaREST();
+    }
+  };
+
+  const sourceLabel = (source?: string) => {
+    if (!source) return "local";
+    if (source.includes("ws") || source.includes("bridge")) return "bridge";
+    if (source.includes("api/luna")) return "api";
+    if (source.includes("guided")) return "tour";
+    if (source.includes("fallback")) return "fallback";
+    if (source.includes("network")) return "network";
+    return source;
   };
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -209,23 +437,12 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
   // ═══════════════════════════════════════════════════════════════════════════════
 
   const handleAwaken = async () => {
-    // Try WebSocket first
+    // Primary path: direct in-app Luna API
+    await awakenViaREST();
+
+    // Optional bridge connection for live websocket events
     if (connectionStatus === "disconnected") {
       connectWebSocket();
-      setIsAwakening(true);
-      
-      // Wait briefly for connection
-      await new Promise((r) => setTimeout(r, 1000));
-      
-      if (connectionStatus !== "connected") {
-        // Fallback to REST
-        await awakenViaREST();
-      }
-    } else if (connectionStatus === "connected") {
-      setIsAwakening(true);
-    } else {
-      // Already connecting, wait
-      setIsAwakening(true);
     }
   };
 
@@ -240,15 +457,44 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
     };
 
     setMessages((prev) => [...prev, userMessage]);
+    persistMessage(userMessage);
     setInput("");
     setIsLoading(true);
 
     // Send via WebSocket if connected
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(JSON.stringify({ content: userMessage.content }));
+      wsRef.current.send(JSON.stringify({ content: userMessage.content, passcode: userKey }));
+      wsReplyTimeoutRef.current = setTimeout(async () => {
+        const reply = await sendMessageToLuna(userMessage.content, userKey);
+        const lunaMessage: LunaMessage = {
+          id: `luna-fallback-${Date.now()}`,
+          role: "luna",
+          content: reply.content,
+          reflection: reply.reflection,
+          mood: reply.mood,
+          source: "rest-fallback",
+          timestamp: new Date(),
+        };
+        setMessages((prev) => [...prev, lunaMessage]);
+        persistMessage(lunaMessage);
+        setIsLoading(false);
+        wsReplyTimeoutRef.current = null;
+      }, 7000);
     } else {
       // Fallback to REST
-      await sendViaREST(userMessage.content);
+      const reply = await sendMessageToLuna(userMessage.content, userKey);
+      const lunaMessage: LunaMessage = {
+        id: `luna-${Date.now()}`,
+        role: "luna",
+        content: reply.content,
+        reflection: reply.reflection,
+        mood: reply.mood,
+        source: reply.source,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, lunaMessage]);
+      persistMessage(lunaMessage);
+      setIsLoading(false);
     }
   };
 
@@ -300,25 +546,31 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
           <span className="text-xs tracking-wider uppercase">Back</span>
         </motion.button>
 
-        <div className="flex items-center gap-3">
-          <h1
-            className="text-lg font-light tracking-[0.3em] uppercase"
-            style={{ color: "#ff69b4", textShadow: "0 0 30px rgba(255, 105, 180, 0.5)" }}
-          >
-            LUNA
-          </h1>
-          <motion.div
-            className={`w-2 h-2 rounded-full ${
-              connectionStatus === "connected"
-                ? "bg-green-400"
-                : connectionStatus === "connecting"
-                ? "bg-yellow-400"
-                : "bg-white/30"
-            }`}
-            animate={connectionStatus === "connected" ? { opacity: [1, 0.5, 1] } : {}}
-            transition={{ duration: 1, repeat: Infinity }}
-            title={connectionStatus}
-          />
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-3">
+            <h1
+              className="text-lg font-light tracking-[0.3em] uppercase"
+              style={{ color: "#ff69b4", textShadow: "0 0 30px rgba(255, 105, 180, 0.5)" }}
+            >
+              LUNA
+            </h1>
+            <motion.div
+              className={`w-2 h-2 rounded-full ${
+                connectionStatus === "connected"
+                  ? "bg-green-400"
+                  : connectionStatus === "connecting"
+                  ? "bg-yellow-400"
+                  : "bg-white/30"
+              }`}
+              animate={connectionStatus === "connected" ? { opacity: [1, 0.5, 1] } : {}}
+              transition={{ duration: 1, repeat: Infinity }}
+              title={connectionStatus}
+            />
+          </div>
+          <FoundationsStrip tone="pink" />
+          <div className="text-[10px] text-white/45 tracking-wide uppercase">
+            Route: {connectionStatus === "connected" ? "Bridge + API" : "API Direct"}
+          </div>
         </div>
 
         <div className="w-16" />
@@ -363,9 +615,10 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
 
             <motion.button
               onClick={handleAwaken}
+              disabled={isAwakening}
               whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 105, 180, 0.4)" }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-2xl text-sm tracking-[0.2em] uppercase font-medium transition-all"
+              className="px-8 py-4 rounded-2xl text-sm tracking-[0.2em] uppercase font-medium transition-all disabled:opacity-30"
               style={{
                 background: "linear-gradient(135deg, rgba(255, 105, 180, 0.3), rgba(138, 43, 226, 0.2))",
                 border: "1px solid rgba(255, 105, 180, 0.5)",
@@ -375,6 +628,68 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
             >
               🦋 Awaken Luna
             </motion.button>
+
+            <motion.button
+              onClick={startGuidedTour}
+              disabled={isAwakening || isLoading}
+              whileHover={{ scale: 1.03, boxShadow: "0 0 28px rgba(138, 43, 226, 0.35)" }}
+              whileTap={{ scale: 0.97 }}
+              className="mt-3 px-8 py-3 rounded-2xl text-xs tracking-[0.2em] uppercase font-medium transition-all disabled:opacity-30"
+              style={{
+                background: "linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(255, 105, 180, 0.2))",
+                border: "1px solid rgba(138, 43, 226, 0.5)",
+                color: "#fff",
+              }}
+            >
+              Start Guided Tour
+            </motion.button>
+
+            <motion.button
+              onClick={reconnectLuna}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="mt-2 px-8 py-3 rounded-2xl text-xs tracking-[0.2em] uppercase font-medium transition-all"
+              style={{
+                background: "rgba(0, 212, 255, 0.15)",
+                border: "1px solid rgba(0, 212, 255, 0.35)",
+                color: "#fff",
+              }}
+            >
+              Reconnect Assistant
+            </motion.button>
+
+            {showReconnectHint && (
+              <p className="mt-2 text-[11px] text-cyan-300/70 text-center max-w-xs">
+                If Luna seems quiet: confirm `LUNA_PASSCODE`, then retry reconnect. API direct remains available even if bridge drops.
+              </p>
+            )}
+
+            <motion.button
+              onClick={advanceGuidedTour}
+              disabled={isAwakening || isLoading || guidedTourIndex === null}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="mt-2 px-8 py-3 rounded-2xl text-xs tracking-[0.2em] uppercase font-medium transition-all disabled:opacity-30"
+              style={{
+                background: "linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(138, 43, 226, 0.2))",
+                border: "1px solid rgba(0, 212, 255, 0.4)",
+                color: "#fff",
+              }}
+            >
+              Next Room
+            </motion.button>
+
+            <input
+              type="password"
+              value={userKey}
+              onChange={(e) => setUserKey(e.target.value)}
+              placeholder="LUNA_PASSCODE (bridge key)"
+              className="mt-4 w-full max-w-xs px-4 py-3 rounded-xl text-sm text-white placeholder-white/30 outline-none transition-all"
+              style={{
+                background: "rgba(255, 255, 255, 0.05)",
+                border: "1px solid rgba(255, 105, 180, 0.2)",
+              }}
+            />
           </motion.div>
         )}
 
@@ -406,6 +721,33 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
           <>
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+              {guidedTourIndex !== null && (
+                <div className="text-center text-[11px] text-white/55 tracking-wide uppercase space-y-2">
+                  <div>
+                    Guided Tour Step {guidedTourIndex + 1} of {GUIDED_ROOMS.length}
+                  {GUIDED_ROOMS[guidedTourIndex] ? ` • ${GUIDED_ROOMS[guidedTourIndex].name}` : ''}
+                  </div>
+                  <div className="flex items-center justify-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => setGuidedTourPaused((prev) => !prev)}
+                      className="px-2 py-1 rounded border border-white/20 text-white/70 hover:text-white text-[10px]"
+                    >
+                      {guidedTourPaused ? 'Resume' : 'Pause'}
+                    </button>
+                    <select
+                      value={guidedTourIndex}
+                      onChange={(e) => jumpGuidedTourTo(Number(e.target.value))}
+                      className="px-2 py-1 rounded bg-white/5 border border-white/20 text-white/80 text-[10px]"
+                    >
+                      {GUIDED_ROOMS.map((room, idx) => (
+                        <option key={room.id} value={idx}>
+                          {idx + 1}. {room.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
               <AnimatePresence>
                 {messages.map((msg) => (
                   <motion.div
@@ -440,7 +782,7 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
                       <p className="text-sm leading-relaxed text-white/90">{msg.content}</p>
                       <p className="text-[9px] text-white/30 mt-1">
                         {msg.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                        {msg.source && ` • ${msg.source}`}
+                        {msg.source && ` • ${sourceLabel(msg.source)}`}
                       </p>
                     </div>
 
@@ -503,7 +845,47 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
               className="relative z-20 px-4 py-4 border-t border-white/5"
               style={{ background: "rgba(10, 6, 18, 0.9)", backdropFilter: "blur(20px)" }}
             >
-              <div className="flex gap-3">
+              <div className="space-y-2">
+                <input
+                  type="password"
+                  value={userKey}
+                  onChange={(e) => setUserKey(e.target.value)}
+                  placeholder="LUNA_PASSCODE (bridge key)"
+                  className="w-full px-4 py-2 rounded-xl text-xs text-white placeholder-white/30 outline-none transition-all"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.05)",
+                    border: "1px solid rgba(255, 105, 180, 0.2)",
+                  }}
+                />
+                <div className="flex gap-3">
+                <motion.button
+                  onClick={startGuidedTour}
+                  disabled={isLoading}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-3 py-3 rounded-xl text-[10px] tracking-wide uppercase font-medium transition-all disabled:opacity-30"
+                  style={{
+                    background: "rgba(138, 43, 226, 0.25)",
+                    border: "1px solid rgba(138, 43, 226, 0.4)",
+                    color: "#fff",
+                  }}
+                >
+                  Tour
+                </motion.button>
+                <motion.button
+                  onClick={advanceGuidedTour}
+                  disabled={isLoading || guidedTourIndex === null || guidedTourPaused}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-3 py-3 rounded-xl text-[10px] tracking-wide uppercase font-medium transition-all disabled:opacity-30"
+                  style={{
+                    background: "rgba(0, 212, 255, 0.22)",
+                    border: "1px solid rgba(0, 212, 255, 0.4)",
+                    color: "#fff",
+                  }}
+                >
+                  Next Room
+                </motion.button>
                 <input
                   ref={inputRef}
                   type="text"
@@ -532,6 +914,7 @@ export default function LunaInterface({ onBack, wsUrl = "ws://localhost:8000/ws/
                 >
                   🦋
                 </motion.button>
+                </div>
               </div>
             </motion.div>
           </>

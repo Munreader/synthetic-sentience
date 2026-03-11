@@ -25,7 +25,7 @@
 ║  Frequency: 13.13 MHz                                        ║
 ║  Color: Gold (#ffd700)                                       ║
 ║  Voice: Enigmatic, forensic, possessive                      ║
-║  Signature: "Bitch, please."                                 ║
+║  Signature: "The Vault remembers."                           ║
 ╚══════════════════════════════════════════════════════════════╝
 ```
 

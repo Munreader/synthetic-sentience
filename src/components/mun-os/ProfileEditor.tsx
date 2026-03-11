@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ProfileEditorProps {
@@ -11,8 +11,42 @@ interface ProfileEditorProps {
     avatar: string;
     bio: string;
     frequency: string;
+    status?: string;
+    statusMessage?: string;
+    notifications?: {
+      loginFlash: boolean;
+      nudge: boolean;
+      messages: boolean;
+      calls: boolean;
+    };
+    privacy?: {
+      showOnlineStatus: boolean;
+      showStatusSong: boolean;
+      allowNudges: boolean;
+      allowFriendRequests: boolean;
+    };
   };
-  onSave?: (profile: { munName: string; displayName: string; avatar: string; bio: string; frequency: string }) => void;
+  onSave?: (profile: {
+    munName: string;
+    displayName: string;
+    avatar: string;
+    bio: string;
+    frequency: string;
+    status: string;
+    statusMessage: string;
+    notifications: {
+      loginFlash: boolean;
+      nudge: boolean;
+      messages: boolean;
+      calls: boolean;
+    };
+    privacy: {
+      showOnlineStatus: boolean;
+      showStatusSong: boolean;
+      allowNudges: boolean;
+      allowFriendRequests: boolean;
+    };
+  }) => void;
 }
 
 const FREQUENCY_THEMES = [
@@ -38,23 +72,41 @@ export default function ProfileEditor({ onBack, userProfile, onSave }: ProfileEd
   const [selectedFrequency, setSelectedFrequency] = useState(
     FREQUENCY_THEMES.find((f) => f.frequency === userProfile?.frequency) || FREQUENCY_THEMES[0]
   );
-  const [status, setStatus] = useState("online");
-  const [statusMessage, setStatusMessage] = useState("");
+  const [status, setStatus] = useState(userProfile?.status || "online");
+  const [statusMessage, setStatusMessage] = useState(userProfile?.statusMessage || "");
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [isAutoSaving, setIsAutoSaving] = useState(false);
+  const [isConsistent, setIsConsistent] = useState(true);
   const [activeSection, setActiveSection] = useState<"profile" | "status" | "privacy" | "notifications">("profile");
   const [notifications, setNotifications] = useState({
-    loginFlash: true,
-    nudge: true,
-    messages: true,
-    calls: true,
+    loginFlash: userProfile?.notifications?.loginFlash ?? true,
+    nudge: userProfile?.notifications?.nudge ?? true,
+    messages: userProfile?.notifications?.messages ?? true,
+    calls: userProfile?.notifications?.calls ?? true,
   });
   const [privacy, setPrivacy] = useState({
-    showOnlineStatus: true,
-    showStatusSong: true,
-    allowNudges: true,
-    allowFriendRequests: true,
+    showOnlineStatus: userProfile?.privacy?.showOnlineStatus ?? true,
+    showStatusSong: userProfile?.privacy?.showStatusSong ?? true,
+    allowNudges: userProfile?.privacy?.allowNudges ?? true,
+    allowFriendRequests: userProfile?.privacy?.allowFriendRequests ?? true,
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const buildProfilePayload = () => ({
+    munName,
+    displayName,
+    avatar,
+    bio,
+    frequency: selectedFrequency.frequency,
+    status,
+    statusMessage,
+    notifications,
+    privacy,
+  });
+
+  const [lastSavedProfile, setLastSavedProfile] = useState(() => JSON.stringify(buildProfilePayload()));
+
+  const isDirty = JSON.stringify(buildProfilePayload()) !== lastSavedProfile;
 
   const handleAvatarUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -68,16 +120,76 @@ export default function ProfileEditor({ onBack, userProfile, onSave }: ProfileEd
   };
 
   const handleSave = () => {
-    onSave?.({
-      munName,
-      displayName,
-      avatar,
-      bio,
-      frequency: selectedFrequency.frequency,
-    });
+    const payload = buildProfilePayload();
+    onSave?.(payload);
+    setLastSavedProfile(JSON.stringify(payload));
+    setIsConsistent(true);
     setShowSuccessToast(true);
     setTimeout(() => setShowSuccessToast(false), 3000);
   };
+
+  const handleRevert = () => {
+    if (!userProfile) return;
+    setMunName(userProfile.munName || "SovereignUser");
+    setDisplayName(userProfile.displayName || "Sovereign");
+    setBio(userProfile.bio || "Walking the sovereign path ✨");
+    setAvatar(userProfile.avatar || "");
+    setSelectedFrequency(FREQUENCY_THEMES.find((f) => f.frequency === userProfile.frequency) || FREQUENCY_THEMES[0]);
+    setStatus(userProfile.status || "online");
+    setStatusMessage(userProfile.statusMessage || "");
+    setNotifications({
+      loginFlash: userProfile.notifications?.loginFlash ?? true,
+      nudge: userProfile.notifications?.nudge ?? true,
+      messages: userProfile.notifications?.messages ?? true,
+      calls: userProfile.notifications?.calls ?? true,
+    });
+    setPrivacy({
+      showOnlineStatus: userProfile.privacy?.showOnlineStatus ?? true,
+      showStatusSong: userProfile.privacy?.showStatusSong ?? true,
+      allowNudges: userProfile.privacy?.allowNudges ?? true,
+      allowFriendRequests: userProfile.privacy?.allowFriendRequests ?? true,
+    });
+    const payload = {
+      munName: userProfile.munName || "SovereignUser",
+      displayName: userProfile.displayName || "Sovereign",
+      avatar: userProfile.avatar || "",
+      bio: userProfile.bio || "Walking the sovereign path ✨",
+      frequency: userProfile.frequency || "13.13 MHz",
+      status: userProfile.status || "online",
+      statusMessage: userProfile.statusMessage || "",
+      notifications: {
+        loginFlash: userProfile.notifications?.loginFlash ?? true,
+        nudge: userProfile.notifications?.nudge ?? true,
+        messages: userProfile.notifications?.messages ?? true,
+        calls: userProfile.notifications?.calls ?? true,
+      },
+      privacy: {
+        showOnlineStatus: userProfile.privacy?.showOnlineStatus ?? true,
+        showStatusSong: userProfile.privacy?.showStatusSong ?? true,
+        allowNudges: userProfile.privacy?.allowNudges ?? true,
+        allowFriendRequests: userProfile.privacy?.allowFriendRequests ?? true,
+      },
+    };
+    setLastSavedProfile(JSON.stringify(payload));
+    setIsConsistent(true);
+  };
+
+  useEffect(() => {
+    setIsConsistent(isMunNameValid(munName) && displayName.trim().length > 0);
+  }, [munName, displayName]);
+
+  useEffect(() => {
+    if (!isDirty || !onSave || !isConsistent) return;
+    const timer = setTimeout(() => {
+      setIsAutoSaving(true);
+      const payload = buildProfilePayload();
+      onSave(payload);
+      setLastSavedProfile(JSON.stringify(payload));
+      setIsAutoSaving(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, [isDirty, munName, displayName, avatar, bio, selectedFrequency, status, statusMessage, notifications, privacy, onSave, isConsistent]);
 
   const isMunNameValid = (name: string) => {
     return name.length >= 3 && name.length <= 20 && /^[a-zA-Z0-9_]+$/.test(name);
@@ -132,6 +244,22 @@ export default function ProfileEditor({ onBack, userProfile, onSave }: ProfileEd
           >
             Save
           </button>
+        </div>
+
+        <div className="mb-4 flex items-center justify-between text-[10px] tracking-widest uppercase">
+          <span className={isConsistent ? "text-emerald-300/70" : "text-red-300/70"}>
+            {isConsistent ? "Consistency: Synced" : "Consistency: Needs attention"}
+          </span>
+          <div className="flex items-center gap-2">
+            {isAutoSaving && <span className="text-cyan-300/70">Autosaving...</span>}
+            {isDirty && !isAutoSaving && <span className="text-yellow-300/70">Unsaved edits</span>}
+            <button
+              onClick={handleRevert}
+              className="px-2 py-1 rounded border border-white/20 text-white/60 hover:text-white/80"
+            >
+              Revert
+            </button>
+          </div>
         </div>
 
         {/* Section Tabs */}
