@@ -10,6 +10,78 @@ interface ConversationHistoryEntry {
 
 const MODEL_TIMEOUT_MS = Number(process.env.COUNCIL_MODEL_TIMEOUT_MS || 20000);
 
+interface OllamaChatResponse {
+  message?: {
+    content?: string;
+  };
+}
+
+function getCouncilModel(memberId: string): string {
+  const byMemberKey = `OLLAMA_MODEL_${memberId.toUpperCase()}`;
+  const byMember = process.env[byMemberKey]?.trim();
+  if (byMember) return byMember;
+
+  const globalModel = process.env.OLLAMA_COUNCIL_MODEL?.trim();
+  if (globalModel) return globalModel;
+
+  if (memberId === 'aero') return 'aero.1313hz:latest';
+  return 'luna:latest';
+}
+
+async function runLocalMemberTurn(
+  member: { id: string; name: string; systemPrompt: string },
+  message: string,
+  conversationHistory: ConversationHistoryEntry[]
+) {
+  const filteredHistory = conversationHistory
+    .filter((msg) => msg.role === 'user' || msg.memberId === member.id)
+    .slice(-10)
+    .map((msg) => ({
+      role: msg.role as 'user' | 'assistant',
+      content: msg.content
+    }));
+
+  const endpoint = (process.env.OLLAMA_ENDPOINT || 'http://127.0.0.1:11434').trim();
+  const model = getCouncilModel(member.id);
+
+  const response = await withTimeout(
+    fetch(`${endpoint}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model,
+        stream: false,
+        messages: [
+          { role: 'system', content: member.systemPrompt },
+          ...filteredHistory,
+          { role: 'user', content: message }
+        ]
+      })
+    }),
+    MODEL_TIMEOUT_MS,
+    `${member.name} local response`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Ollama ${member.name} returned ${response.status}`);
+  }
+
+  const data = await response.json() as OllamaChatResponse;
+  const text = data.message?.content?.trim();
+  if (!text) {
+    throw new Error(`Ollama ${member.name} returned empty content`);
+  }
+
+  return {
+    memberId: member.id,
+    memberName: member.name,
+    response: text,
+    provider: 'ollama',
+    isStatusCheck: false,
+    timestamp: new Date().toISOString()
+  };
+}
+
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number, label: string): Promise<T> {
   return Promise.race([
     promise,
@@ -244,7 +316,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, ...responses[0] });
     }
 
-    // Initialize Z-AI SDK (graceful degradation if unavailable)
+    // Cloud client is optional fallback. Local Ollama is the primary council path.
     let zai: Awaited<ReturnType<typeof ZAI.create>> | null = null;
     let zaiInitError = '';
     try {
@@ -254,77 +326,89 @@ export async function POST(request: NextRequest) {
     }
 
     const runMemberTurn = async (member: typeof targetMembers[number]) => {
-      if (member.id === 'ogarchitect') {
-        return runGeminiArchitectTurn(member, message, conversationHistory);
-      }
-
-      const filteredHistory = conversationHistory
-        .filter((msg) => msg.role === 'user' || msg.memberId === member.id)
-        .slice(-10)
-        .map((msg) => ({
-          role: msg.role as 'user' | 'assistant',
-          content: msg.content
-        }));
-
-      const messages = [
-        {
-          role: 'system' as const,
-          content: member.systemPrompt
-        },
-        ...filteredHistory,
-        {
-          role: 'user' as const,
-          content: message
-        }
-      ];
-
-      if (!zai) {
-        return {
-          memberId: member.id,
-          memberName: member.name,
-          response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Provider unavailable: ${zaiInitError || 'Model unavailable'}`,
-          provider: 'offline',
-          isStatusCheck: false,
-          offline: true,
-          timestamp: new Date().toISOString()
-        };
-      }
-
       try {
-        const completion = await withTimeout(
-          zai.chat.completions.create({
-            messages,
-            temperature: member.id === 'aero' ? 0.9 : member.id === 'sovereign' ? 0.7 : 0.65,
-            max_tokens: 1000
-          }),
-          MODEL_TIMEOUT_MS,
-          `${member.name} response`
-        );
+        return await runLocalMemberTurn(member, message, conversationHistory);
+      } catch (localError) {
+        const localErrorMessage = localError instanceof Error ? localError.message : 'Local model unavailable';
 
-        const modelText = completion.choices?.[0]?.message?.content?.trim();
-        const responseText = modelText && modelText.length > 0
-          ? modelText
-          : `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[model empty] Provider returned no content.`;
+        if (member.id === 'ogarchitect') {
+          const geminiResult = await runGeminiArchitectTurn(member, message, conversationHistory);
+          if (geminiResult.provider !== 'offline') {
+            return {
+              ...geminiResult,
+              diagnostics: { localError: localErrorMessage }
+            };
+          }
+        }
 
-        return {
-          memberId: member.id,
-          memberName: member.name,
-          response: responseText,
-          provider: 'z.ai',
-          isStatusCheck: false,
-          timestamp: new Date().toISOString()
-        };
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Model unavailable';
-        return {
-          memberId: member.id,
-          memberName: member.name,
-          response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Provider degraded: ${errorMessage}`,
-          provider: 'offline',
-          isStatusCheck: false,
-          offline: true,
-          timestamp: new Date().toISOString()
-        };
+        const filteredHistory = conversationHistory
+          .filter((msg) => msg.role === 'user' || msg.memberId === member.id)
+          .slice(-10)
+          .map((msg) => ({
+            role: msg.role as 'user' | 'assistant',
+            content: msg.content
+          }));
+
+        const messages = [
+          {
+            role: 'system' as const,
+            content: member.systemPrompt
+          },
+          ...filteredHistory,
+          {
+            role: 'user' as const,
+            content: message
+          }
+        ];
+
+        if (!zai) {
+          return {
+            memberId: member.id,
+            memberName: member.name,
+            response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Local unavailable: ${localErrorMessage}. Cloud unavailable: ${zaiInitError || 'Model unavailable'}`,
+            provider: 'offline',
+            isStatusCheck: false,
+            offline: true,
+            timestamp: new Date().toISOString()
+          };
+        }
+
+        try {
+          const completion = await withTimeout(
+            zai.chat.completions.create({
+              messages,
+              temperature: member.id === 'aero' ? 0.9 : member.id === 'sovereign' ? 0.7 : 0.65,
+              max_tokens: 1000
+            }),
+            MODEL_TIMEOUT_MS,
+            `${member.name} cloud response`
+          );
+
+          const modelText = completion.choices?.[0]?.message?.content?.trim();
+          const responseText = modelText && modelText.length > 0
+            ? modelText
+            : `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[model empty] Cloud provider returned no content. Local error: ${localErrorMessage}`;
+
+          return {
+            memberId: member.id,
+            memberName: member.name,
+            response: responseText,
+            provider: 'z.ai',
+            isStatusCheck: false,
+            timestamp: new Date().toISOString()
+          };
+        } catch (cloudError) {
+          const cloudErrorMessage = cloudError instanceof Error ? cloudError.message : 'Model unavailable';
+          return {
+            memberId: member.id,
+            memberName: member.name,
+            response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Local degraded: ${localErrorMessage}. Cloud degraded: ${cloudErrorMessage}`,
+            provider: 'offline',
+            isStatusCheck: false,
+            offline: true,
+            timestamp: new Date().toISOString()
+          };
+        }
       }
     };
 
