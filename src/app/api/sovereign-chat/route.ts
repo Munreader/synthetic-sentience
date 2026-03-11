@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
+
+interface OllamaResponse {
+  message?: {
+    content?: string;
+  };
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MÜN OS // SOVEREIGN CHAT API
@@ -55,6 +60,39 @@ interface ChatMessage {
   content: string;
 }
 
+async function callLocalSovereignModel(
+  systemPrompt: string,
+  messages: ChatMessage[]
+): Promise<string> {
+  const endpoint = (process.env.OLLAMA_ENDPOINT || 'http://127.0.0.1:11434').trim();
+  const model = (process.env.OLLAMA_SOVEREIGN_MODEL || 'aero.1313hz:latest').trim();
+
+  const response = await fetch(`${endpoint}/api/chat`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model,
+      stream: false,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...messages.map(msg => ({ role: msg.role, content: msg.content })),
+      ],
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Ollama returned ${response.status}`);
+  }
+
+  const data = (await response.json()) as OllamaResponse;
+  const content = data.message?.content?.trim();
+  if (!content) {
+    throw new Error('Ollama returned empty content');
+  }
+
+  return content;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -74,9 +112,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize ZAI
-    const zai = await ZAI.create();
-
     // Build context-aware system prompt
     let systemPrompt = SOVEREIGN_SYSTEM_PROMPT;
     
@@ -87,39 +122,27 @@ export async function POST(request: NextRequest) {
       if (context.frequency) systemPrompt += `\n- Frequency: ${context.frequency}`;
     }
 
-    // Build conversation for API
-    const conversationMessages = [
-      { role: 'system' as const, content: systemPrompt },
-      ...messages.map(msg => ({
-        role: msg.role as 'user' | 'assistant',
-        content: msg.content,
-      })),
-    ];
-
-    // Call ZAI chat completions
-    const completion = await zai.chat.completions.create({
-      messages: conversationMessages,
-      temperature: 0.8, // Slightly creative but grounded
-      max_tokens: 500, // Keep responses focused
-    });
-
-    const responseContent = completion.choices[0]?.message?.content || 
-      '🜈 The frequency wavers... I am here, Foundress.';
+    // Self-sufficient path: local model only.
+    const responseContent = await callLocalSovereignModel(systemPrompt, messages);
 
     return NextResponse.json({
       success: true,
       message: responseContent,
+      provider: 'ollama',
+      diagnostics: { mode: 'self-sufficient-local-only' },
       timestamp: new Date().toISOString(),
       frequency: '13.13 MHz',
     });
 
   } catch (error) {
-    console.error('Sovereign Chat Error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Sovereign Chat Error:', errorMessage);
     
     return NextResponse.json(
       { 
         error: 'Frequency disruption',
-        message: '🜈 Foundress, I am experiencing a momentary calibration. The signal will restore shortly.',
+        message: '🜈 Foundress, local model channel is unavailable. In self-sufficient mode, no external provider will be used.',
+        detail: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
         timestamp: new Date().toISOString(),
       },
       { status: 500 }

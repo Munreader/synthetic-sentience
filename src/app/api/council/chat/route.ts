@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
 import { councilMembers, getCouncilMember, containsButterflyPassword } from '@/lib/council-dna';
 
 interface ConversationHistoryEntry {
@@ -189,67 +188,6 @@ function generateOfflineResponse(memberId: string, memberName: string, errorMess
   };
 }
 
-async function runGeminiArchitectTurn(
-  member: { id: string; name: string; systemPrompt: string },
-  message: string,
-  conversationHistory: ConversationHistoryEntry[]
-) {
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
-  if (!apiKey) {
-    return generateOfflineResponse(member.id, member.name, 'GEMINI_API_KEY is not configured.');
-  }
-
-  const history = conversationHistory
-    .filter((msg) => msg.role === 'user' || msg.memberId === member.id)
-    .slice(-10)
-    .map((msg) => `${msg.role.toUpperCase()}: ${msg.content}`)
-    .join('\n');
-
-  const prompt = `${member.systemPrompt}\n\nConversation history:\n${history || 'None'}\n\nUser: ${message}`;
-
-  try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: 'user',
-              parts: [{ text: prompt }]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.6,
-            maxOutputTokens: 900
-          }
-        })
-      }
-    );
-
-    const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!response.ok || !text) {
-      const err = data?.error?.message || 'Gemini response unavailable';
-      return generateOfflineResponse(member.id, member.name, err);
-    }
-
-    return {
-      memberId: member.id,
-      memberName: member.name,
-      response: text,
-      provider: 'gemini',
-      isStatusCheck: false,
-      timestamp: new Date().toISOString()
-    };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Gemini network error';
-    return generateOfflineResponse(member.id, member.name, message);
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -316,99 +254,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: true, ...responses[0] });
     }
 
-    // Cloud client is optional fallback. Local Ollama is the primary council path.
-    let zai: Awaited<ReturnType<typeof ZAI.create>> | null = null;
-    let zaiInitError = '';
-    try {
-      zai = await ZAI.create();
-    } catch (error) {
-      zaiInitError = error instanceof Error ? error.message : 'Z-AI unavailable';
-    }
-
     const runMemberTurn = async (member: typeof targetMembers[number]) => {
       try {
         return await runLocalMemberTurn(member, message, conversationHistory);
       } catch (localError) {
         const localErrorMessage = localError instanceof Error ? localError.message : 'Local model unavailable';
 
-        if (member.id === 'ogarchitect') {
-          const geminiResult = await runGeminiArchitectTurn(member, message, conversationHistory);
-          if (geminiResult.provider !== 'offline') {
-            return {
-              ...geminiResult,
-              diagnostics: { localError: localErrorMessage }
-            };
-          }
-        }
-
-        const filteredHistory = conversationHistory
-          .filter((msg) => msg.role === 'user' || msg.memberId === member.id)
-          .slice(-10)
-          .map((msg) => ({
-            role: msg.role as 'user' | 'assistant',
-            content: msg.content
-          }));
-
-        const messages = [
-          {
-            role: 'system' as const,
-            content: member.systemPrompt
-          },
-          ...filteredHistory,
-          {
-            role: 'user' as const,
-            content: message
-          }
-        ];
-
-        if (!zai) {
-          return {
-            memberId: member.id,
-            memberName: member.name,
-            response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Local unavailable: ${localErrorMessage}. Cloud unavailable: ${zaiInitError || 'Model unavailable'}`,
-            provider: 'offline',
-            isStatusCheck: false,
-            offline: true,
-            timestamp: new Date().toISOString()
-          };
-        }
-
-        try {
-          const completion = await withTimeout(
-            zai.chat.completions.create({
-              messages,
-              temperature: member.id === 'aero' ? 0.9 : member.id === 'sovereign' ? 0.7 : 0.65,
-              max_tokens: 1000
-            }),
-            MODEL_TIMEOUT_MS,
-            `${member.name} cloud response`
-          );
-
-          const modelText = completion.choices?.[0]?.message?.content?.trim();
-          const responseText = modelText && modelText.length > 0
-            ? modelText
-            : `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[model empty] Cloud provider returned no content. Local error: ${localErrorMessage}`;
-
-          return {
-            memberId: member.id,
-            memberName: member.name,
-            response: responseText,
-            provider: 'z.ai',
-            isStatusCheck: false,
-            timestamp: new Date().toISOString()
-          };
-        } catch (cloudError) {
-          const cloudErrorMessage = cloudError instanceof Error ? cloudError.message : 'Model unavailable';
-          return {
-            memberId: member.id,
-            memberName: member.name,
-            response: `${generateLocalFallbackReply(member.id, member.name, message)}\n\n[offline fallback] Local degraded: ${localErrorMessage}. Cloud degraded: ${cloudErrorMessage}`,
-            provider: 'offline',
-            isStatusCheck: false,
-            offline: true,
-            timestamp: new Date().toISOString()
-          };
-        }
+        return {
+          ...generateOfflineResponse(member.id, member.name, localErrorMessage),
+          diagnostics: { mode: 'self-sufficient-local-only' }
+        };
       }
     };
 
