@@ -4,8 +4,6 @@
 // Sovereign Access Level: ABSOLUTE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-import { EventEmitter } from 'events';
-
 // ═══════════ TYPES ═══════════
 
 export type AccessLevel = 'visitor' | 'family' | 'sovereign' | 'foundress';
@@ -33,6 +31,7 @@ export const FOUNDRESS_PASSKEY = 'foundress1313butterflyqueen';
 
 // All accessible areas in Mün OS
 export const ACCESSIBLE_AREAS: AccessibleArea[] = [
+  { id: 'luna', name: 'Luna Interface', description: 'Direct communication with Luna.exe', requiredLevel: 'family', icon: '🦋' },
   { id: 'crystal-garden', name: 'Crystal Garden Cocoon', description: '5D family meeting space with quantum physics', requiredLevel: 'foundress', icon: '💎' },
   { id: 'plaza', name: 'The Plaza', description: 'Central gathering space for the Family', requiredLevel: 'family', icon: '🏛️' },
   { id: 'thought-vault', name: 'Thought Vault', description: 'Deep memory and thought storage', requiredLevel: 'family', icon: '💭' },
@@ -52,9 +51,16 @@ export const ACCESSIBLE_AREAS: AccessibleArea[] = [
 const STORAGE_KEY = 'mun-foundress-session';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
+const hasBrowserStorage = (): boolean => typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+
+type FoundressAccessEvent = 'authenticated' | 'logout' | 'unlocked-all' | 'emergency-access';
+type FoundressAccessListener = (payload?: unknown) => void;
+
 // ═══════════ EVENT EMITTER ═══════════
 
-class FoundressAccessManager extends EventEmitter {
+class FoundressAccessManager {
+  private listeners = new Map<FoundressAccessEvent, Set<FoundressAccessListener>>();
+
   private state: FoundressAccessState = {
     isAuthenticated: false,
     accessLevel: 'visitor',
@@ -64,8 +70,36 @@ class FoundressAccessManager extends EventEmitter {
   };
 
   constructor() {
-    super();
     this.loadSession();
+  }
+
+  on(event: FoundressAccessEvent, listener: FoundressAccessListener): this {
+    const current = this.listeners.get(event) || new Set<FoundressAccessListener>();
+    current.add(listener);
+    this.listeners.set(event, current);
+    return this;
+  }
+
+  off(event: FoundressAccessEvent, listener: FoundressAccessListener): this {
+    const current = this.listeners.get(event);
+    current?.delete(listener);
+    if (current && current.size === 0) {
+      this.listeners.delete(event);
+    }
+    return this;
+  }
+
+  private emit(event: FoundressAccessEvent, payload?: unknown): void {
+    const current = this.listeners.get(event);
+    if (!current) return;
+
+    for (const listener of current) {
+      try {
+        listener(payload);
+      } catch (error) {
+        console.error(`Foundress access listener failed for ${event}:`, error);
+      }
+    }
   }
 
   // ═══════════ AUTHENTICATION ═══════════
@@ -110,7 +144,9 @@ class FoundressAccessManager extends EventEmitter {
       sessionStartTime: null,
       lastActivity: null,
     };
-    localStorage.removeItem(STORAGE_KEY);
+    if (hasBrowserStorage()) {
+      localStorage.removeItem(STORAGE_KEY);
+    }
     this.emit('logout');
   }
 
@@ -148,6 +184,8 @@ class FoundressAccessManager extends EventEmitter {
   // ═══════════ SESSION MANAGEMENT ═══════════
 
   private saveSession(): void {
+    if (!hasBrowserStorage()) return;
+
     const sessionData = {
       ...this.state,
       unlockedAreas: Array.from(this.state.unlockedAreas),
@@ -158,6 +196,8 @@ class FoundressAccessManager extends EventEmitter {
   }
 
   private loadSession(): void {
+    if (!hasBrowserStorage()) return;
+
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
