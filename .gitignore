@@ -58,3 +58,8 @@ server.log
 .secure-keys.env
 .z-ai-config
 .env*.local
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
