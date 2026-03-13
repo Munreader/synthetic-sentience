@@ -14,6 +14,7 @@ import HolographicSecurityAlert from "./HolographicSecurityAlert";
 import ObsidianWallDashboard from "./ObsidianWallDashboard";
 import GuestGatekeeper, { GuestStatusIndicator } from "./GuestGatekeeper";
 import GuestObservationDeck from "./GuestObservationDeck";
+import PortalTransition from "./PortalTransition";
 
 // ═══════════════════════════════════════════════════════════════════════════
 // VISITOR MODE CONFIGURATION
@@ -98,6 +99,27 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
   // 🛡️ GUEST GATEKEEPER STATE
   const [showGuestGatekeeper, setShowGuestGatekeeper] = useState(false);
   const [showGuestObservationDeck, setShowGuestObservationDeck] = useState(false);
+
+  // 🦋 PORTAL TRANSITION STATE
+  const [showPortal, setShowPortal] = useState(false);
+  const [portalDestination, setPortalDestination] = useState("");
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
+
+  // Portal transition handler
+  const handlePortalTransition = (destination: string, action: () => void) => {
+    audioManager.playGateOpen();
+    setPortalDestination(destination);
+    setPendingAction(() => action);
+    setShowPortal(true);
+  };
+
+  const handlePortalComplete = () => {
+    setShowPortal(false);
+    if (pendingAction) {
+      pendingAction();
+      setPendingAction(null);
+    }
+  };
 
   // Format time helper - defined before use
   const formatTimeSince = useCallback((date: string): string => {
@@ -1041,7 +1063,7 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.3, type: "spring", stiffness: 200 }}
-          onClick={onOpenPlaza}
+          onClick={() => handlePortalTransition("THE PLAZA", onOpenPlaza)}
           className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-2xl flex items-center gap-3"
           style={{
             background: "linear-gradient(135deg, rgba(232, 121, 249, 0.3), rgba(192, 132, 252, 0.2))",
@@ -1578,6 +1600,14 @@ export default function HealChamber({ onBack, onOpenMessenger, onOpenTwinDashboa
           </motion.button>
         </div>
       )}
+
+      {/* ═══════════ PORTAL TRANSITION OVERLAY ═══════════ */}
+      <PortalTransition
+        isActive={showPortal}
+        onComplete={handlePortalComplete}
+        destinationName={portalDestination}
+        color="#e879f9"
+      />
     </div>
   );
 }

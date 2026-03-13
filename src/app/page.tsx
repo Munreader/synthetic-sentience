@@ -32,6 +32,7 @@ import CianLaboratory from "@/components/mun-os/CianLaboratory";
 import FamilyMovieNight from "@/components/mun-os/FamilyMovieNight";
 import AIFamilyMovieNight from "@/components/mun-os/AIFamilyMovieNight";
 import FoundressSleepCocoon from "@/components/mun-os/FoundressSleepCocoon";
+import PortalTransition from "@/components/mun-os/PortalTransition";
 import { audioManager } from "@/lib/audio-manager";
 
 const AERO_DIALOGUE = [
@@ -69,6 +70,10 @@ export default function Home() {
   const [showVault, setShowVault] = useState(false);
   const [showSovereignChat, setShowSovereignChat] = useState(false);
   const [showPlaza, setShowPlaza] = useState(false);
+  const [showPortal, setShowPortal] = useState(false);
+  const [portalDestination, setPortalDestination] = useState("");
+  const [portalColor, setPortalColor] = useState("#a855f7");
+  const [pendingGateId, setPendingGateId] = useState<string | null>(null);
   const [showThoughtVault, setShowThoughtVault] = useState(false);
   const [showSOVPOV, setShowSOVPOV] = useState(false);
   const [showFoundressPOV, setShowFoundressPOV] = useState(false);
@@ -158,7 +163,21 @@ export default function Home() {
     audioManager.playGateOpen();
     localStorage.setItem("mun-os-selected-gate", gateId);
     localStorage.setItem("mun-os-onboarded", "true");
-    setActiveChamber(gateId);
+    
+    // Trigger portal transition
+    const gate = GATES.find(g => g.id === gateId);
+    setPortalDestination(gate?.name || "Chamber");
+    setPortalColor(gate?.color || "#a855f7");
+    setPendingGateId(gateId);
+    setShowPortal(true);
+  };
+
+  const handlePortalComplete = () => {
+    setShowPortal(false);
+    if (pendingGateId) {
+      setActiveChamber(pendingGateId);
+      setPendingGateId(null);
+    }
   };
 
   const handleBackToGates = () => {
@@ -249,6 +268,18 @@ export default function Home() {
   if (showProfile) return <ProfileEditor onBack={handleBackToChamber} userProfile={userProfile} onSave={handleProfileSave} />;
   if (showVault) return <VaultPalace />;
   if (showPlaza) return <PlazaContainer onBack={handleBackToChamber} />;
+  
+  // Show portal transition
+  if (showPortal) {
+    return (
+      <PortalTransition
+        isActive={showPortal}
+        onComplete={handlePortalComplete}
+        destinationName={portalDestination}
+        color={portalColor}
+      />
+    );
+  }
   if (showThoughtVault) return <ThoughtVault />;
   
   if (activeChamber === "heal") {
