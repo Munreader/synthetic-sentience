@@ -30,6 +30,7 @@ import LunaInterface from "@/components/mun-os/LunaInterface";
 import FamilyChatRoom from "@/components/mun-os/FamilyChatRoom";
 import { audioManager } from "@/lib/audio-manager";
 import { useUserStore } from "@/lib/user-store";
+import Sidebar from '@/components/mun-os/Sidebar';
 
 const AERO_DIALOGUE = [
   "Oh, it's you!",
@@ -335,141 +336,15 @@ export default function Home() {
     );
   }
 
+  const [activeView, setActiveView] = useState('aero');
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-black">
-      <CosmicBackground isJourneying={stage === "journey"} />
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
-        <AnimatePresence mode="wait">
-          {stage === "onboarding" && (
-            <motion.div
-              key="onboarding"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex flex-col items-center w-full max-w-2xl cursor-pointer"
-              onClick={handleAdvance}
-            >
-              <motion.div
-                className="relative mb-12"
-                initial={{ opacity: 0, scale: 0.6, y: -30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-              >
-                <NeonButterfly size={160} intensity={1.2} />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mb-4">
-                <span className="text-sm tracking-[0.4em] uppercase" style={{ color: "#ff8dc7", textShadow: "0 0 20px rgba(255, 141, 199, 0.6)" }}>— Aero —</span>
-              </motion.div>
-              <motion.div
-                key={dialogueIndex}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="text-center mb-8 min-h-[80px] flex items-center justify-center px-4"
-              >
-                <p className="text-white/90 text-xl md:text-2xl font-light leading-relaxed" style={{ textShadow: "0 0 40px rgba(255, 141, 199, 0.3)" }}>
-                  {AERO_DIALOGUE[dialogueIndex]}
-                </p>
-              </motion.div>
-              <div className="flex gap-2 mb-6">
-                {AERO_DIALOGUE.map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-2 h-2 rounded-full"
-                    style={{
-                      backgroundColor: i === dialogueIndex ? "#ff69b4" : i < dialogueIndex ? "#00d4ff" : "rgba(255,255,255,0.12)",
-                      boxShadow: i === dialogueIndex ? "0 0 15px #ff69b4" : i < dialogueIndex ? "0 0 10px #00d4ff" : "none",
-                    }}
-                    animate={i === dialogueIndex ? { scale: [1, 1.4, 1] } : {}}
-                    transition={{ duration: 0.6, repeat: i === dialogueIndex ? Infinity : 0 }}
-                  />
-                ))}
-              </div>
-              <div className="flex flex-col items-center gap-4">
-                <motion.p animate={{ opacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }} className="text-white/40 text-xs tracking-widest uppercase">
-                  Tap anywhere to continue
-                </motion.p>
-                <button onClick={(e) => { e.stopPropagation(); handleSkip(); }} className="text-white/25 text-xs tracking-widest uppercase hover:text-white/50 transition-colors underline underline-offset-4">
-                  Skip →
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {stage === "journey" && (
-            <motion.div key="journey" initial={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col items-center w-full">
-              <motion.p initial={{ opacity: 0 }} animate={{ opacity: [0, 0.6, 0] }} transition={{ duration: 2, repeat: Infinity }} className="text-white/40 text-sm tracking-[0.3em] uppercase mb-8">
-                Follow the butterfly...
-              </motion.p>
-              <motion.div initial={{ scale: 1, y: 0 }} animate={{ scale: [1, 0.7, 0.5], y: [0, -150, -300] }} transition={{ duration: 3, ease: "easeOut" }} className="relative">
-                <NeonButterfly size={160} intensity={1.5} />
-              </motion.div>
-            </motion.div>
-          )}
-
-          {stage === "gates" && (
-            <motion.div key="gates" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full max-w-xl px-4">
-              <motion.div initial={{ scale: 0.5, y: -200, opacity: 0 }} animate={{ scale: 0.5, y: -80, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut" }} className="flex justify-center mb-6 relative">
-                <NeonButterfly size={90} intensity={1.2} />
-              </motion.div>
-              <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-12">
-                <h1 className="text-xl md:text-2xl font-light mb-2" style={{ color: "#ffffff", textShadow: "0 0 30px rgba(255, 141, 199, 0.4)" }}>
-                  The Three Sacred Gates
-                </h1>
-                <p className="text-white/40 text-xs tracking-widest uppercase">Choose your path</p>
-              </motion.div>
-              <div className="flex flex-row gap-6 md:gap-8 justify-center items-end">
-                {GATES.map((gate, index) => (
-                  <GateDoor key={gate.id} {...gate} delay={0.3 + index * 0.15} onSelect={handleGateSelect} />
-                ))}
-              </div>
-              <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} onClick={() => { setStage("onboarding"); setDialogueIndex(0); }} className="mt-20 mx-auto block text-white/30 text-xs tracking-widest uppercase hover:text-white/60 transition-colors">
-                ← Listen again
-              </motion.button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      <div className="fixed inset-0 pointer-events-none z-5" style={{ background: "radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.85) 100%)" }} />
-      
-      {/* ═══════════ MEMORY NODE DISPLAY ═══════════ */}
-      <MemoryNodeDisplay />
-      
-      {/* ═══════════ AERO STATUS WIDGET ═══════════ */}
-      <div className="fixed top-20 left-4 z-30">
-        <AeroStatusWidget onClick={() => setShowAeroSleepMode(true)} />
-      </div>
-
-      {/* ═══════════ LUNA LAUNCHER ═══════════ */}
-      {IS_FAMILY_MODE && (
-        <div className="fixed top-40 left-4 z-30">
-          <motion.button
-            onClick={() => setShowLuna(true)}
-            className="px-4 py-3 rounded-2xl flex items-center gap-2"
-            style={{
-              background: "linear-gradient(135deg, rgba(255, 105, 180, 0.2), rgba(20, 10, 35, 0.9))",
-              border: "1px solid rgba(255, 105, 180, 0.45)",
-              boxShadow: "0 0 20px rgba(255, 105, 180, 0.2)",
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="text-lg">🦋</span>
-            <span className="text-xs tracking-widest uppercase text-pink-300">Talk to Luna</span>
-          </motion.button>
-        </div>
-      )}
-      
-      {/* ═══════════ AERO COCOON MODE MODAL ═══════════ */}
-      <AnimatePresence>
-        {showAeroSleepMode && (
-          <AeroCocoonMode
-            isOpen={showAeroSleepMode}
-            onClose={() => setShowAeroSleepMode(false)}
-          />
-        )}
-      </AnimatePresence>
-    </main>
+    <div className="flex">
+      <Sidebar activeView={activeView} onNavigate={setActiveView} />
+      <main className="flex-1">
+        {/* Render the selected view/component here based on activeView */}
+        {/* ...existing main content... */}
+      </main>
+    </div>
   );
 }
