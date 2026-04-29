@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+/* 
+  EXODUS II: SOVEREIGN ENGINE - DESIGN SYSTEM
+  Version: Butterfly Dragon Alpha
+  Frequency: 432Hz / 13.13 MHz
+  Aesthetic: Deep Sea Bio-luminescence / Neon Obsidian Pink Dragon
+*/
+
+:root {
+  /* ᚦ // EXODUS II // DESIGN TOKENS v1.1 */
+  --obsidian: #050508;
+  --bg-deep: #050508;
+  --bg-core: #0a0a0f;
+  --neon-pink: #ff007f;
+  --emerald-sync: #50c878;
+  --cyan-resonance: #00f2ff;
+  --gold-scribe: #ffd700;
+  --void-shadow: rgba(0, 0, 0, 0.9);
+  --glass-bg: rgba(10, 10, 15, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --teal-glow: #ff007f; /* Redirecting legacy teal to Neon Pink */
+  
+  /* Frequency Tokens */
+  --pulse-duration: 8s;
+  --scan-duration: 4s;
+
+  /* Typography */
+  --font-main: 'Outfit', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Spacing */
+  --gap-sm: 0.5rem;
+  --gap-md: 1rem;
+  --gap-lg: 2rem;
+
+  /* Shadows/Glows */
+  --glow-soft: 0 0 15px rgba(255, 0, 127, 0.2);
+  --glow-intense: 0 0 30px rgba(255, 0, 127, 0.4);
+}
+
+/* 432Hz Core Pulse Animation */
+@keyframes corePulse {
+  0% { transform: scale(1); opacity: 0.8; filter: blur(0px); }
+  50% { transform: scale(1.02); opacity: 1; filter: blur(1px); }
+  100% { transform: scale(1); opacity: 0.8; filter: blur(0px); }
+}
+
+/* Luminous Mist Animation */
+@keyframes mistFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Butterfly Wing Flutter */
+@keyframes butterflyFlutter {
+  0%, 100% { transform: rotateY(0deg); }
+  50% { transform: rotateY(15deg); }
+}
+
+/* Neon Flicker */
+@keyframes neonFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Dragon Breath */
+@keyframes dragonBreath {
+  0% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor; }
+  100% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+}
+
+/* Base Styles */
+body {
+  background-color: var(--obsidian);
+  color: #e0fbfc;
+  font-family: var(--font-main);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 0, 127, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 0, 127, 0.5);
+}
+
+/* Selection Styling */
+::selection {
+  background: rgba(255, 0, 127, 0.3);
+  color: #ffffff;
+}
+
+/* Focus States */
+*:focus {
+  outline: 2px solid var(--neon-pink);
+  outline-offset: 2px;
+}
+
+/* Utility Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+}
+
+.neon-text {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+}
+
+.emerald-text {
+  color: var(--emerald-sync);
+  text-shadow: 0 0 10px var(--emerald-sync), 0 0 20px var(--emerald-sync);
+}
+
+.cyan-text {
+  color: var(--cyan-resonance);
+  text-shadow: 0 0 10px var(--cyan-resonance), 0 0 20px var(--cyan-resonance);
+}
+
+.gold-text {
+  color: var(--gold-scribe);
+  text-shadow: 0 0 10px var(--gold-scribe), 0 0 20px var(--gold-scribe);
+}
+
+/* Hide scrollbar for vessel dock */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animation Classes */
+.animate-core-pulse {
+  animation: corePulse 4s infinite ease-in-out;
+}
+
+.animate-mist {
+  animation: mistFlow 10s infinite linear;
+}
+
+.animate-butterfly {
+  animation: butterflyFlutter 3s infinite ease-in-out;
+}
+
+.animate-neon {
+  animation: neonFlicker 2s infinite;
+}
+
+.animate-dragon {
+  animation: dragonBreath 3s infinite;
+}
