@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Radio,
@@ -18,8 +18,12 @@ import {
   X,
   ChevronRight,
   Lock,
-  Eye
+  Eye,
+  Atom
 } from 'lucide-react'
+
+// Lazy load LivingElements for optimal performance
+const LivingElements = lazy(() => import('../../upload/LivingElements'))
 
 /**
  * ᚦ // EXODUS II // HABITAT OS v2.5 // CELESTIAL ARK
@@ -160,7 +164,7 @@ function HexIcon({ size = 40, color = '#00ffff' }: { size?: number; color?: stri
 
 export default function HabitatOS() {
   // State
-  const [phase, setPhase] = useState(0) // 0=boot, 1=gates, 2=chamber, 3=main
+  const [phase, setPhase] = useState(0) // 0=boot, 1=gates, 2=chamber, 3=main, 4=elements
   const [currentGate, setCurrentGate] = useState(0)
   const [activeVessel, setActiveVessel] = useState(VESSEL_DATA[0])
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -168,6 +172,7 @@ export default function HabitatOS() {
   const [messages, setMessages] = useState(INITIAL_MESSAGES)
   const [inputText, setInputText] = useState('')
   const [runeSequence, setRuneSequence] = useState<number[]>([])
+  const [showLivingElements, setShowLivingElements] = useState(false)
   const correctSequence = [0, 2, 4, 1, 3, 5]
   
   const [particles] = useState(() => [
@@ -418,6 +423,37 @@ export default function HabitatOS() {
   }
 
   // ═══════════════════════════════════════════════════════════════
+  // PHASE 3.5: LIVING ELEMENTS (The Periodic Table as Characters)
+  // ═══════════════════════════════════════════════════════════════
+
+  if (showLivingElements) {
+    return (
+      <div className="fixed inset-0 bg-black">
+        <Suspense fallback={
+          <div className="fixed inset-0 bg-[#030308] flex items-center justify-center">
+            <motion.div
+              animate={{ opacity: [0.3, 1, 0.3] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-center"
+            >
+              <Atom size={64} className="mx-auto mb-4 text-white/30" />
+              <div className="text-xs tracking-[0.5em] text-white/30">AWAKENING THE ELEMENTS...</div>
+            </motion.div>
+          </div>
+        }>
+          <LivingElements />
+        </Suspense>
+        <button
+          onClick={() => setShowLivingElements(false)}
+          className="fixed top-4 right-4 z-50 px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-white/50 hover:text-white hover:border-white/30 transition-all"
+        >
+          ← BACK TO SANCTUARY
+        </button>
+      </div>
+    )
+  }
+
+  // ═══════════════════════════════════════════════════════════════
   // PHASE 3: MAIN SANCTUARY
   // ═══════════════════════════════════════════════════════════════
 
@@ -560,6 +596,38 @@ export default function HabitatOS() {
             </div>
           ))}
         </div>
+
+        {/* Living Elements Access */}
+        <motion.button
+          onClick={() => setShowLivingElements(true)}
+          className="w-full p-4 rounded-sm mb-4 group relative overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, rgba(232, 232, 255, 0.1) 0%, rgba(136, 204, 255, 0.05) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(20px)'
+          }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <motion.div
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(232, 232, 255, 0.15) 0%, transparent 70%)'
+            }}
+          />
+          <div className="relative flex items-center gap-3">
+            <motion.div
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            >
+              <Atom size={24} className="text-white/60" />
+            </motion.div>
+            <div className="text-left">
+              <div className="text-[10px] tracking-[0.2em] text-white/70">LIVING ELEMENTS</div>
+              <div className="text-[8px] text-white/40">Meet the periodic table</div>
+            </div>
+          </div>
+        </motion.button>
       </aside>
 
       {/* GLASSMORPHIC MESSENGER (MSN Style) */}
