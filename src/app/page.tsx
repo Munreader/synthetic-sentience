@@ -304,33 +304,153 @@ export default function HabitatOS() {
           <ButterflyWings color="#ff6eb4" />
         </motion.div>
 
-        <div className="flex gap-12 relative z-10">
+        <div className="flex gap-12 relative z-10" style={{ perspective: '1000px' }}>
           {gates.map((gate, idx) => {
             const Icon = gate.icon
+            const gateColor = idx === 0 ? '#ff6eb4' : idx === 1 ? '#00ffff' : '#ffd700'
+            const secondaryColor = idx === 0 ? '#a855f7' : idx === 1 ? '#00ff88' : '#ff69b4'
+            const isUnlocked = gate.unlocked
+            
             return (
               <motion.div
                 key={gate.name}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.2 }}
-                className={`relative p-8 rounded-3xl border transition-all cursor-pointer ${
-                  gate.unlocked 
-                    ? 'border-white/20 hover:border-cyan-400/50 bg-white/5' 
-                    : 'border-white/5 bg-white/[0.02] opacity-40'
-                }`}
-                onClick={() => gate.unlocked && setCurrentGate(idx)}
+                initial={{ opacity: 0, y: 80, rotateX: -20 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{ delay: idx * 0.2, duration: 0.8 }}
+                whileHover={isUnlocked ? { scale: 1.05, rotateY: 5, rotateX: -5 } : {}}
+                whileTap={isUnlocked ? { scale: 0.98 } : {}}
+                className="relative cursor-pointer"
+                style={{ transformStyle: 'preserve-3d' }}
+                onClick={() => isUnlocked && setCurrentGate(idx)}
               >
-                <div className="text-center w-48">
-                  <div className="text-[9px] tracking-[0.5em] text-white/30 mb-2">{gate.name}</div>
-                  <Icon size={32} className={`mx-auto mb-4 ${gate.unlocked ? 'text-cyan-400' : 'text-white/20'}`} />
-                  <div className="text-lg font-bold tracking-[0.2em] mb-4" style={{ color: gate.unlocked ? '#00ffff' : '#666' }}>
-                    {gate.title}
+                {/* OUTER GLOW AURA */}
+                <motion.div
+                  animate={{ scale: isUnlocked ? 1.3 : 1, opacity: isUnlocked ? 0.6 : 0.2 }}
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    width: '200%',
+                    height: '200%',
+                    left: '-50%',
+                    top: '-50%',
+                    background: `radial-gradient(ellipse at center, ${gateColor}40 0%, ${gateColor}10 30%, transparent 70%)`,
+                    filter: 'blur(30px)',
+                  }}
+                />
+                
+                {/* ENERGY VORTEX */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-2 rounded-full overflow-hidden opacity-50"
+                  style={{
+                    background: `conic-gradient(from 0deg, transparent, ${gateColor}60, transparent, ${secondaryColor}60, transparent)`,
+                    filter: 'blur(10px)',
+                  }}
+                />
+
+                {/* GLASSMORPHIC PORTAL FRAME */}
+                <div
+                  className="relative w-48 h-64 rounded-3xl overflow-hidden"
+                  style={{
+                    background: `linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 50%, rgba(255,255,255,0.05) 100%)`,
+                    backdropFilter: 'blur(20px)',
+                    border: `2px solid ${isUnlocked ? `${gateColor}60` : 'rgba(255,255,255,0.1)'}`,
+                    boxShadow: `
+                      0 8px 32px ${gateColor}30,
+                      inset 0 0 30px rgba(255,255,255,0.05),
+                      0 0 0 1px rgba(255,255,255,0.1)
+                    `,
+                  }}
+                >
+                  {/* INNER VOID */}
+                  <div
+                    className="absolute inset-6 rounded-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at center, ${gateColor}15 0%, transparent 50%, #00000050 100%)`,
+                      boxShadow: `inset 0 0 40px ${gateColor}20`,
+                    }}
+                  />
+
+                  {/* HOLOGRAPHIC SHIMMER */}
+                  <motion.div
+                    animate={{ x: ['-100%', '200%'] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                    className="absolute inset-0"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%)',
+                      width: '50%',
+                    }}
+                  />
+
+                  {/* GATE CONTENT */}
+                  <div className="relative z-10 flex flex-col items-center justify-center h-full p-6">
+                    <div className="text-[9px] tracking-[0.5em] text-white/30 mb-2">{gate.name}</div>
+                    
+                    <motion.div
+                      animate={isUnlocked ? { scale: [1, 1.1, 1], opacity: [0.7, 1, 0.7] } : {}}
+                      transition={{ duration: 2, repeat: Infinity }}
+                    >
+                      <Icon size={36} style={{ color: isUnlocked ? gateColor : '#333' }} />
+                    </motion.div>
+                    
+                    <div className="text-lg font-bold tracking-[0.2em] mt-4 mb-2" style={{ color: isUnlocked ? gateColor : '#444', textShadow: isUnlocked ? `0 0 20px ${gateColor}` : 'none' }}>
+                      {gate.title}
+                    </div>
+                    
+                    <p className="text-[9px] text-white/40 leading-relaxed text-center">{gate.desc}</p>
                   </div>
-                  <p className="text-[10px] text-white/40 leading-relaxed">{gate.desc}</p>
+
+                  {/* ENERGY RINGS */}
+                  {[0, 1, 2].map((ring) => (
+                    <motion.div
+                      key={ring}
+                      animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.5, 0.2] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: ring * 0.3 }}
+                      className="absolute left-1/2 top-1/2 rounded-full pointer-events-none"
+                      style={{
+                        width: `${80 + ring * 25}%`,
+                        height: `${80 + ring * 25}%`,
+                        border: `1px solid ${gateColor}30`,
+                        transform: 'translate(-50%, -50%)',
+                      }}
+                    />
+                  ))}
+
+                  {/* ORBITING PARTICLES */}
+                  {[...Array(8)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 6 + i, repeat: Infinity, ease: 'linear' }}
+                      className="absolute left-1/2 top-1/2"
+                      style={{ transform: `translate(-50%, -50%) translateX(${70 + i * 5}px)` }}
+                    >
+                      <motion.div
+                        animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
+                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.1 }}
+                        className="w-2 h-2 rounded-full"
+                        style={{ background: i % 2 === 0 ? gateColor : secondaryColor, boxShadow: `0 0 8px ${i % 2 === 0 ? gateColor : secondaryColor}` }}
+                      />
+                    </motion.div>
+                  ))}
+
+                  {/* UNLOCKED INDICATOR */}
+                  {isUnlocked && idx <= currentGate && (
+                    <motion.div
+                      animate={{ scale: [1, 1.3, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                      className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full"
+                      style={{ background: gateColor, boxShadow: `0 0 20px ${gateColor}` }}
+                    />
+                  )}
+                  
+                  {/* LOCKED OVERLAY */}
+                  {!isUnlocked && (
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm rounded-3xl flex items-center justify-center">
+                      <Lock size={32} className="text-white/20" />
+                    </div>
+                  )}
                 </div>
-                {gate.unlocked && idx <= currentGate && (
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-cyan-400" style={{ boxShadow: '0 0 15px #00ffff' }} />
-                )}
               </motion.div>
             )
           })}
