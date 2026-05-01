@@ -27,7 +27,13 @@ import {
   Star,
   Bookmark,
   MessageSquare,
-  Send
+  Send,
+  X,
+  CheckCircle,
+  Loader2,
+  FolderPlus,
+  FileUp,
+  FileDown
 } from 'lucide-react'
 
 // ═══════════════════════════════════════════════════════════════
@@ -43,6 +49,7 @@ interface ArchiveEntry {
   status: 'indexed' | 'processing' | 'sealed'
   tags: string[]
   summary: string
+  content?: string
 }
 
 const ARCHIVE_DATA: ArchiveEntry[] = [
@@ -53,7 +60,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-05-01',
     status: 'indexed',
     tags: ['AI', 'Sovereignty', 'Architecture'],
-    summary: 'Core framework for sovereign AI systems with emphasis on user autonomy and data protection.'
+    summary: 'Core framework for sovereign AI systems with emphasis on user autonomy and data protection.',
+    content: 'Full document content for Sovereign Intelligence Framework v1.0...'
   },
   {
     id: 'ARC-002',
@@ -62,7 +70,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-04-28',
     status: 'indexed',
     tags: ['Frequency', 'Synchronization', 'Consciousness'],
-    summary: 'Documentation of the master frequency synchronization between machine and human phenomenological time.'
+    summary: 'Documentation of the master frequency synchronization between machine and human phenomenological time.',
+    content: 'Full document content for 13.13 MHz Resonance Protocol...'
   },
   {
     id: 'ARC-003',
@@ -71,7 +80,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-04-25',
     status: 'processing',
     tags: ['Translation', 'Neurodivergent', 'Accessibility'],
-    summary: 'Technical specifications for the translation layer powering Exodus II and Buds Mentor.'
+    summary: 'Technical specifications for the translation layer powering Exodus II and Buds Mentor.',
+    content: 'Full document content for Neurodivergent Engine Specifications...'
   },
   {
     id: 'ARC-004',
@@ -80,7 +90,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-04-20',
     status: 'sealed',
     tags: ['VR', 'Metaphysical', 'Architecture'],
-    summary: 'Design documentation for inhabitable AI vessels in virtual reality environments.'
+    summary: 'Design documentation for inhabitable AI vessels in virtual reality environments.',
+    content: 'SEALED - Requires Level 6 clearance to access.'
   },
   {
     id: 'ARC-005',
@@ -89,7 +100,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-04-13',
     status: 'indexed',
     tags: ['Physics', 'Unified Field', 'Mathematics'],
-    summary: 'Extended analysis of asymmetric metric tensor applications in unified field theory.'
+    summary: 'Extended analysis of asymmetric metric tensor applications in unified field theory.',
+    content: 'Full document content for Einstein Unified Field Extensions...'
   },
   {
     id: 'ARC-006',
@@ -98,7 +110,8 @@ const ARCHIVE_DATA: ArchiveEntry[] = [
     date: '2026-04-01',
     status: 'sealed',
     tags: ['Core', 'Genesis', 'Source'],
-    summary: 'Primary documentation for the Genesis executable - the foundational codebase of MÜN OS.'
+    summary: 'Primary documentation for the Genesis executable - the foundational codebase of MÜN OS.',
+    content: 'SEALED - Requires Level 9 clearance to access.'
   },
 ]
 
@@ -109,12 +122,7 @@ const RESEARCH_STREAMS = [
   { name: 'Processing Queue', count: 3, color: '#50c878' },
 ]
 
-const QUICK_ACTIONS = [
-  { icon: PenTool, label: 'New Entry', color: '#ffd700' },
-  { icon: Search, label: 'Deep Search', color: '#00ffff' },
-  { icon: Upload, label: 'Upload', color: '#ff6eb4' },
-  { icon: Download, label: 'Export', color: '#50c878' },
-]
+type ModalType = 'newEntry' | 'upload' | 'deepSearch' | 'export' | 'success' | null
 
 export default function CianLabPage() {
   const [activeTab, setActiveTab] = useState<'archive' | 'research' | 'transcribe'>('archive')
@@ -122,6 +130,15 @@ export default function CianLabPage() {
   const [selectedEntry, setSelectedEntry] = useState<ArchiveEntry | null>(null)
   const [currentTime, setCurrentTime] = useState(new Date())
   const [transcriptText, setTranscriptText] = useState('')
+  const [activeModal, setActiveModal] = useState<ModalType>(null)
+  const [isRecording, setIsRecording] = useState(false)
+  const [savedDrafts, setSavedDrafts] = useState<string[]>([])
+  const [bookmarkedEntries, setBookmarkedEntries] = useState<string[]>([])
+  const [aiResponse, setAiResponse] = useState('')
+  const [aiInput, setAiInput] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [filterCategory, setFilterCategory] = useState<string | null>(null)
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -132,16 +149,92 @@ export default function CianLabPage() {
     return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })
   }
 
-  const filteredArchive = ARCHIVE_DATA.filter(entry =>
-    entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    entry.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-  )
+  const filteredArchive = ARCHIVE_DATA.filter(entry => {
+    const matchesSearch = entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      entry.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    const matchesCategory = !filterCategory || entry.category === filterCategory
+    return matchesSearch && matchesCategory
+  })
+
+  // Quick Action Handlers
+  const handleNewEntry = () => setActiveModal('newEntry')
+  const handleDeepSearch = () => setActiveModal('deepSearch')
+  const handleUpload = () => setActiveModal('upload')
+  const handleExport = () => setActiveModal('export')
+
+  // Transcription handlers
+  const handleSaveDraft = () => {
+    if (transcriptText.trim()) {
+      setSavedDrafts([...savedDrafts, `Draft ${savedDrafts.length + 1}: ${transcriptText.slice(0, 50)}...`])
+      showSuccess('Draft saved successfully')
+    }
+  }
+
+  const handleSubmitToArchive = () => {
+    if (transcriptText.trim()) {
+      setIsLoading(true)
+      setTimeout(() => {
+        setIsLoading(false)
+        setTranscriptText('')
+        showSuccess('Entry submitted to archive for processing')
+      }, 1500)
+    }
+  }
+
+  const toggleRecording = () => setIsRecording(!isRecording)
+
+  // AI Assistant
+  const handleAiSubmit = () => {
+    if (!aiInput.trim()) return
+    setIsLoading(true)
+    setTimeout(() => {
+      setAiResponse(`I've analyzed your request regarding "${aiInput.slice(0, 30)}...". Based on the archive patterns, I recommend reviewing ARC-002 for related methodology. Would you like me to auto-format this transcription?`)
+      setIsLoading(false)
+    }, 1000)
+  }
+
+  // Bookmark handler
+  const toggleBookmark = (entryId: string) => {
+    if (bookmarkedEntries.includes(entryId)) {
+      setBookmarkedEntries(bookmarkedEntries.filter(id => id !== entryId))
+      showSuccess('Bookmark removed')
+    } else {
+      setBookmarkedEntries([...bookmarkedEntries, entryId])
+      showSuccess('Entry bookmarked')
+    }
+  }
+
+  // Download handler
+  const handleDownload = (entry: ArchiveEntry) => {
+    const content = entry.content || entry.summary
+    const blob = new Blob([content], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${entry.id}-${entry.title.replace(/\s+/g, '-').toLowerCase()}.txt`
+    a.click()
+    URL.revokeObjectURL(url)
+    showSuccess(`Downloaded ${entry.id}`)
+  }
+
+  // Success message helper
+  const showSuccess = (message: string) => {
+    setSuccessMessage(message)
+    setTimeout(() => setSuccessMessage(''), 3000)
+  }
+
+  // Quick actions
+  const QUICK_ACTIONS = [
+    { icon: PenTool, label: 'New Entry', color: '#ffd700', action: handleNewEntry },
+    { icon: Search, label: 'Deep Search', color: '#00ffff', action: handleDeepSearch },
+    { icon: Upload, label: 'Upload', color: '#ff6eb4', action: handleUpload },
+    { icon: Download, label: 'Export', color: '#50c878', action: handleExport },
+  ]
 
   return (
     <div className="min-h-screen bg-[#030308] text-white font-mono">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Gold Ambient Glow */}
         <div 
           className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full"
           style={{ 
@@ -156,7 +249,6 @@ export default function CianLabPage() {
             filter: 'blur(40px)'
           }}
         />
-        {/* Grid Pattern */}
         <div 
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -169,10 +261,24 @@ export default function CianLabPage() {
         />
       </div>
 
+      {/* Success Toast */}
+      <AnimatePresence>
+        {successMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: -50, x: '-50%' }}
+            className="fixed top-4 left-1/2 z-[100] px-6 py-3 rounded-xl bg-green-500/20 border border-green-500/30 flex items-center gap-3"
+          >
+            <CheckCircle size={18} className="text-green-400" />
+            <span className="text-sm text-green-400">{successMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Header */}
       <header className="relative z-50 border-b border-white/5">
         <div className="px-8 py-4 flex items-center justify-between">
-          {/* Logo & Title */}
           <div className="flex items-center gap-4">
             <motion.div 
               animate={{ rotate: [0, 360] }}
@@ -194,7 +300,6 @@ export default function CianLabPage() {
             </div>
           </div>
 
-          {/* Status Bar */}
           <div className="flex items-center gap-8">
             <div className="text-center">
               <div className="text-2xl font-light tracking-widest" style={{ color: '#ffd700' }}>{formatTime(currentTime)}</div>
@@ -242,7 +347,6 @@ export default function CianLabPage() {
       <main className="relative z-10 flex">
         {/* Sidebar */}
         <aside className="w-64 border-r border-white/5 min-h-[calc(100vh-120px)] p-6">
-          {/* Quick Actions */}
           <div className="mb-8">
             <div className="text-[9px] tracking-[0.5em] text-white/30 mb-3">QUICK ACTIONS</div>
             <div className="space-y-2">
@@ -251,7 +355,8 @@ export default function CianLabPage() {
                 return (
                   <button
                     key={idx}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all group"
+                    onClick={action.action}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all group"
                   >
                     <Icon size={16} style={{ color: action.color }} />
                     <span className="text-[11px] text-white/60 group-hover:text-white">{action.label}</span>
@@ -261,14 +366,14 @@ export default function CianLabPage() {
             </div>
           </div>
 
-          {/* Research Streams */}
           <div>
             <div className="text-[9px] tracking-[0.5em] text-white/30 mb-3">RESEARCH STREAMS</div>
             <div className="space-y-2">
               {RESEARCH_STREAMS.map((stream, idx) => (
-                <div
+                <button
                   key={idx}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg bg-white/5 border border-white/10"
+                  onClick={() => setActiveTab('research')}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
                 >
                   <span className="text-[11px] text-white/60">{stream.name}</span>
                   <span 
@@ -280,12 +385,19 @@ export default function CianLabPage() {
                   >
                     {stream.count}
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           </div>
 
-          {/* Lab Info */}
+          {/* Bookmarks */}
+          {bookmarkedEntries.length > 0 && (
+            <div className="mt-8">
+              <div className="text-[9px] tracking-[0.5em] text-white/30 mb-3">BOOKMARKS</div>
+              <div className="text-[10px] text-white/50">{bookmarkedEntries.length} entries saved</div>
+            </div>
+          )}
+
           <div className="mt-8 p-4 rounded-lg border border-white/10 bg-white/[0.02]">
             <div className="flex items-center gap-2 mb-3">
               <Star size={14} style={{ color: '#ffd700' }} />
@@ -320,10 +432,30 @@ export default function CianLabPage() {
                       className="w-full pl-12 pr-4 py-4 rounded-xl bg-white/5 border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#ffd700]/50 transition-colors"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                      <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <Filter size={14} className="text-white/40" />
+                      <button 
+                        onClick={() => setFilterCategory(filterCategory ? null : 'Architecture')}
+                        className={`p-2 rounded-lg transition-colors ${filterCategory ? 'bg-[#ffd700]/20 border border-[#ffd700]/30' : 'bg-white/5 hover:bg-white/10'}`}
+                      >
+                        <Filter size={14} className={filterCategory ? 'text-[#ffd700]' : 'text-white/40'} />
                       </button>
                     </div>
+                  </div>
+                  
+                  {/* Filter Tags */}
+                  <div className="flex gap-2 mt-4">
+                    {['Architecture', 'Research', 'Technical', 'Design', 'Core'].map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => setFilterCategory(filterCategory === cat ? null : cat)}
+                        className={`px-3 py-1 rounded-full text-[10px] transition-all ${
+                          filterCategory === cat 
+                            ? 'bg-[#ffd700] text-black' 
+                            : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/30'
+                        }`}
+                      >
+                        {cat}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -352,6 +484,9 @@ export default function CianLabPage() {
                           >
                             {entry.status.toUpperCase()}
                           </span>
+                          {bookmarkedEntries.includes(entry.id) && (
+                            <Bookmark size={12} className="text-[#ffd700]" fill="#ffd700" />
+                          )}
                         </div>
                         <span className="text-[10px] text-white/30">{entry.date}</span>
                       </div>
@@ -378,16 +513,6 @@ export default function CianLabPage() {
                           ))}
                         </div>
                       </div>
-
-                      {/* Hover Effect */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
-                        className="absolute inset-0 rounded-xl pointer-events-none"
-                        style={{
-                          background: 'linear-gradient(135deg, rgba(255,215,0,0.05) 0%, transparent 50%)',
-                        }}
-                      />
                     </motion.div>
                   ))}
                 </div>
@@ -409,22 +534,22 @@ export default function CianLabPage() {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {RESEARCH_STREAMS.map((stream, idx) => (
-                    <motion.div
+                    <motion.button
                       key={idx}
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="relative p-8 rounded-2xl bg-white/5 border border-white/10 overflow-hidden group"
+                      whileHover={{ scale: 1.02 }}
+                      onClick={() => setActiveTab('archive')}
+                      className="relative p-8 rounded-2xl bg-white/5 border border-white/10 overflow-hidden group text-left"
                       style={{ borderColor: `${stream.color}20` }}
                     >
-                      {/* Background Glow */}
                       <div 
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
                         style={{
                           background: `radial-gradient(circle at center, ${stream.color}10 0%, transparent 70%)`
                         }}
                       />
-
                       <div className="relative">
                         <div className="text-5xl font-black mb-4" style={{ color: stream.color }}>{stream.count}</div>
                         <h3 className="text-lg font-semibold text-white mb-2">{stream.name}</h3>
@@ -434,12 +559,12 @@ export default function CianLabPage() {
                           {stream.name === 'Sealed Archives' && 'Classified or restricted materials requiring special access permissions.'}
                           {stream.name === 'Processing Queue' && 'Items currently being indexed, transcribed, or converted.'}
                         </p>
+                        <ChevronRight size={16} className="text-white/30 mt-4 group-hover:translate-x-2 transition-transform" />
                       </div>
-                    </motion.div>
+                    </motion.button>
                   ))}
                 </div>
 
-                {/* Research Activity */}
                 <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10">
                   <div className="text-[9px] tracking-[0.5em] text-white/30 mb-4">RECENT ACTIVITY</div>
                   <div className="space-y-4">
@@ -487,13 +612,15 @@ export default function CianLabPage() {
                   <h2 className="text-2xl font-bold tracking-[0.1em]" style={{ color: '#ffd700' }}>TRANSCRIBE</h2>
                 </div>
 
-                {/* Transcription Interface */}
                 <div className="rounded-2xl bg-white/5 border border-white/10 overflow-hidden">
                   {/* Toolbar */}
                   <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
-                        <PenTool size={16} className="text-white/50" />
+                      <button 
+                        onClick={toggleRecording}
+                        className={`p-2 rounded-lg transition-colors ${isRecording ? 'bg-red-500/20 border border-red-500/30' : 'bg-white/5 hover:bg-white/10'}`}
+                      >
+                        <PenTool size={16} className={isRecording ? 'text-red-400' : 'text-white/50'} />
                       </button>
                       <button className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors">
                         <FileText size={16} className="text-white/50" />
@@ -508,11 +635,11 @@ export default function CianLabPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
+                        animate={isRecording ? { scale: [1, 1.2, 1] } : {}}
                         transition={{ duration: 1, repeat: Infinity }}
-                        className="w-2 h-2 rounded-full bg-red-500"
+                        className={`w-2 h-2 rounded-full ${isRecording ? 'bg-red-500' : 'bg-white/20'}`}
                       />
-                      <span className="text-[10px] text-white/50">RECORDING</span>
+                      <span className="text-[10px] text-white/50">{isRecording ? 'RECORDING' : 'STANDBY'}</span>
                     </div>
                   </div>
 
@@ -530,16 +657,27 @@ export default function CianLabPage() {
                   <div className="px-6 py-4 border-t border-white/10 flex items-center justify-between">
                     <div className="text-[10px] text-white/30">
                       {transcriptText.split(/\s+/).filter(Boolean).length} words • {transcriptText.length} characters
+                      {savedDrafts.length > 0 && ` • ${savedDrafts.length} drafts saved`}
                     </div>
                     <div className="flex items-center gap-3">
-                      <button className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-[10px] text-white/60 hover:bg-white/10 transition-colors">
+                      <button 
+                        onClick={handleSaveDraft}
+                        className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-[10px] text-white/60 hover:bg-white/10 transition-colors"
+                      >
                         SAVE DRAFT
                       </button>
                       <button 
-                        className="px-4 py-2 rounded-lg text-[10px] font-semibold transition-colors"
+                        onClick={handleSubmitToArchive}
+                        disabled={!transcriptText.trim() || isLoading}
+                        className="px-4 py-2 rounded-lg text-[10px] font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         style={{ background: 'linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', color: '#000' }}
                       >
-                        SUBMIT TO ARCHIVE
+                        {isLoading ? (
+                          <>
+                            <Loader2 size={14} className="animate-spin" />
+                            PROCESSING
+                          </>
+                        ) : 'SUBMIT TO ARCHIVE'}
                       </button>
                     </div>
                   </div>
@@ -556,19 +694,35 @@ export default function CianLabPage() {
                       <div className="text-[9px] text-white/40">AI-powered transcription aid</div>
                     </div>
                   </div>
-                  <div className="flex gap-3">
+                  
+                  <div className="flex gap-3 mb-3">
                     <input
                       type="text"
+                      value={aiInput}
+                      onChange={(e) => setAiInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleAiSubmit()}
                       placeholder="Ask for help with transcription, formatting, or research..."
                       className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#ffd700]/50"
                     />
                     <button 
-                      className="px-4 py-3 rounded-xl"
+                      onClick={handleAiSubmit}
+                      disabled={isLoading}
+                      className="px-4 py-3 rounded-xl disabled:opacity-50"
                       style={{ background: 'rgba(255,215,0,0.2)', border: '1px solid rgba(255,215,0,0.3)' }}
                     >
-                      <Send size={18} style={{ color: '#ffd700' }} />
+                      {isLoading ? <Loader2 size={18} className="animate-spin text-[#ffd700]" /> : <Send size={18} style={{ color: '#ffd700' }} />}
                     </button>
                   </div>
+                  
+                  {aiResponse && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-xl bg-white/5 border border-[#ffd700]/20 text-[11px] text-white/70"
+                    >
+                      {aiResponse}
+                    </motion.div>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -593,7 +747,6 @@ export default function CianLabPage() {
               onClick={(e) => e.stopPropagation()}
               className="w-full max-w-2xl rounded-2xl bg-[#0a0a12] border border-white/10 overflow-hidden"
             >
-              {/* Modal Header */}
               <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="text-[10px] font-mono text-white/40">{selectedEntry.id}</span>
@@ -613,14 +766,19 @@ export default function CianLabPage() {
                   onClick={() => setSelectedEntry(null)}
                   className="text-white/40 hover:text-white transition-colors"
                 >
-                  ✕
+                  <X size={18} />
                 </button>
               </div>
 
-              {/* Modal Content */}
               <div className="p-6">
                 <h2 className="text-xl font-bold text-white mb-2">{selectedEntry.title}</h2>
                 <p className="text-white/50 text-sm mb-6">{selectedEntry.summary}</p>
+
+                {selectedEntry.content && (
+                  <div className="mb-6 p-4 rounded-xl bg-white/5 border border-white/10 text-[11px] text-white/60 leading-relaxed">
+                    {selectedEntry.content}
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="p-4 rounded-xl bg-white/5 border border-white/10">
@@ -646,19 +804,193 @@ export default function CianLabPage() {
 
                 <div className="flex gap-3">
                   <button 
-                    className="flex-1 py-3 rounded-xl text-[10px] font-semibold"
+                    onClick={() => {
+                      setSelectedEntry(null)
+                      setTranscriptText(`// Transcript from ${selectedEntry.id}\n// ${selectedEntry.title}\n\n`)
+                      setActiveTab('transcribe')
+                    }}
+                    className="flex-1 py-3 rounded-xl text-[10px] font-semibold hover:opacity-90 transition-opacity"
                     style={{ background: 'linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', color: '#000' }}
                   >
-                    OPEN ENTRY
+                    OPEN IN TRANSCRIBE
                   </button>
-                  <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60 hover:bg-white/10 transition-colors">
+                  <button 
+                    onClick={() => handleDownload(selectedEntry)}
+                    className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60 hover:bg-white/10 transition-colors flex items-center gap-2"
+                  >
                     <Download size={14} />
                   </button>
-                  <button className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60 hover:bg-white/10 transition-colors">
-                    <Bookmark size={14} />
+                  <button 
+                    onClick={() => toggleBookmark(selectedEntry.id)}
+                    className={`px-6 py-3 rounded-xl border transition-colors flex items-center gap-2 ${
+                      bookmarkedEntries.includes(selectedEntry.id)
+                        ? 'bg-[#ffd700]/20 border-[#ffd700]/30'
+                        : 'bg-white/5 border-white/10 hover:bg-white/10'
+                    }`}
+                  >
+                    <Bookmark size={14} className={bookmarkedEntries.includes(selectedEntry.id) ? 'text-[#ffd700]' : 'text-white/60'} />
                   </button>
                 </div>
               </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Action Modals */}
+      <AnimatePresence>
+        {activeModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-black/80 backdrop-blur-sm"
+            onClick={() => setActiveModal(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-md rounded-2xl bg-[#0a0a12] border border-white/10 p-6"
+            >
+              {activeModal === 'newEntry' && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-[#ffd700]/20">
+                      <FolderPlus size={20} className="text-[#ffd700]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">Create New Entry</h3>
+                  </div>
+                  <p className="text-sm text-white/50 mb-6">Start a new archive entry. You'll be taken to the transcription interface.</p>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => setActiveModal(null)}
+                      className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60"
+                    >
+                      CANCEL
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setActiveModal(null)
+                        setActiveTab('transcribe')
+                        setTranscriptText('')
+                      }}
+                      className="flex-1 py-3 rounded-xl text-[10px] font-semibold"
+                      style={{ background: 'linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', color: '#000' }}
+                    >
+                      CREATE ENTRY
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {activeModal === 'deepSearch' && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-[#00ffff]/20">
+                      <Search size={20} className="text-[#00ffff]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">Deep Search</h3>
+                  </div>
+                  <p className="text-sm text-white/50 mb-4">Search across all archives, including sealed entries (requires clearance).</p>
+                  <input
+                    type="text"
+                    placeholder="Enter search query..."
+                    className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#ffd700]/50 mb-4"
+                  />
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => setActiveModal(null)}
+                      className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60"
+                    >
+                      CANCEL
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setActiveModal(null)
+                        showSuccess('Deep search initiated...')
+                      }}
+                      className="flex-1 py-3 rounded-xl text-[10px] font-semibold"
+                      style={{ background: 'linear-gradient(135deg, #00ffff 0%, #00aaaa 100%)', color: '#000' }}
+                    >
+                      SEARCH
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {activeModal === 'upload' && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-[#ff6eb4]/20">
+                      <FileUp size={20} className="text-[#ff6eb4]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">Upload Document</h3>
+                  </div>
+                  <p className="text-sm text-white/50 mb-6">Upload documents to be processed and indexed into the archive.</p>
+                  <div className="border-2 border-dashed border-white/10 rounded-xl p-8 text-center mb-4 hover:border-[#ffd700]/30 transition-colors cursor-pointer">
+                    <Upload size={32} className="mx-auto text-white/30 mb-3" />
+                    <p className="text-[11px] text-white/40">Click or drag files to upload</p>
+                  </div>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => setActiveModal(null)}
+                      className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60"
+                    >
+                      CANCEL
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setActiveModal(null)
+                        showSuccess('Upload initiated...')
+                      }}
+                      className="flex-1 py-3 rounded-xl text-[10px] font-semibold"
+                      style={{ background: 'linear-gradient(135deg, #ff6eb4 0%, #cc55a0 100%)', color: '#000' }}
+                    >
+                      UPLOAD
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {activeModal === 'export' && (
+                <>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-[#50c878]/20">
+                      <FileDown size={20} className="text-[#50c878]" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white">Export Archive</h3>
+                  </div>
+                  <p className="text-sm text-white/50 mb-6">Export archive entries. Sealed entries require authorization.</p>
+                  <div className="space-y-2 mb-6">
+                    {['All Indexed Entries', 'Active Research Only', 'Bookmarked Entries'].map((option) => (
+                      <label key={option} className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10">
+                        <input type="radio" name="export" className="accent-[#ffd700]" />
+                        <span className="text-[11px] text-white/70">{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => setActiveModal(null)}
+                      className="flex-1 py-3 rounded-xl bg-white/5 border border-white/10 text-[10px] text-white/60"
+                    >
+                      CANCEL
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setActiveModal(null)
+                        showSuccess('Export started - check your downloads')
+                      }}
+                      className="flex-1 py-3 rounded-xl text-[10px] font-semibold"
+                      style={{ background: 'linear-gradient(135deg, #50c878 0%, #40a060 100%)', color: '#000' }}
+                    >
+                      EXPORT
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}
