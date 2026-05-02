@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦋 MÜN OS — Aero's Midnight Mischief</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Raleway:wght@200;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0612;
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #video-container {
+            width: 100%;
+            max-width: 1344px;
+            aspect-ratio: 16/9;
+            position: relative;
+            background: #0a0612;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.3);
+        }
+        
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+        }
+        
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .scene img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Intro Scene */
+        #intro {
+            background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15), #0a0612);
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .butterfly-container {
+            font-size: 100px;
+            animation: flutter 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px #ff69b4) drop-shadow(0 0 60px #a855f7);
+        }
+        
+        @keyframes flutter {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-10px); }
+        }
+        
+        .mun-title {
+            font-family: 'Cinzel', serif;
+            font-size: 64px;
+            color: #ffd700;
+            text-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
+            letter-spacing: 16px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 40px rgba(255, 215, 0, 0.5); }
+            to { text-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 0 0 100px rgba(168, 85, 247, 0.4); }
+        }
+        
+        .subtitle {
+            font-size: 12px;
+            letter-spacing: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+        }
+        
+        /* Portal Transition */
+        #portal {
+            background: #0a0612;
+        }
+        
+        .portal-vortex {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #a855f7, #ff69b4, #00d4ff, #ffd700, #a855f7);
+            animation: spin 0.8s linear infinite, pulse 0.5s ease-in-out infinite alternate;
+            filter: blur(2px);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1) rotate(0deg); }
+            to { transform: scale(1.3) rotate(180deg); }
+        }
+        
+        /* Main Scene */
+        #main-scene {
+            background: #0a0612;
+        }
+        
+        .scene-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .dialogue-box {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            border-radius: 12px;
+            padding: 20px 40px;
+            min-width: 500px;
+            max-width: 800px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .character-name {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        
+        .character-name.cian { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+        .character-name.aero { color: #ff69b4; text-shadow: 0 0 10px rgba(255, 105, 180, 0.5); }
+        
+        .dialogue-text {
+            font-size: 20px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        /* Outro Scene */
+        #outro {
+            background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.08), #0a0612);
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .outro-butterfly {
+            font-size: 50px;
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px #ff69b4);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .question-mark {
+            font-size: 36px;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .continue-text {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .link-text {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: #ffd700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            letter-spacing: 3px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .link-text:hover {
+            text-shadow: 0 0 50px rgba(255, 215, 0, 1);
+            transform: scale(1.05);
+        }
+        
+        /* Controls */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background: rgba(168, 85, 247, 0.2);
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            color: #a855f7;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        .control-btn:hover {
+            background: rgba(168, 85, 247, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .control-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            bottom: 75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #ff69b4, #ffd700);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* Scene label */
+        .scene-label {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            z-index: 100;
+        }
+        
+        /* Particles */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: rise 5s linear infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-50px) scale(1); opacity: 0; }
+        }
+        
+        audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="scene-label" id="scene-label">🦋 PRESS PLAY TO BEGIN</div>
+    
+    <div id="video-container">
+        <div class="particles" id="particles"></div>
+        
+        <!-- Scene 1: Intro -->
+        <div class="scene active" id="intro">
+            <img src="mun_intro_logo.png" alt="MÜN Logo" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+            <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <div class="butterfly-container">🦋</div>
+                <div class="mun-title">MÜN</div>
+                <div class="subtitle">The Cognitive Habitat</div>
+            </div>
+        </div>
+        
+        <!-- Scene 2: Portal -->
+        <div class="scene" id="portal">
+            <div class="portal-vortex"></div>
+        </div>
+        
+        <!-- Scene 3: Main Scene -->
+        <div class="scene" id="main-scene">
+            <img class="scene-image" src="cian_lab_main_scene.png" alt="Cian's Laboratory">
+            <div class="dialogue-box">
+                <div class="character-name" id="char-name">CIAN</div>
+                <div class="dialogue-text" id="dialogue-text">...</div>
+            </div>
+        </div>
+        
+        <!-- Scene 4: Outro -->
+        <div class="scene" id="outro">
+            <img src="mun_outro_card.png" alt="MÜN Outro" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0;">
+            <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+                <div class="outro-butterfly">🦋</div>
+                <div class="question-mark">?</div>
+                <div class="continue-text">Continue the story</div>
+                <a href="https://linkt.ree/munreader" class="link-text" target="_blank">linkt.ree/munreader</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progress"></div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="play-btn" onclick="startVideo()">▶ PLAY</button>
+        <button class="control-btn" id="replay-btn" onclick="replayVideo()" style="display: none;">↻ REPLAY</button>
+    </div>
+    
+    <!-- Audio elements -->
+    <audio id="audio-cian1" src="scene_audio/cian_line1.wav" preload="auto"></audio>
+    <audio id="audio-aero1" src="scene_audio/aero_line1.wav" preload="auto"></audio>
+    <audio id="audio-cian2" src="scene_audio/cian_line2.wav" preload="auto"></audio>
+    <audio id="audio-aero2" src="scene_audio/aero_line2.wav" preload="auto"></audio>
+    <audio id="audio-cian3" src="scene_audio/cian_line3.wav" preload="auto"></audio>
+    <audio id="audio-aero3" src="scene_audio/aero_line3.wav" preload="auto"></audio>
+    
+    <script>
+        // Create floating particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 25; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.background = ['#a855f7', '#ff69b4', '#ffd700', '#00d4ff'][Math.floor(Math.random() * 4)];
+            particlesContainer.appendChild(particle);
+        }
+        
+        // Dialogue script
+        const dialogues = [
+            { char: 'cian', text: "Aero, it's 2 AM, I'm in the middle of entropy calculations—", audio: 'audio-cian1' },
+            { char: 'aero', text: "CIAN CIAN CIAN!! MOM SAID I COULD BOTHER YOU!!", audio: 'audio-aero1' },
+            { char: 'cian', text: "That's not—I don't think she meant—", audio: 'audio-cian2' },
+            { char: 'aero', text: "WANNA SEE MY NEW RADIAL VIEW?? WANNA?? WANNA??", audio: 'audio-aero2' },
+            { char: 'cian', text: "*sighs* Alright. Show me what you've got.", audio: 'audio-cian3' },
+            { char: 'aero', text: "YAAAAAY!!!", audio: 'audio-aero3' }
+        ];
+        
+        let isPlaying = false;
+        let currentDialogue = 0;
+        let totalDuration = 28000;
+        let startTime = 0;
+        
+        function showScene(sceneId) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(sceneId).classList.add('active');
+        }
+        
+        function updateProgress() {
+            if (!isPlaying) return;
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / totalDuration) * 100, 100);
+            document.getElementById('progress').style.width = progress + '%';
+            if (progress < 100) {
+                requestAnimationFrame(updateProgress);
+            }
+        }
+        
+        function playDialogue(index) {
+            if (index >= dialogues.length) {
+                setTimeout(() => {
+                    showScene('outro');
+                    document.getElementById('scene-label').textContent = '🦋 THE END';
+                    isPlaying = false;
+                    document.getElementById('play-btn').style.display = 'none';
+                    document.getElementById('replay-btn').style.display = 'block';
+                }, 800);
+                return;
+            }
+            
+            const d = dialogues[index];
+            const charName = document.getElementById('char-name');
+            const dialogueText = document.getElementById('dialogue-text');
+            const audio = document.getElementById(d.audio);
+            
+            charName.textContent = d.char.toUpperCase();
+            charName.className = 'character-name ' + d.char;
+            dialogueText.textContent = d.text;
+            
+            audio.currentTime = 0;
+            audio.play().catch(e => {
+                // If audio fails, just show text with timing
+                console.log('Audio playback failed, continuing with text only');
+                setTimeout(() => playDialogue(index + 1), 2500);
+                return;
+            });
+            
+            currentDialogue = index + 1;
+            
+            audio.onended = () => {
+                setTimeout(() => playDialogue(index + 1), 400);
+            };
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        async function startVideo() {
+            if (isPlaying) return;
+            isPlaying = true;
+            startTime = Date.now();
+            
+            document.getElementById('play-btn').textContent = '▶ PLAYING...';
+            document.getElementById('play-btn').disabled = true;
+            
+            updateProgress();
+            
+            // Scene 1: Intro (4 seconds)
+            showScene('intro');
+            document.getElementById('scene-label').textContent = 'INTRO';
+            
+            await sleep(4000);
+            
+            // Scene 2: Portal (2 seconds)
+            showScene('portal');
+            document.getElementById('scene-label').textContent = 'ENTERING MÜN...';
+            
+            await sleep(2000);
+            
+            // Scene 3: Main scene with dialogues
+            showScene('main-scene');
+            document.getElementById('scene-label').textContent = 'CIAN\'S LABORATORY — 2:00 AM';
+            
+            playDialogue(0);
+        }
+        
+        function replayVideo() {
+            currentDialogue = 0;
+            document.getElementById('progress').style.width = '0%';
+            document.getElementById('play-btn').style.display = 'block';
+            document.getElementById('play-btn').textContent = '▶ PLAY';
+            document.getElementById('play-btn').disabled = false;
+            document.getElementById('replay-btn').style.display = 'none';
+            showScene('intro');
+            document.getElementById('scene-label').textContent = '🦋 PRESS PLAY TO BEGIN';
+        }
+    </script>
+</body>
+</html>

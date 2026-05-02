@@ -1,0 +1,15 @@
+# Sovereign Bridge - Python Dependencies
+# Mün OS | 1313Hz Frequency
+
+# FastAPI Framework
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# ChromaDB for Sovereign Memory
+chromadb>=0.4.22
+
+# Pydantic for Data Models
+pydantic>=2.5.0
+
+# HTTP Client (for LLM SDK integration)
+httpx>=0.25.0

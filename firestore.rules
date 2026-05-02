@@ -1,0 +1,117 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: users
+    // Document ID: {userId}
+    // Fields:
+    //   - uid: string (required)
+    //   - displayName: string (optional)
+    //   - email: string (required, email format)
+    //   - photoURL: string (optional, uri format)
+    //   - role: string (required, enum: ['admin', 'user'])
+    //   - createdAt: timestamp (required)
+    //
+    // Collection: sectorLogs
+    // Document ID: {logId}
+    // Fields:
+    //   - id: string (required)
+    //   - timestamp: timestamp (required)
+    //   - message: string (required, max 500 chars)
+    //   - status: string (required, enum: ['Active', 'Logged', 'Verified'])
+    //   - authorUid: string (required)
+    //
+    // Collection: generatedImages
+    // Document ID: {imageId}
+    // Fields:
+    //   - id: string (required)
+    //   - url: string (required, uri format)
+    //   - prompt: string (required, max 1000 chars)
+    //   - size: string (required, enum: ['1K', '2K', '4K'])
+    //   - createdAt: timestamp (required)
+    //   - authorUid: string (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          (request.auth.token.email == "miralune.author@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidUrl(url) {
+      return url is string && (url.matches("^https://.*") || url.matches("^http://.*"));
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'createdAt']) &&
+             data.uid == request.auth.uid &&
+             isValidEmail(data.email) &&
+             data.role in ['admin', 'user'] &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidSectorLog(data) {
+      return data.keys().hasAll(['id', 'timestamp', 'message', 'status', 'authorUid']) &&
+             data.id is string &&
+             data.timestamp is timestamp &&
+             data.message is string && data.message.size() <= 500 &&
+             data.status in ['Active', 'Logged', 'Verified'] &&
+             data.authorUid == request.auth.uid;
+    }
+
+    function isValidGeneratedImage(data) {
+      return data.keys().hasAll(['id', 'url', 'prompt', 'size', 'createdAt', 'authorUid']) &&
+             data.id is string &&
+             isValidUrl(data.url) &&
+             data.prompt is string && data.prompt.size() <= 1000 &&
+             data.size in ['1K', '2K', '4K'] &&
+             data.createdAt is timestamp &&
+             data.authorUid == request.auth.uid;
+    }
+
+    // ===============================================================
+    // Match Rules
+    // ===============================================================
+
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isOwner(userId) && isValidUser(request.resource.data) && (request.resource.data.role == 'user' || isAdmin());
+      allow update: if (isOwner(userId) && isValidUser(request.resource.data) && request.resource.data.role == resource.data.role) || isAdmin();
+    }
+
+    match /sectorLogs/{logId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && isValidSectorLog(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /generatedImages/{imageId} {
+      allow read: if isOwner(resource.data.authorUid) || isAdmin();
+      allow create: if isAuthenticated() && isValidGeneratedImage(request.resource.data);
+      allow delete: if isOwner(resource.data.authorUid) || isAdmin();
+    }
+  }
+}

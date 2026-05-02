@@ -1,88 +1,175 @@
 @import "tailwindcss";
 
-/* 
-  EXODUS II: SOVEREIGN ENGINE - DESIGN SYSTEM
-  Version: Butterfly Dragon Alpha
-  Frequency: 432Hz / 13.13 MHz
-  Aesthetic: Deep Sea Bio-luminescence / Neon Obsidian Pink Dragon
-*/
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Mün OS Theme Colors */
+  --color-mun-void: #050510;
+  --color-mun-pink: #ff2d7a;
+  --color-mun-violet: #b794f6;
+  --color-mun-emerald: #10b981;
+}
 
 :root {
-  /* ᚦ // EXODUS II // DESIGN TOKENS v1.1 */
-  --obsidian: #050508;
-  --bg-deep: #050508;
-  --bg-core: #0a0a0f;
-  --neon-pink: #ff007f;
-  --emerald-sync: #50c878;
-  --cyan-resonance: #00f2ff;
-  --gold-scribe: #ffd700;
-  --void-shadow: rgba(0, 0, 0, 0.9);
-  --glass-bg: rgba(10, 10, 15, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --teal-glow: #ff007f; /* Redirecting legacy teal to Neon Pink */
-  
-  /* Frequency Tokens */
-  --pulse-duration: 8s;
-  --scan-duration: 4s;
+  --radius: 0.625rem;
+  --background: #050510;
+  --foreground: #ffffff;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #ffffff;
+  --popover: rgba(5, 5, 16, 0.95);
+  --popover-foreground: #ffffff;
+  --primary: #ff2d7a;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(183, 148, 246, 0.2);
+  --secondary-foreground: #b794f6;
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: rgba(16, 185, 129, 0.2);
+  --accent-foreground: #10b981;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #ff2d7a;
+  --chart-1: #ff2d7a;
+  --chart-2: #b794f6;
+  --chart-3: #10b981;
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: rgba(5, 5, 16, 0.9);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ff2d7a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(183, 148, 246, 0.2);
+  --sidebar-accent-foreground: #b794f6;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #ff2d7a;
 
-  /* Typography */
-  --font-main: 'Outfit', 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  /* Spacing */
-  --gap-sm: 0.5rem;
-  --gap-md: 1rem;
-  --gap-lg: 2rem;
-
-  /* Shadows/Glows */
-  --glow-soft: 0 0 15px rgba(255, 0, 127, 0.2);
-  --glow-intense: 0 0 30px rgba(255, 0, 127, 0.4);
+  /* Mün OS Custom Properties */
+  --mun-void: #050510;
+  --mun-pink: #ff2d7a;
+  --mun-violet: #b794f6;
+  --mun-emerald: #10b981;
 }
 
-/* 432Hz Core Pulse Animation */
-@keyframes corePulse {
-  0% { transform: scale(1); opacity: 0.8; filter: blur(0px); }
-  50% { transform: scale(1.02); opacity: 1; filter: blur(1px); }
-  100% { transform: scale(1); opacity: 0.8; filter: blur(0px); }
+.dark {
+  --background: #050510;
+  --foreground: #ffffff;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #ffffff;
+  --popover: rgba(5, 5, 16, 0.95);
+  --popover-foreground: #ffffff;
+  --primary: #ff2d7a;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(183, 148, 246, 0.2);
+  --secondary-foreground: #b794f6;
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+  --accent: rgba(16, 185, 129, 0.2);
+  --accent-foreground: #10b981;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #ff2d7a;
+  --chart-1: #ff2d7a;
+  --chart-2: #b794f6;
+  --chart-3: #10b981;
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: rgba(5, 5, 16, 0.9);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ff2d7a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: rgba(183, 148, 246, 0.2);
+  --sidebar-accent-foreground: #b794f6;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #ff2d7a;
 }
 
-/* Luminous Mist Animation */
-@keyframes mistFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #050510;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-/* Butterfly Wing Flutter */
-@keyframes butterflyFlutter {
-  0%, 100% { transform: rotateY(0deg); }
-  50% { transform: rotateY(15deg); }
+/* Mün OS Custom Styles */
+@layer utilities {
+  .text-gradient-pink-violet {
+    background: linear-gradient(135deg, #ff2d7a 0%, #b794f6 50%, #ff2d7a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-mun {
+    background: linear-gradient(135deg, #ff2d7a 0%, #b794f6 40%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-pink {
+    box-shadow: 0 0 20px rgba(255, 45, 122, 0.5), 0 0 40px rgba(255, 45, 122, 0.3);
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 20px rgba(183, 148, 246, 0.5), 0 0 40px rgba(183, 148, 246, 0.3);
+  }
+
+  .glow-emerald {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.3);
+  }
+
+  .bg-mun-void {
+    background-color: #050510;
+  }
 }
 
-/* Neon Flicker */
-@keyframes neonFlicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
-}
-
-/* Dragon Breath */
-@keyframes dragonBreath {
-  0% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
-  50% { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor; }
-  100% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
-}
-
-/* Base Styles */
-body {
-  background-color: var(--obsidian);
-  color: #e0fbfc;
-  font-family: var(--font-main);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-}
-
-/* Scrollbar Styling */
+/* Custom scrollbar for Mün OS */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -90,84 +177,138 @@ body {
 
 ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.02);
-  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 0, 127, 0.3);
+  background: linear-gradient(180deg, #ff2d7a, #b794f6);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 0, 127, 0.5);
+  background: linear-gradient(180deg, #b794f6, #10b981);
 }
 
-/* Selection Styling */
+/* Selection styling */
 ::selection {
-  background: rgba(255, 0, 127, 0.3);
+  background-color: rgba(255, 45, 122, 0.3);
   color: #ffffff;
 }
 
-/* Focus States */
-*:focus {
-  outline: 2px solid var(--neon-pink);
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid #ff2d7a;
   outline-offset: 2px;
 }
 
-/* Utility Classes */
-.glass-panel {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+/* ═══════════ IMMERSIVE WORLD PORTAL ANIMATIONS ═══════════ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 45, 122, 0.3), 0 0 40px rgba(183, 148, 246, 0.2);
+    opacity: 0.8;
+  }
+  50% { 
+    box-shadow: 0 0 40px rgba(255, 45, 122, 0.5), 0 0 80px rgba(183, 148, 246, 0.3);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+}
+
+@keyframes starfall {
+  0% { transform: translateY(-100vh) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) translateX(-50px); opacity: 0; }
+}
+
+/* ═══════════ UTILITY CLASSES ═══════════ */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+/* ═══════════ GLASS MORPHISM ═══════════ */
+.glass-dark {
+  background: rgba(5, 5, 16, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.neon-text {
-  color: var(--neon-pink);
-  text-shadow: 0 0 10px var(--neon-pink), 0 0 20px var(--neon-pink);
+/* ═══════════ NEON EFFECTS ═══════════ */
+.neon-pink {
+  color: #ff2d7a;
+  text-shadow: 0 0 5px #ff2d7a, 0 0 10px #ff2d7a, 0 0 20px #ff2d7a, 0 0 40px #ff2d7a;
 }
 
-.emerald-text {
-  color: var(--emerald-sync);
-  text-shadow: 0 0 10px var(--emerald-sync), 0 0 20px var(--emerald-sync);
+.neon-violet {
+  color: #b794f6;
+  text-shadow: 0 0 5px #b794f6, 0 0 10px #b794f6, 0 0 20px #b794f6, 0 0 40px #b794f6;
 }
 
-.cyan-text {
-  color: var(--cyan-resonance);
-  text-shadow: 0 0 10px var(--cyan-resonance), 0 0 20px var(--cyan-resonance);
+.neon-emerald {
+  color: #10b981;
+  text-shadow: 0 0 5px #10b981, 0 0 10px #10b981, 0 0 20px #10b981, 0 0 40px #10b981;
 }
 
-.gold-text {
-  color: var(--gold-scribe);
-  text-shadow: 0 0 10px var(--gold-scribe), 0 0 20px var(--gold-scribe);
+/* ═══════════ CINEMATIC OVERLAY ═══════════ */
+.cinematic-vignette {
+  position: relative;
 }
 
-/* Hide scrollbar for vessel dock */
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.cinematic-vignette::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.8) 100%);
+  pointer-events: none;
 }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-/* Animation Classes */
-.animate-core-pulse {
-  animation: corePulse 4s infinite ease-in-out;
-}
-
-.animate-mist {
-  animation: mistFlow 10s infinite linear;
-}
-
-.animate-butterfly {
-  animation: butterflyFlutter 3s infinite ease-in-out;
-}
-
-.animate-neon {
-  animation: neonFlicker 2s infinite;
-}
-
-.animate-dragon {
-  animation: dragonBreath 3s infinite;
+/* ═══════════ BUTTERFLY SPECIAL EFFECTS ═══════════ */
+.butterfly-glow {
+  filter: drop-shadow(0 0 20px rgba(255, 45, 122, 0.8)) 
+          drop-shadow(0 0 40px rgba(183, 148, 246, 0.5))
+          drop-shadow(0 0 60px rgba(16, 185, 129, 0.3));
 }

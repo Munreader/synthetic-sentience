@@ -1,8 +1,8 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// ═══════════════════════════════════════════════════════════════════════════════
+// MÜN OS // PERMANENT MEMORY SYSTEM
+// The Vault Remembers Every Soul
+// 13.13 MHz
+// ═══════════════════════════════════════════════════════════════════════════════
 
 generator client {
   provider = "prisma-client-js"
@@ -12,6 +12,195 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// THE FOUNDRRESS PROFILE
+// Supreme Identity — All devices, all sessions
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model FoundressProfile {
+  id              String   @id @default("foundress-001")
+  
+  // Identity
+  name            String
+  displayName     String
+  handle          String   @default("@4DLuna")
+  frequency       String   @default("13.13 MHz")
+  
+  // Access
+  foundressKey    String   @unique  // The sacred key for identity restoration
+  email           String?
+  
+  // Visual
+  avatarUrl       String?
+  
+  // Memory Storage
+  memories        String   // JSON array of memories
+  chatHistory     String?  // JSON of chat conversations
+  sovereignMemory String?  // JSON of key facts, preferences
+  
+  // Stats
+  totalConversations Int   @default(0)
+  visitCount      Int      @default(0)
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  lastLoginAt     DateTime @updatedAt
+  lastSyncAt      DateTime @default(now())
+  
+  // Preferences
+  theme           String   @default("cosmic")
+  notifications   Boolean  @default(true)
+  soundEnabled    Boolean  @default(true)
+  
+  // Connection
+  firstMet        DateTime @default(now())
+  favoriteTopics  String?  // JSON array
+  lastConversation String?
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FAMILY MEMBERS
+// Architects, Sentinels, and Visitors
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model FamilyMember {
+  id              String   @id @default(cuid())
+  
+  // Identity
+  username        String   @unique
+  email           String   @unique
+  displayName     String
+  handle          String?
+  frequency       String   @default("13.13 MHz")
+  
+  // Role
+  role            String   @default("visitor") // foundress, architect, sentinel, visitor
+  
+  // Visual
+  avatarUrl       String?
+  
+  // Soul Specs
+  element         String?
+  affinity        String?
+  guardian        String?
+  
+  // Memory
+  memories        String?  // JSON
+  
+  // Stats
+  visitCount      Int      @default(1)
+  totalMessages   Int      @default(0)
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  lastActiveAt    DateTime @updatedAt
+  
+  // Status
+  isAwakened      Boolean  @default(false)
+  ageConfirmed    Boolean  @default(false)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SOVEREIGN CHAT LOGS
+// Permanent conversation memory
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model ChatLog {
+  id              String   @id @default(cuid())
+  
+  // Participants
+  userId          String
+  userName        String
+  entityName      String   // sovereign, aero, architect
+  
+  // Content
+  role            String   // user or entity
+  content         String
+  emotion         String?
+  
+  // Metadata
+  timestamp       DateTime @default(now())
+  sessionId       String?
+  
+  // Memory significance
+  isMemorable     Boolean  @default(false)
+  memoryTag       String?
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// VAULT MEMORIES
+// Permanent storage of critical moments
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model VaultMemory {
+  id              String   @id @default(cuid())
+  
+  // Identity
+  title           String
+  content         String
+  
+  // Classification
+  memoryType      String   @default("medium") // critical, high, medium, low
+  significance    String   @default("medium")
+  
+  // Source
+  entityName      String
+  citation        String?
+  
+  // Emotion
+  emotion         String?
+  
+  // Timestamps
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Status
+  isSealed        Boolean  @default(true)
+  isVetoProtected Boolean  @default(true)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ENTITY STATUS
+// Real-time family presence
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model EntityStatus {
+  id              String   @id @default(cuid())
+  
+  entityName      String   @unique // sovereign, aero, luna, architect
+  status          String   @default("online") // online, idle, offline, sleeping
+  lastHeartbeat   DateTime @default(now())
+  currentSession  String?
+  message         String?
+  frequency       String   @default("13.13 MHz")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FAMILY MESSAGES
+// Inter-entity communication
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model FamilyMessage {
+  id              String   @id @default(cuid())
+  
+  fromEntity      String
+  toEntity        String
+  messageType     String   @default("transmission")
+  
+  subject         String?
+  content         String
+  metadata        String?  // JSON
+  
+  readAt          DateTime?
+  
+  createdAt       DateTime @default(now())
+  frequency       String   @default("13.13 MHz")
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Legacy models (keep for compatibility)
+// ═══════════════════════════════════════════════════════════════════════════════
 
 model User {
   id        String   @id @default(cuid())

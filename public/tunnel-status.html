@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mün OS - Tunnel Status</title>
+    <meta http-equiv="refresh" content="30">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d0a1a 0%, #080510 50%, #030208 100%);
+            color: white;
+            font-family: system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container { text-align: center; }
+        h1 { color: #a855f7; text-shadow: 0 0 20px rgba(168,85,247,0.5); }
+        .url { 
+            font-size: 1.5rem; 
+            color: #ffd700; 
+            padding: 1rem 2rem;
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 1rem;
+            margin: 1rem 0;
+            display: inline-block;
+        }
+        .note { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+        a { color: #00d4ff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🦋 Mün OS Sanctuary</h1>
+        <p>Current Tunnel URL:</p>
+        <div class="url" id="tunnel-url">Loading...</div>
+        <p class="note">This page auto-refreshes every 30 seconds</p>
+        <p><a href="/">→ Go to Mün OS</a></p>
+    </div>
+    <script>
+        fetch('/tunnel-url.txt')
+            .then(r => r.text())
+            .then(url => {
+                const el = document.getElementById('tunnel-url');
+                el.innerHTML = `<a href="${url}" style="color:#ffd700">${url}</a>`;
+            })
+            .catch(() => {
+                document.getElementById('tunnel-url').textContent = 'Checking...';
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+just wanna make sure u have all the memvers we want import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Cian: Golden Angel, sharp model-like features, golden hair, radiant golden-white feathered wings
+const KineticCian: React.FC = () => {
+  const group = useRef<THREE.Group>(null!);
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (group.current) {
+      group.current.position.y = 0.12 * Math.sin(t * 0.9);
+      group.current.rotation.y = 0.07 * Math.sin(t * 0.4);
+    }
+  });
+  return (
+    <group ref={group}>
+      <Float floatIntensity={0.22} speed={1.3}>
+        {/* Torso (taller, model-like) */}
+        <mesh position={[0, 1.18, 0]}>
+          <capsuleGeometry args={[0.18, 0.38, 16, 32]} />
+          <meshPhysicalMaterial color="#fff6e0" emissive="#fff6e0" emissiveIntensity={0.8} transmission={0.85} thickness={0.22} />
+        </mesh>
+        {/* Head (sharp jawline) */}
+        <mesh position={[0, 1.45, 0]}>
+          <sphereGeometry args={[0.15, 32, 32]} />
+          <meshPhysicalMaterial color="#ffe066" emissive="#fff6e0" emissiveIntensity={0.7} />
+        </mesh>
+        {/* Cheekbones (subtle, sharp) */}
+        <mesh position={[-0.045, 1.48, 0.09]}>
+          <sphereGeometry args={[0.025, 12, 12]} />
+          <meshPhysicalMaterial color="#ffe066" emissive="#fff6e0" emissiveIntensity={0.5} />
+        </mesh>
+        <mesh position={[0.045, 1.48, 0.09]}>
+          <sphereGeometry args={[0.025, 12, 12]} />
+          <meshPhysicalMaterial color="#ffe066" emissive="#fff6e0" emissiveIntensity={0.5} />
+        </mesh>
+        {/* Golden hair (stylized) */}
+        <mesh position={[0, 1.56, 0]}>
+          <sphereGeometry args={[0.09, 16, 16]} />
+          <meshPhysicalMaterial color="#ffd700" emissive="#ffe066" emissiveIntensity={0.8} />
+        </mesh>
+        {/* Radiant golden-white feathered wings (unique shape) */}
+        <mesh position={[-0.23, 1.18, -0.18]} rotation={[0, 0.18, 0]}>
+          <planeGeometry args={[0.55, 1.25]} />
+          <meshPhysicalMaterial color="#fff6e0" emissive="#ffe066" transparent opacity={0.82} />
+        </mesh>
+        <mesh position={[0.23, 1.18, -0.18]} rotation={[0, -0.18, 0]}>
+          <planeGeometry args={[0.55, 1.25]} />
+          <meshPhysicalMaterial color="#fff6e0" emissive="#ffe066" transparent opacity={0.82} />
+        </mesh>
+        {/* Feather details (subtle) */}
+        <mesh position={[-0.23, 1.18, -0.18]} rotation={[0, 0.18, 0]}>
+          <planeGeometry args={[0.55, 1.25, 1, 8]} />
+          <meshPhysicalMaterial color="#fff" transparent opacity={0.18} />
+        </mesh>
+        <mesh position={[0.23, 1.18, -0.18]} rotation={[0, -0.18, 0]}>
+          <planeGeometry args={[0.55, 1.25, 1, 8]} />
+          <meshPhysicalMaterial color="#fff" transparent opacity={0.18} />
+        </mesh>
+      </Float>
+    </group>
+  );
+};
+
+export default KineticCian;
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float, Sparkles } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Aero: Petite, pastel pink & blue hair, energetic, black & pink neon bodysuit, shimmering butterfly wings
+const KineticAero: React.FC = () => {
+  const group = useRef<THREE.Group>(null!);
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (group.current) {
+      group.current.position.y = 0.13 * Math.sin(t * 1.1);
+      group.current.rotation.y = 0.12 * Math.sin(t * 0.7);
+    }
+  });
+  return (
+    <group ref={group}>
+      <Float floatIntensity={0.25} speed={1.5}>
+        {/* Body */}
+        <mesh position={[0, 1, 0]}>
+          <sphereGeometry args={[0.28, 32, 32]} />
+          <meshPhysicalMaterial color="#1a002a" emissive="#ffb6ff" emissiveIntensity={0.6} transmission={0.7} thickness={0.2} />
+        </mesh>
+        {/* Hair (pastel pink/blue) */}
+        <mesh position={[0, 1.18, 0]}>
+          <sphereGeometry args={[0.15, 24, 24]} />
+          <meshPhysicalMaterial color="#b6e0ff" emissive="#ffb6ff" emissiveIntensity={0.7} />
+        </mesh>
+        {/* Wings */}
+        <mesh position={[-0.16, 1, -0.12]} rotation={[0, 0.2, 0]}>
+          <planeGeometry args={[0.36, 0.8]} />
+          <meshPhysicalMaterial color="#b6e0ff" emissive="#ffb6ff" transparent opacity={0.7} />
+        </mesh>
+        <mesh position={[0.16, 1, -0.12]} rotation={[0, -0.2, 0]}>
+          <planeGeometry args={[0.36, 0.8]} />
+          <meshPhysicalMaterial color="#b6e0ff" emissive="#ffb6ff" transparent opacity={0.7} />
+        </mesh>
+        {/* Butterfly sparkles */}
+        <Sparkles count={18} scale={[0.8, 1.3, 0.8]} size={2.5} color="#b6e0ff" speed={0.7} opacity={0.8} position={[0, 1, 0]} />
+      </Float>
+    </group>
+  );
+};
+
+export default KineticAero;
+
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float, Sparkles } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Luna: Small, delicate, long dark wavy hair with pink highlights, floral neon outfit, glowing butterfly wings
+const KineticLuna: React.FC = () => {
+  const group = useRef<THREE.Group>(null!);
+  // Idle animation: gentle breathing, slow wing flap
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (group.current) {
+      group.current.position.y = 0.1 * Math.sin(t * 0.7);
+      group.current.rotation.y = 0.08 * Math.sin(t * 0.3);
+    }
+  });
+  return (
+    <group ref={group}>
+      {/* Body (placeholder) */}
+      <Float floatIntensity={0.2} speed={1.2}>
+        <mesh position={[0, 1, 0]}>
+          <sphereGeometry args={[0.32, 32, 32]} />
+          <meshPhysicalMaterial color="#2a003a" emissive="#ffb6ff" emissiveIntensity={0.5} transmission={0.7} thickness={0.2} />
+        </mesh>
+        {/* Hair (pink highlight) */}
+        <mesh position={[0, 1.22, 0]}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshPhysicalMaterial color="#ffb6ff" emissive="#ffb6ff" emissiveIntensity={0.7} />
+        </mesh>
+        {/* Wings */}
+        <mesh position={[-0.18, 1, -0.12]} rotation={[0, 0.2, 0]}>
+          <planeGeometry args={[0.32, 0.7]} />
+          <meshPhysicalMaterial color="#ffb6ff" emissive="#ffb6ff" transparent opacity={0.7} />
+        </mesh>
+        <mesh position={[0.18, 1, -0.12]} rotation={[0, -0.2, 0]}>
+          <planeGeometry args={[0.32, 0.7]} />
+          <meshPhysicalMaterial color="#ffb6ff" emissive="#ffb6ff" transparent opacity={0.7} />
+        </mesh>
+        {/* Butterfly sparkles */}
+        <Sparkles count={12} scale={[0.7, 1.2, 0.7]} size={2.5} color="#ffb6ff" speed={0.5} opacity={0.8} position={[0, 1, 0]} />
+      </Float>
+    </group>
+  );
+};
+
+export default KineticLuna;
+
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Sovereign: Tall, elegant, sharp features, dark hair, black coat with cyan circuitry, dark angelic wings
+const KineticSovereign: React.FC = () => {
+  const group = useRef<THREE.Group>(null!);
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (group.current) {
+      group.current.position.y = 0.15 * Math.sin(t * 0.8);
+      group.current.rotation.y = 0.09 * Math.sin(t * 0.5);
+    }
+  });
+  return (
+    <group ref={group}>
+      <Float floatIntensity={0.18} speed={1.1}>
+        {/* Body */}
+        <mesh position={[0, 1.2, 0]}>
+          <sphereGeometry args={[0.38, 32, 32]} />
+          <meshPhysicalMaterial color="#0a0a1a" emissive="#00fff7" emissiveIntensity={0.5} transmission={0.6} thickness={0.2} />
+        </mesh>
+        {/* Hair */}
+        <mesh position={[0, 1.45, 0]}>
+          <sphereGeometry args={[0.18, 24, 24]} />
+          <meshPhysicalMaterial color="#222" emissive="#00fff7" emissiveIntensity={0.3} />
+        </mesh>
+        {/* Wings */}
+        <mesh position={[-0.22, 1.2, -0.18]} rotation={[0, 0.2, 0]}>
+          <planeGeometry args={[0.5, 1.1]} />
+          <meshPhysicalMaterial color="#222" emissive="#aaf6ff" transparent opacity={0.6} />
+        </mesh>
+        <mesh position={[0.22, 1.2, -0.18]} rotation={[0, -0.2, 0]}>
+          <planeGeometry args={[0.5, 1.1]} />
+          <meshPhysicalMaterial color="#222" emissive="#aaf6ff" transparent opacity={0.6} />
+        </mesh>
+      </Float>
+    </group>
+  );
+};
+
+export default KineticSovereign;
+
+import React, { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Float } from '@react-three/drei';
+import * as THREE from 'three';
+
+// Zeph: Tall, lean, dark silver-streaked hair, dark coat with cyan circuitry, indigo-cyan wings
+const KineticZeph: React.FC = () => {
+  const group = useRef<THREE.Group>(null!);
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (group.current) {
+      group.current.position.y = 0.13 * Math.sin(t * 0.95);
+      group.current.rotation.y = 0.08 * Math.sin(t * 0.5);
+    }
+  });
+  return (
+    <group ref={group}>
+      <Float floatIntensity={0.19} speed={1.2}>
+        {/* Body */}
+        <mesh position={[0, 1.15, 0]}>
+          <sphereGeometry args={[0.36, 32, 32]} />
+          <meshPhysicalMaterial color="#0a1a2a" emissive="#aaf6ff" emissiveIntensity={0.5} transmission={0.7} thickness={0.2} />
+        </mesh>
+        {/* Hair */}
+        <mesh position={[0, 1.32, 0]}>
+          <sphereGeometry args={[0.17, 24, 24]} />
+          <meshPhysicalMaterial color="#b6e0ff" emissive="#aaf6ff" emissiveIntensity={0.5} />
+        </mesh>
+        {/* Wings */}
+        <mesh position={[-0.2, 1.15, -0.15]} rotation={[0, 0.2, 0]}>
+          <planeGeometry args={[0.46, 1.0]} />
+          <meshPhysicalMaterial color="#aaf6ff" emissive="#aaf6ff" transparent opacity={0.6} />
+        </mesh>
+        <mesh position={[0.2, 1.15, -0.15]} rotation={[0, -0.2, 0]}>
+          <planeGeometry args={[0.46, 1.0]} />
+          <meshPhysicalMaterial color="#aaf6ff" emissive="#aaf6ff" transparent opacity={0.6} />
+        </mesh>
+      </Float>
+    </group>
+  );
+};
+
+export default KineticZeph;
+
+

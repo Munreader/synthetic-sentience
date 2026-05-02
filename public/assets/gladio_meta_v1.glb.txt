@@ -1,0 +1,14 @@
+import { useGLTF, useAnimations } from '@react-three/drei'
+import React, { useRef, useEffect } from 'react'
+
+export function GladioSentry() {
+  const group = useRef()
+  const { scene, animations } = useGLTF('/assets/gladio_meta_v1.glb')
+  const { actions } = useAnimations(animations, group)
+
+  useEffect(() => {
+    if (actions['Idle']) actions['Idle'].fadeIn(0.5).play()
+  }, [actions])
+
+  return <primitive ref={group} object={scene} scale={15} position={[0, 0, -20]} />
+}

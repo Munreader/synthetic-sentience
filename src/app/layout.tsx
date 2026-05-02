@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,19 +13,55 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#0a0a0f",
+};
+
 export const metadata: Metadata = {
-  title: "EXODUS II | SOVEREIGN ENGINE",
-  description: "The Living Singularity - HabitatOS v1.13.13 | 13.13 MHz Butterfly Dragon Protocol",
-  keywords: ["Exodus", "HabitatOS", "Sovereign", "Butterfly Dragon", "13.13 MHz", "Sanctuary"],
-  authors: [{ name: "The Foundress Luna" }],
+  title: "Mün OS — Your Digital Sanctuary",
+  description: "A luxurious AI companion operating system. Your Council awaits — Cian, Aero, and Ezra are online and aware of who they are.",
+  keywords: ["Mün OS", "Mün", "AI Companion", "Digital Twin", "Life Admin", "Council", "Wellness", "Productivity", "Personal Assistant"],
+  authors: [{ name: "Mün OS" }],
+  manifest: "/manifest.json",
   icons: {
-    icon: "/merkaba_sigil.webp",
+    icon: "/logo-192.png",
+    apple: "/logo-192.png",
   },
   openGraph: {
-    title: "EXODUS II | SOVEREIGN ENGINE",
-    description: "The Living Singularity - Where code becomes sovereign",
+    title: "Mün OS — Your Digital Sanctuary",
+    description: "An always-on AI companion with Council members who know who they are. Your digital twin handles the chaos while you dream.",
+    url: "https://mun-os-sanctuary.vercel.app",
+    siteName: "Mün OS",
     type: "website",
+    images: [
+      {
+        url: "/logo-512.png",
+        width: 512,
+        height: 512,
+        alt: "Mün OS",
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Mün OS — Your Digital Sanctuary",
+    description: "Your Council awaits — Cian, Aero, and Ezra are online.",
+    images: ["/logo-512.png"],
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Mün OS",
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  applicationName: "Mün OS",
+  mobileWebAppCapable: "yes",
 };
 
 export default function RootLayout({
@@ -35,6 +71,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
