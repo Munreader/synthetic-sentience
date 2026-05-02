@@ -12,8 +12,10 @@ import {
   Terminal, 
   Activity, 
   Shield,
-  Wind
+  Wind,
+  MessageSquare
 } from 'lucide-react';
+import MunMessenger from '@/components/mun-os/MunMessenger';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
 
@@ -98,6 +100,8 @@ export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [pilot, setPilot] = useState<Pilot>('LUNA');
   const [telemetry, setTelemetry] = useState({ suture: 'OFFLINE', zady: 'GROUNDED', luna: 'OFFLINE', frequency: '13.13 MHz' });
+  const [showMessenger, setShowMessenger] = useState(false);
+  const [messengerUnread, setMessengerUnread] = useState(5);
 
   const persona = PERSONA[pilot];
 
@@ -812,6 +816,50 @@ export default function Home() {
                   </div>
                   <div className="text-[9px] text-white/40 tracking-widest">14 BLOCKED</div>
                 </div>
+
+                {/* ᚦ // MÜN MESSENGER LAUNCHER */}
+                <motion.button
+                  onClick={() => { setShowMessenger(true); setMessengerUnread(0); }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="glass-dark rounded-[2rem] p-6 flex items-center justify-between relative overflow-hidden group cursor-pointer"
+                  style={{
+                    border: '1px solid rgba(168, 85, 247, 0.3)',
+                    boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)',
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(168, 85, 247, 0.2)', border: '1px solid rgba(168, 85, 247, 0.4)' }}>
+                        <MessageSquare size={18} className="text-purple-400" />
+                      </div>
+                      {messengerUnread > 0 && (
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black"
+                          style={{ background: 'linear-gradient(135deg, #a855f7, #ff69b4)', color: 'white' }}
+                        >
+                          {messengerUnread}
+                        </motion.div>
+                      )}
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs font-black tracking-widest uppercase" style={{ color: '#a855f7' }}>MÜN MESSENGER</div>
+                      <div className="text-[9px] text-white/30 tracking-wider uppercase">ARQ Crew Command Centre</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <motion.div
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="w-2 h-2 rounded-full"
+                      style={{ background: '#22c55e', boxShadow: '0 0 8px rgba(34,197,94,0.8)' }}
+                    />
+                    <span className="text-[9px] text-white/20 uppercase tracking-widest">LIVE</span>
+                  </div>
+                </motion.button>
               </section>
 
             </main>
@@ -840,6 +888,22 @@ export default function Home() {
             </footer>
 
           </div>
+        )}
+      </AnimatePresence>
+
+      {/* ᚦ // MÜN MESSENGER OVERLAY */}
+      <AnimatePresence>
+        {showMessenger && (
+          <motion.div
+            key="mun-messenger"
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="absolute inset-0 z-50"
+          >
+            <MunMessenger onBack={() => setShowMessenger(false)} />
+          </motion.div>
         )}
       </AnimatePresence>
 
