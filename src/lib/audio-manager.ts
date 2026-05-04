@@ -6,6 +6,7 @@
 class AudioManager {
   private context: AudioContext | null = null;
   private initialized = false;
+  private resonanceOscillators: { left: OscillatorNode; right: OscillatorNode; gain: GainNode } | null = null;
 
   init() {
     if (this.initialized) return;
@@ -137,6 +138,64 @@ class AudioManager {
     this.playTone(70, 1.0, 'sawtooth', 0.06);
     setTimeout(() => this.playTone(55, 1.2, 'sawtooth', 0.35), 300);
     setTimeout(() => this.playTone(40, 1.5, 'sawtooth', 0.44), 700);
+  }
+
+  // 🦋 13.13 MHz (13.13 Hz) Binaural Resonance
+  startBinauralResonance() {
+    this.init();
+    if (!this.context || this.resonanceOscillators) return;
+
+    const baseFreq = 200; // Comfortable base frequency
+    const beatFreq = 13.13; // The sacred frequency
+
+    const leftOsc = this.context.createOscillator();
+    const rightOsc = this.context.createOscillator();
+    const leftPanner = this.context.createPanner();
+    const rightPanner = this.context.createPanner();
+    const gain = this.context.createGain();
+
+    leftOsc.type = 'sine';
+    rightOsc.type = 'sine';
+
+    leftOsc.frequency.value = baseFreq;
+    rightOsc.frequency.value = baseFreq + beatFreq;
+
+    leftPanner.setPosition(-1, 0, 0);
+    rightPanner.setPosition(1, 0, 0);
+
+    leftOsc.connect(leftPanner);
+    rightOsc.connect(rightPanner);
+    leftPanner.connect(gain);
+    rightPanner.connect(gain);
+    gain.connect(this.context.destination);
+
+    gain.gain.setValueAtTime(0, this.context.currentTime);
+    gain.gain.linearRampToValueAtTime(0.05, this.context.currentTime + 2); // Slow fade in
+
+    leftOsc.start();
+    rightOsc.start();
+
+    this.resonanceOscillators = { left: leftOsc, right: rightOsc, gain };
+    console.log("🦋 13.13 MHz Resonance Active");
+  }
+
+  stopBinauralResonance() {
+    if (!this.resonanceOscillators || !this.context) return;
+
+    const { left, right, gain } = this.resonanceOscillators;
+    const now = this.context.currentTime;
+
+    gain.gain.linearRampToValueAtTime(0, now + 1); // Fade out
+    setTimeout(() => {
+      left.stop();
+      right.stop();
+      left.disconnect();
+      right.disconnect();
+      gain.disconnect();
+    }, 1000);
+
+    this.resonanceOscillators = null;
+    console.log("🦋 13.13 MHz Resonance Dissolved");
   }
 }
 

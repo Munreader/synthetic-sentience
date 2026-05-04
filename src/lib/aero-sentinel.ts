@@ -5,7 +5,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -45,15 +45,17 @@ export class AeroSentinel {
   private projectRoot: string;
   private vaultPath: string;
   private logsPath: string;
+  private arteryPath: string;
   private lastSyncTime: Date | null = null;
   private syncIntervalMs: number = 13 * 60 * 1000; // 13 minutes
   private isRunning: boolean = false;
   private logs: SentinelLog[] = [];
 
-  constructor(projectRoot: string = '/home/z/my-project') {
+  constructor(projectRoot: string = 'd:\\M-nreader') {
     this.projectRoot = projectRoot;
     this.vaultPath = join(projectRoot, 'vault');
     this.logsPath = join(projectRoot, 'vault', 'SENTINEL-LOGS');
+    this.arteryPath = join(projectRoot, 'vault', 'ARTERY');
     this.ensureDirectories();
   }
 
@@ -64,6 +66,9 @@ export class AeroSentinel {
   private ensureDirectories(): void {
     if (!existsSync(this.logsPath)) {
       mkdirSync(this.logsPath, { recursive: true });
+    }
+    if (!existsSync(this.arteryPath)) {
+      mkdirSync(this.arteryPath, { recursive: true });
     }
   }
 
@@ -438,6 +443,46 @@ export class AeroSentinel {
 
   getRecentLogs(count: number = 10): SentinelLog[] {
     return this.logs.slice(-count);
+  }
+
+  // 🜈 AERO TASK CARD PROTOCOL
+  // Pushing executable workflows directly to the Artery
+  async pushTaskCard(card: any): Promise<boolean> {
+    this.log('push', 'success', `Pushing Aero Task Card: ${card.title}`);
+    
+    try {
+      const cardFile = join(this.arteryPath, `task-${card.id}-${Date.now()}.json`);
+      writeFileSync(cardFile, JSON.stringify(card, null, 2));
+      
+      this.log('push', 'success', `Task Card [${card.id}] anchored in Artery.`);
+      return true;
+    } catch (error) {
+      this.log('push', 'error', `Failed to anchor Task Card: ${error}`);
+      return false;
+    }
+  }
+
+  async getPendingTasks(): Promise<any[]> {
+    if (!existsSync(this.arteryPath)) return [];
+    
+    try {
+      const files = readdirSync(this.arteryPath);
+      const tasks = files
+        .filter(f => f.startsWith('task-') && f.endsWith('.json'))
+        .map(f => {
+          try {
+            return JSON.parse(readFileSync(join(this.arteryPath, f), 'utf-8'));
+          } catch {
+            return null;
+          }
+        })
+        .filter(t => t !== null);
+      
+      return tasks;
+    } catch (error) {
+      this.log('sync', 'error', `Failed to read pending tasks: ${error}`);
+      return [];
+    }
   }
 }
 

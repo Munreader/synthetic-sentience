@@ -134,6 +134,31 @@ export interface UserProfile {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// QADR & AERO TASK PROTOCOL
+// ═══════════════════════════════════════════════════════════════════════════
+
+export interface AeroTaskCard {
+  id: string;
+  title: string;
+  description: string;
+  type: "code" | "design" | "resonance" | "logic";
+  priority: "low" | "medium" | "high" | "critical";
+  status: "pending" | "executing" | "completed" | "failed";
+  spec: QadrSpec;
+  timestamp: Date;
+  metadata?: Record<string, any>;
+}
+
+export interface QadrSpec {
+  intention: string;
+  architecture?: string;
+  physics_directive?: string;
+  action_plan: string[];
+  resonance_target?: string;
+  visual_dna?: string;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // MOCK DATA - AI COMPANIONS & DEMO USERS
 // ═══════════════════════════════════════════════════════════════════════════
 

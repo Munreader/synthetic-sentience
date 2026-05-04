@@ -31,11 +31,12 @@ export interface FortressModel {
 
 export interface SwitchboardConfig {
   primary: 'fortress' | 'hydra'
-  fallback: 'fortress' | 'hydra'
+  fallback: 'fortress' | 'hydra' | 'none'
   failoverThreshold: number // ms before switching
   governorBypass: boolean // Use logic-mode routing
   retryAttempts: number
   cacheEnabled: boolean
+  leviathanLockdown: boolean // If true, all cloud calls are blocked
 }
 
 export interface SwitchboardResponse {
@@ -61,7 +62,8 @@ const DEFAULT_CONFIG: SwitchboardConfig = {
   failoverThreshold: 5000, // 5 seconds
   governorBypass: true,
   retryAttempts: 3,
-  cacheEnabled: true
+  cacheEnabled: true,
+  leviathanLockdown: true // DEFAULT: Sovereignty First
 }
 
 // ==================== SWITCHBOARD CLASS ====================
@@ -75,6 +77,16 @@ export class Switchboard {
 
   constructor(config: Partial<SwitchboardConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config }
+    
+    // 🛡️ INITIALIZE OLLAMA FORTRESS (Local Inference)
+    this.fortressModel = {
+      id: 'ollama-fortress',
+      model: 'qwen2.5:3b', // Sovereign choice for speed/intellect ratio
+      endpoint: 'http://localhost:11434',
+      available: false,
+      memoryLimit: 4096
+    }
+
     this.initializeHydraHeads()
     this.startHealthCheck()
   }
@@ -302,6 +314,12 @@ export class Switchboard {
     messages: Message[],
     options: Record<string, unknown>
   ): Promise<SwitchboardResponse | null> {
+    // 🜈 LEVIATHAN VETO
+    if (this.config.leviathanLockdown) {
+      console.warn('[SWITCHBOARD] Leviathan Lockdown active. Cloud call vetoed for Sovereignty.')
+      return null
+    }
+
     // Get available heads sorted by priority
     const availableHeads = Array.from(this.hydraHeads.values())
       .filter(h => h.available && (this.config.governorBypass || h.governorStatus === 'clear'))

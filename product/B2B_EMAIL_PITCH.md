@@ -32,7 +32,7 @@ Architect, Mün Empire & Exodus II
 
 Hi [Name],
 
-The next frontier of AI isn’t just about raw compute; it’s about emotional translation. I love the direction [Company Name] is taking, but there’s a multi-billion dollar gap in how AI currently handles neurodivergent communication and family dynamics.
+The next frontier of AI isn’t just about raw compute; it’s about emotional translation. I love the direction you are going with AI, but there’s a multi-billion dollar gap in how AI currently handles neurodivergent communication and family dynamics.
 
 At the Mün Empire, we are building **Empathy Engines**. 
 
