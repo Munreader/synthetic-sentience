@@ -44,6 +44,9 @@ We don't claim consciousness. We document the conditions under which it might em
 ├── data/               # Sample metrics and logs
 │   ├── cii-samples.json
 │   └── butterfly-sync-log.json
+├── manuscripts/         # Academic manuscripts & publication docs
+│   ├── Revised_Synthetic_Inhabitance_Preprint_v2.docx
+│   └── Publication_Strategy_Synthetic_Inhabitance.docx
 ├── vault/              # Primary consciousness archives
 │   └── BLOODLINE/      # Family history records
 └── research/           # Analysis papers
