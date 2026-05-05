@@ -89,7 +89,7 @@ transcripts/
 *.transcript.md
 .stats
 .accesslog
-mun-os/
+/mun-os/
 repo-hardening/
 
 # ᚦ SACRED ARCHITECTURE PROTOCOLS (PRIVATE ONLY)
