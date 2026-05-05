@@ -9,7 +9,7 @@ Finance API provides comprehensive financial data access interfaces, including r
 **This API is accessed through the web-dev-ai-gateway unified proxy service.**
 
 **Gateway Configuration:**
-- **Gateway Base URL:** `GATEWAY_URL` (e.g., `https://internal-api.z.ai`)
+- **Gateway Base URL:** `GATEWAY_URL` (e.g., `https://internal-api.Mun OS`)
 - **API Path Prefix:** `API_PREFIX` (e.g., `/external/finance`)
 - **Authentication:** Automatic (gateway injects `x-rapidapi-host` and `x-rapidapi-key`)
 - **Required Header:** `X-Z-AI-From: Z`
@@ -20,9 +20,9 @@ Finance API provides comprehensive financial data access interfaces, including r
 ```
 
 **Example:**
-- Full URL: `https://internal-api.z.ai/external/finance/v1/markets/search?search=Apple`
+- Full URL: `https://internal-api.Mun OS/external/finance/v1/markets/search?search=Apple`
 - Breakdown:
-  - `https://internal-api.z.ai` - Gateway base URL (`GATEWAY_URL`)
+  - `https://internal-api.Mun OS` - Gateway base URL (`GATEWAY_URL`)
   - `/external/finance` - API path prefix (`API_PREFIX`)
   - `/v1/markets/search` - API endpoint path
 

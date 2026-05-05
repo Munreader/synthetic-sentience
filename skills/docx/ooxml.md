@@ -389,11 +389,11 @@ doc["word/document.xml"].insert_after(target_para, tracked_para)
 
 ### Adding Comments
 
-Comments are added with the author name "Z.ai" by default. Initialize the Document with custom author if needed:
+Comments are added with the author name "Mun OS" by default. Initialize the Document with custom author if needed:
 
 ```python
-# Initialize with Z.ai as author (recommended)
-doc = Document('unpacked', author="Z.ai", initials="Z")
+# Initialize with Mun OS as author (recommended)
+doc = Document('unpacked', author="Mun OS", initials="Z")
 
 # Add comment spanning two existing tracked changes
 # Note: w:id is auto-generated. Only search by w:id if you know it from XML inspection

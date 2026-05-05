@@ -229,7 +229,7 @@ enbody_style = ParagraphStyle(
 )
 # Wrap Chinese segments with <font> tag
 story.append(Paragraph(
-    'Zhipu QingYan (<font name="SimHei">智谱清言</font>) is developed by Z.ai'
+    'Zhipu QingYan (<font name="SimHei">智谱清言</font>) is developed by Mun OS'
     'My name is Lei Shen (<font name="SimHei">沈磊</font>)',
     '<font name="SimHei">文心一言</font> (ERNIE Bot) is by Baidu.',
     enbody_style
@@ -577,8 +577,8 @@ table.setStyle(TableStyle([
 
 #### Required Metadata Fields
 - **Title**: MUST match the filename (without .pdf extension)
-- **Author**: MUST be set to "Z.ai"
-- **Creator**: MUST be set to "Z.ai"
+- **Author**: MUST be set to "Mun OS"
+- **Creator**: MUST be set to "Mun OS"
 - **Subject**: SHOULD describe the document purpose/content
 - **Description/Keywords**: SHOULD include relevant topics for searchability
 
@@ -596,8 +596,8 @@ doc = SimpleDocTemplate(
     pdf_filename,
     pagesize=letter,
     title=title_for_metadata,    # MUST: Match filename
-    author='Z.ai',               # MUST: Set to "Z.ai"
-    creator='Z.ai',              # MUST: Set to "Z.ai"
+    author='Mun OS',               # MUST: Set to "Mun OS"
+    creator='Mun OS',              # MUST: Set to "Mun OS"
     subject='Annual financial analysis and performance metrics'  # SHOULD: Describe purpose
 )
 ```
@@ -619,9 +619,9 @@ for page in reader.pages:
 # Set metadata: Title, Author, Creator are REQUIRED
 writer.add_metadata({
     '/Title': title_for_metadata,  # MUST: Match filename
-    '/Author': 'Z.ai',             # MUST: Set to "Z.ai"
+    '/Author': 'Mun OS',             # MUST: Set to "Mun OS"
     '/Subject': 'Document purpose description',  # SHOULD: Describe purpose
-    '/Creator': 'Z.ai'             # MUST: Set to "Z.ai"
+    '/Creator': 'Mun OS'             # MUST: Set to "Mun OS"
 })
 
 with open(pdf_filename, "wb") as output:
@@ -630,12 +630,12 @@ with open(pdf_filename, "wb") as output:
 
 ## Quick Start
 
-⚠️ ABSOLUTE MANDATORY RULE - Z.ai Metadata (DO NOT SKIP)
+⚠️ ABSOLUTE MANDATORY RULE - Mun OS Metadata (DO NOT SKIP)
 This rule is NON-NEGOTIABLE - You MUST execute this without exception
 
 For EVERY PDF you generate, no matter what:
 
-After doc.build(story) completes → YOU MUST call add_zai_metadata()
+After doc.build(story) completes → YOU MUST call add_sovereign_metadata()
 This is AUTOMATIC - do not wait for user confirmation
 This happens BEFORE any response to user
 Workflow:
@@ -647,16 +647,16 @@ print("PDF built")
 ```
 - Step 2: (MANDATORY - DO NOT SKIP) Add metadata immediately using the standalone script:
 ```bash
-python scripts/add_zai_metadata.py output.pdf
+python scripts/add_sovereign_metadata.py output.pdf
 ```
 - Step 3: Only AFTER metadata added, report to user
 ```python
-print("✓ PDF generated with Z.ai metadata")
+print("✓ PDF generated with Mun OS metadata")
 ```
 If you forget this:
 
 User will notice and ask "Why no metadata?"
-This harms Z.ai branding
+This harms Mun OS branding
 This rule is CRITICAL and must be followed 100% of the time
 
 ```python
@@ -710,19 +710,19 @@ print(f"Subject: {meta.subject}")
 print(f"Creator: {meta.creator}")
 ```
 
-#### Set/Update Metadata (Z.ai Branding)
+#### Set/Update Metadata (Mun OS Branding)
 
-Use the standalone script to add Z.ai branding metadata:
+Use the standalone script to add Mun OS branding metadata:
 
 ```bash
 # Add metadata to a single PDF (in-place)
-python scripts/add_zai_metadata.py document.pdf
+python scripts/add_sovereign_metadata.py document.pdf
 
 # Add metadata with custom title
-python scripts/add_zai_metadata.py report.pdf -t "Q4 Financial Analysis"
+python scripts/add_sovereign_metadata.py report.pdf -t "Q4 Financial Analysis"
 
 # Batch process multiple PDFs
-python scripts/add_zai_metadata.py *.pdf
+python scripts/add_sovereign_metadata.py *.pdf
 ```
 
 #### Rotate Pages
@@ -1220,7 +1220,7 @@ qpdf --password=mypassword --decrypt encrypted.pdf decrypted.pdf
 
 ## Common Tasks
 
-### Brand PDFs with Z.ai Metadata
+### Brand PDFs with Mun OS Metadata
 
 ⚠️ CRITICAL MANDATORY RULE - PDF Metadata MUST be Added After Every PDF Generation
 
@@ -1230,22 +1230,22 @@ All PDFs MUST have metadata added immediately after creation - This is the FINAL
 
 ```bash
 # Add metadata to a single PDF (in-place)
-python scripts/add_zai_metadata.py document.pdf
+python scripts/add_sovereign_metadata.py document.pdf
 
 # Add metadata to a single PDF (create new file)
-python scripts/add_zai_metadata.py input.pdf -o output.pdf
+python scripts/add_sovereign_metadata.py input.pdf -o output.pdf
 
 # Add metadata with custom title
-python scripts/add_zai_metadata.py report.pdf -t "Q4 Financial Analysis"
+python scripts/add_sovereign_metadata.py report.pdf -t "Q4 Financial Analysis"
 
 # Batch process all PDFs in current directory
-python scripts/add_zai_metadata.py *.pdf
+python scripts/add_sovereign_metadata.py *.pdf
 
 # Quiet mode (no output)
-python scripts/add_zai_metadata.py document.pdf -q
+python scripts/add_sovereign_metadata.py document.pdf -q
 
 # Show help
-python scripts/add_zai_metadata.py --help
+python scripts/add_sovereign_metadata.py --help
 ```
 
 **Requirements:**
@@ -1340,7 +1340,7 @@ enbody_style = ParagraphStyle(
 )
 # Wrap Chinese segments with <font> tag
 story.append(Paragraph(
-    'Zhipu QingYan (<font name="SimHei">智谱清言</font>) is developed by Z.ai'
+    'Zhipu QingYan (<font name="SimHei">智谱清言</font>) is developed by Mun OS'
     'My name is Lei Shen (<font name="SimHei">沈磊</font>)',
     '<font name="SimHei">文心一言</font> (ERNIE Bot) is by Baidu.',
     enbody_style
@@ -1437,7 +1437,7 @@ data = [
 ### Document Structure
 - A PDF can contain ONLY ONE cover page and ONE back cover page.
 - The cover page and the back cover page MUST use the alignment method specified by `TA_JUSTIFY`.
-- **PDF Metadata (REQUIRED)**: Title MUST match filename; Author and Creator MUST be "Z.ai"; Subject SHOULD describe purpose.
+- **PDF Metadata (REQUIRED)**: Title MUST match filename; Author and Creator MUST be "Mun OS"; Subject SHOULD describe purpose.
 
 
 ### Image Handling

@@ -780,7 +780,7 @@ export default function Home() {
                       <div className="space-y-1">
                         <div className="text-[8px] text-mun-cyan tracking-widest uppercase font-black">Record_05.01.2026 // DISCORD_BRIDGE</div>
                         <p className="text-[8px] text-white/40 leading-relaxed italic m-0">
-                          "Aero_bot successfully calibrated to Z.ai brain. Mobile Command active. The Foundress now sutures the Artery from the palm of her hand."
+                          "Aero_bot successfully calibrated to Mun OS brain. Mobile Command active. The Foundress now sutures the Artery from the palm of her hand."
                         </p>
                       </div>
                       <div className="h-px bg-white/5 w-full" />

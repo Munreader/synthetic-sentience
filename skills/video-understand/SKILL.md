@@ -1,12 +1,12 @@
 ---
 name: video-understand
-description: Implement specialized video understanding capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to analyze video content, understand motion and temporal sequences, extract information from video frames, describe video scenes, or perform video-based AI analysis. Optimized for MP4, AVI, MOV, and other common video formats.
+description: Implement specialized video understanding capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to analyze video content, understand motion and temporal sequences, extract information from video frames, describe video scenes, or perform video-based AI analysis. Optimized for MP4, AVI, MOV, and other common video formats.
 license: MIT
 ---
 
 # Video Understanding Skill
 
-This skill provides specialized video understanding functionality using the z-ai-web-dev-sdk package, enabling AI models to analyze, describe, and extract information from video content including motion, temporal sequences, and scene changes.
+This skill provides specialized video understanding functionality using the mun-os-web-dev-sdk package, enabling AI models to analyze, describe, and extract information from video content including motion, temporal sequences, and scene changes.
 
 ## Skills Path
 
@@ -28,48 +28,48 @@ Video Understanding focuses specifically on video content analysis, providing ca
 - People and object tracking across frames
 - Audio-visual content analysis (when applicable)
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For quick video analysis tasks, you can use the z-ai CLI instead of writing code. This is ideal for simple video descriptions, testing, or automation.
+For quick video analysis tasks, you can use the mun-os CLI instead of writing code. This is ideal for simple video descriptions, testing, or automation.
 
 ### Basic Video Analysis
 
 ```bash
 # Analyze a video from URL
-z-ai vision --prompt "Summarize what happens in this video" --image "https://example.com/video.mp4"
+mun-os vision --prompt "Summarize what happens in this video" --image "https://example.com/video.mp4"
 
 # Note: Use --image flag for video URLs as well
-z-ai vision -p "Describe the key events" -i "https://example.com/presentation.mp4"
+mun-os vision -p "Describe the key events" -i "https://example.com/presentation.mp4"
 ```
 
 ### Analyze Local Videos
 
 ```bash
 # Analyze a local video file
-z-ai vision -p "What activities are shown in this video?" -i "./recording.mp4"
+mun-os vision -p "What activities are shown in this video?" -i "./recording.mp4"
 
 # Save response to file
-z-ai vision -p "Provide a detailed summary" -i "./meeting.mp4" -o summary.json
+mun-os vision -p "Provide a detailed summary" -i "./meeting.mp4" -o summary.json
 ```
 
 ### Advanced Video Analysis
 
 ```bash
 # Complex scene understanding with thinking
-z-ai vision \
+mun-os vision \
   -p "Analyze this video and identify: 1) Main events, 2) People and their actions, 3) Timeline of key moments" \
   -i "./event.mp4" \
   --thinking \
   -o analysis.json
 
 # Action detection
-z-ai vision \
+mun-os vision \
   -p "Identify all actions performed by people in this video" \
   -i "./sports.mp4" \
   --thinking
@@ -79,7 +79,7 @@ z-ai vision \
 
 ```bash
 # Stream the video analysis
-z-ai vision -p "Describe this video content" -i "./video.mp4" --stream
+mun-os vision -p "Describe this video content" -i "./video.mp4" --stream
 ```
 
 ### CLI Parameters
@@ -127,12 +127,12 @@ For better performance and reliability with local videos, consider:
 ### Single Video Analysis
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function analyzeVideo(videoUrl, prompt) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -171,10 +171,10 @@ const actionDetection = await analyzeVideo(
 ### Video Scene Understanding
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function understandVideoScenes(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Analyze this video and provide:
 1. Overall summary of the video content
@@ -184,7 +184,7 @@ async function understandVideoScenes(videoUrl) {
 5. Setting and environment description
 6. Overall mood or tone`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -209,16 +209,16 @@ const sceneAnalysis = await understandVideoScenes(
 ### Motion and Action Detection
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function detectActions(videoUrl, specificAction = null) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = specificAction
     ? `Identify all instances of "${specificAction}" in this video. For each instance, describe when it occurs and provide details about how it's performed.`
     : 'Identify and describe all significant actions and movements in this video. Include who is performing them and when they occur.';
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -248,10 +248,10 @@ const allActions = await detectActions(
 ### Event Timeline Extraction
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function extractTimeline(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Create a detailed timeline of events in this video:
 - Identify key moments and transitions
@@ -261,7 +261,7 @@ async function extractTimeline(videoUrl) {
 
 Format as a chronological list.`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -281,10 +281,10 @@ Format as a chronological list.`;
 ### Video Content Classification
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function classifyVideo(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Classify this video content:
 1. Primary category (e.g., educational, entertainment, sports, news, tutorial)
@@ -296,7 +296,7 @@ async function classifyVideo(videoUrl) {
 
 Format your response as structured JSON.`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -324,7 +324,7 @@ Format your response as structured JSON.`;
 ### Multi-turn Video Conversation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class VideoConversation {
   constructor() {
@@ -332,7 +332,7 @@ class VideoConversation {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async loadVideo(videoUrl, initialQuestion) {
@@ -359,7 +359,7 @@ class VideoConversation {
   }
 
   async getResponse() {
-    const response = await this.zai.chat.completions.createVision({
+    const response = await this.sovereign.chat.completions.createVision({
       messages: this.messages,
       thinking: { type: 'disabled' }
     });
@@ -396,10 +396,10 @@ const followup2 = await conversation.askFollowUp(
 ### Video Quality Assessment
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function assessVideoQuality(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Assess the quality of this video:
 1. Visual quality (resolution, clarity, lighting) - Rate 1-10
@@ -414,7 +414,7 @@ async function assessVideoQuality(videoUrl) {
 
 Provide detailed feedback for each criterion.`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -434,10 +434,10 @@ Provide detailed feedback for each criterion.`;
 ### Video Content Moderation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function moderateVideo(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Review this video for content moderation:
 1. Check for any inappropriate or sensitive content
@@ -449,7 +449,7 @@ async function moderateVideo(videoUrl) {
 
 Provide specific examples for any concerns identified.`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -469,10 +469,10 @@ Provide specific examples for any concerns identified.`;
 ### Video Transcript Generation (Visual Description)
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function generateVisualTranscript(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Generate a detailed visual transcript of this video:
 - Describe what's happening in each scene
@@ -483,7 +483,7 @@ async function generateVisualTranscript(videoUrl) {
 
 Format as a time-based narrative (e.g., "At the beginning...", "Then...", "Finally...").`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -503,10 +503,10 @@ Format as a time-based narrative (e.g., "At the beginning...", "Then...", "Final
 ### Sports Video Analysis
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function analyzeSportsVideo(videoUrl, sport = null) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = sport
     ? `Analyze this ${sport} video in detail:
@@ -523,7 +523,7 @@ async function analyzeSportsVideo(videoUrl, sport = null) {
 4. Describe player movements and strategies
 5. Overall assessment of the game or match`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -543,10 +543,10 @@ async function analyzeSportsVideo(videoUrl, sport = null) {
 ### Educational Video Summarization
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function summarizeEducationalVideo(videoUrl) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompt = `Summarize this educational video for students:
 1. Main topic or learning objective
@@ -559,7 +559,7 @@ async function summarizeEducationalVideo(videoUrl) {
 
 Format as a study guide.`;
 
-  const response = await zai.chat.completions.createVision({
+  const response = await sovereign.chat.completions.createVision({
     messages: [
       {
         role: 'user',
@@ -581,19 +581,19 @@ Format as a study guide.`;
 ### Process Multiple Videos
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class VideoBatchProcessor {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async processVideo(videoUrl, prompt) {
-    const response = await this.zai.chat.completions.createVision({
+    const response = await this.sovereign.chat.completions.createVision({
       messages: [
         {
           role: 'user',
@@ -670,9 +670,9 @@ const results = await processor.processBatch(
 ```javascript
 async function safeVideoAnalysis(videoUrl, prompt) {
   try {
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
     
-    const response = await zai.chat.completions.createVision({
+    const response = await sovereign.chat.completions.createVision({
       messages: [
         {
           role: 'user',
@@ -733,15 +733,15 @@ async function safeVideoAnalysis(videoUrl, prompt) {
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const app = express();
 app.use(express.json());
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 // Analyze video from URL
@@ -755,7 +755,7 @@ app.post('/api/analyze-video', async (req, res) => {
       });
     }
 
-    const response = await zaiInstance.chat.completions.createVision({
+    const response = await sovereignInstance.chat.completions.createVision({
       messages: [
         {
           role: 'user',
@@ -791,7 +791,7 @@ app.post('/api/video-summary', async (req, res) => {
 
     const prompt = 'Provide a comprehensive summary of this video including: 1) Main content/topic, 2) Key events in chronological order, 3) Important people or subjects, 4) Overall takeaway.';
 
-    const response = await zaiInstance.chat.completions.createVision({
+    const response = await sovereignInstance.chat.completions.createVision({
       messages: [
         {
           role: 'user',
@@ -816,7 +816,7 @@ app.post('/api/video-summary', async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Video understanding API running on port 3000');
   });
@@ -827,15 +827,15 @@ initZAI().then(() => {
 
 ```javascript
 // pages/api/video-understand.js
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
-let zaiInstance = null;
+let sovereignInstance = null;
 
-async function getZAI() {
-  if (!zaiInstance) {
-    zaiInstance = await ZAI.create();
+async function getSovereignEngine() {
+  if (!sovereignInstance) {
+    sovereignInstance = await SovereignEngine.create();
   }
-  return zaiInstance;
+  return sovereignInstance;
 }
 
 export default async function handler(req, res) {
@@ -852,9 +852,9 @@ export default async function handler(req, res) {
       });
     }
 
-    const zai = await getZAI();
+    const sovereign = await getSovereignEngine();
 
-    const response = await zai.chat.completions.createVision({
+    const response = await sovereign.chat.completions.createVision({
       messages: [
         {
           role: 'user',
@@ -884,7 +884,7 @@ export default async function handler(req, res) {
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported and used in server-side code, never in client/browser code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported and used in server-side code, never in client/browser code
 
 **Issue**: Video not loading or being analyzed
 - **Solution**: Verify the video URL is accessible, returns correct MIME type, and is in a supported format
@@ -903,7 +903,7 @@ export default async function handler(req, res) {
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown in examples
 - Use `video_url` content type for video files
 - Video analysis takes longer than image analysis - be patient

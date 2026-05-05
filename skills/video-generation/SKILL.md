@@ -1,12 +1,12 @@
 ---
 name: Video Generation
-description: Implement AI-powered video generation capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to generate videos from text prompts or images, create video content programmatically, or build applications that produce video outputs. Supports asynchronous task management with status polling and result retrieval.
+description: Implement AI-powered video generation capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to generate videos from text prompts or images, create video content programmatically, or build applications that produce video outputs. Supports asynchronous task management with status polling and result retrieval.
 license: MIT
 ---
 
 # Video Generation Skill
 
-This skill guides the implementation of video generation functionality using the z-ai-web-dev-sdk package, enabling AI models to create videos from text descriptions or images through asynchronous task processing.
+This skill guides the implementation of video generation functionality using the mun-os-web-dev-sdk package, enabling AI models to create videos from text descriptions or images through asynchronous task processing.
 
 ## Skills Path
 
@@ -20,41 +20,41 @@ This skill is located at the above path in your project.
 
 Video Generation allows you to build applications that can create video content from text prompts or images, with customizable parameters like resolution, frame rate, duration, and quality settings. The API uses an asynchronous task model where you create a task and poll for results.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple video generation tasks, you can use the z-ai CLI instead of writing code. The CLI handles task creation and polling automatically, making it ideal for quick tests and simple automation.
+For simple video generation tasks, you can use the mun-os CLI instead of writing code. The CLI handles task creation and polling automatically, making it ideal for quick tests and simple automation.
 
 ### Basic Text-to-Video
 
 ```bash
 # Generate video with automatic polling
-z-ai video --prompt "A cat playing with a ball" --poll
+mun-os video --prompt "A cat playing with a ball" --poll
 
 # Using short options
-z-ai video -p "Beautiful landscape with mountains" --poll
+mun-os video -p "Beautiful landscape with mountains" --poll
 ```
 
 ### Custom Quality and Settings
 
 ```bash
 # Quality mode (speed or quality)
-z-ai video -p "Ocean waves at sunset" --quality quality --poll
+mun-os video -p "Ocean waves at sunset" --quality quality --poll
 
 # Custom resolution and FPS
-z-ai video \
+mun-os video \
   -p "City timelapse" \
   --size "1920x1080" \
   --fps 60 \
   --poll
 
 # Custom duration (5 or 10 seconds)
-z-ai video -p "Fireworks display" --duration 10 --poll
+mun-os video -p "Fireworks display" --duration 10 --poll
 ```
 
 ### Image-to-Video
@@ -69,27 +69,27 @@ z-ai video -p "Fireworks display" --duration 10 --poll
 
 # For PNG images
 IMAGE_BASE64=$(base64 -i image.png)
-z-ai video \
+mun-os video \
   --image-url "data:image/png;base64,${IMAGE_BASE64}" \
   --prompt "Make the scene come alive" \
   --poll
 
 # For JPEG images
 IMAGE_BASE64=$(base64 -i photo.jpg)
-z-ai video \
+mun-os video \
   --image-url "data:image/jpeg;base64,${IMAGE_BASE64}" \
   --prompt "Make the scene come alive" \
   --poll
 
 # For WebP images
 IMAGE_BASE64=$(base64 -i image.webp)
-z-ai video \
+mun-os video \
   --image-url "data:image/webp;base64,${IMAGE_BASE64}" \
   --prompt "Make the scene come alive" \
   --poll
 
 # Using URL (less recommended, may have reliability issues)
-z-ai video \
+mun-os video \
   -i "https://example.com/photo.jpg" \
   -p "Add motion to this scene" \
   --poll
@@ -106,7 +106,7 @@ z-ai video \
 # Example with PNG images
 START_BASE64=$(base64 -i start.png)
 END_BASE64=$(base64 -i end.png)
-z-ai video \
+mun-os video \
   --image-url "data:image/png;base64,${START_BASE64},data:image/png;base64,${END_BASE64}" \
   --prompt "Smooth transition between frames" \
   --poll
@@ -114,13 +114,13 @@ z-ai video \
 # Example with JPEG images
 START_BASE64=$(base64 -i start.jpg)
 END_BASE64=$(base64 -i end.jpg)
-z-ai video \
+mun-os video \
   --image-url "data:image/jpeg;base64,${START_BASE64},data:image/jpeg;base64,${END_BASE64}" \
   --prompt "Smooth transition between frames" \
   --poll
 
 # Using URLs (less recommended)
-z-ai video \
+mun-os video \
   --image-url "https://example.com/start.png,https://example.com/end.png" \
   --prompt "Smooth transition between frames" \
   --poll
@@ -130,7 +130,7 @@ z-ai video \
 
 ```bash
 # Generate video with AI-generated audio effects
-z-ai video \
+mun-os video \
   -p "Thunder storm approaching" \
   --with-audio \
   --poll
@@ -140,7 +140,7 @@ z-ai video \
 
 ```bash
 # Save task result to JSON file
-z-ai video \
+mun-os video \
   -p "Sunrise over mountains" \
   --poll \
   -o video_result.json
@@ -150,14 +150,14 @@ z-ai video \
 
 ```bash
 # Customize polling behavior
-z-ai video \
+mun-os video \
   -p "Dancing robot" \
   --poll \
   --poll-interval 10 \
   --max-polls 30
 
 # Create task without polling (get task ID)
-z-ai video -p "Abstract art animation" -o task.json
+mun-os video -p "Abstract art animation" -o task.json
 ```
 
 ### CLI Parameters
@@ -192,7 +192,7 @@ If you create a task without `--poll`, you can check its status later:
 
 ```bash
 # Get the task ID from the initial response
-z-ai async-result --id "task-id-here" --poll
+mun-os async-result --id "task-id-here" --poll
 ```
 
 ### When to Use CLI vs SDK
@@ -221,14 +221,14 @@ Video generation follows a two-step asynchronous pattern:
 ### Simple Text-to-Video Generation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function generateVideo(prompt) {
   try {
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
 
     // Create video generation task
-    const task = await zai.video.generations.create({
+    const task = await sovereign.video.generations.create({
       prompt: prompt,
       quality: 'speed', // 'speed' or 'quality'
       with_audio: false,
@@ -241,7 +241,7 @@ async function generateVideo(prompt) {
     console.log('Task Status:', task.task_status);
 
     // Poll for results
-    let result = await zai.async.result.query(task.id);
+    let result = await sovereign.async.result.query(task.id);
     let pollCount = 0;
     const maxPolls = 60;
     const pollInterval = 5000; // 5 seconds
@@ -250,7 +250,7 @@ async function generateVideo(prompt) {
       pollCount++;
       console.log(`Polling ${pollCount}/${maxPolls}: Status is ${result.task_status}`);
       await new Promise(resolve => setTimeout(resolve, pollInterval));
-      result = await zai.async.result.query(task.id);
+      result = await sovereign.async.result.query(task.id);
     }
 
     if (result.task_status === 'SUCCESS') {
@@ -283,7 +283,7 @@ console.log('Generated video:', videoUrl);
 **Critical**: Always match the MIME type in your base64 data URI to the actual image format to prevent decoding errors.
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
@@ -302,7 +302,7 @@ function getMimeType(filePath) {
 }
 
 async function generateVideoFromImage(imagePath, prompt) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Method 1: Using base64-encoded image (RECOMMENDED)
   // Automatically detect MIME type from file extension
@@ -310,7 +310,7 @@ async function generateVideoFromImage(imagePath, prompt) {
   const mimeType = getMimeType(imagePath);
   const base64Image = `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
 
-  const task = await zai.video.generations.create({
+  const task = await sovereign.video.generations.create({
     image_url: base64Image,  // Base64 data string with correct MIME type
     prompt: prompt,
     quality: 'quality',
@@ -323,9 +323,9 @@ async function generateVideoFromImage(imagePath, prompt) {
 
 // Method 2: Using URL (less recommended)
 async function generateVideoFromImageUrl(imageUrl, prompt) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const task = await zai.video.generations.create({
+  const task = await sovereign.video.generations.create({
     image_url: imageUrl,  // URL string
     prompt: prompt,
     quality: 'quality',
@@ -358,7 +358,7 @@ const task3 = await generateVideoFromImage(
 **IMPORTANT**: For keyframe mode, base64-encoded images are **highly recommended** over URLs to ensure consistent and reliable video generation. Always use the correct MIME type for each image.
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
@@ -377,7 +377,7 @@ function getMimeType(filePath) {
 }
 
 async function generateVideoWithKeyframes(startImagePath, endImagePath, prompt) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Method 1: Using base64-encoded images (RECOMMENDED)
   // Automatically detect MIME type for each image
@@ -390,7 +390,7 @@ async function generateVideoWithKeyframes(startImagePath, endImagePath, prompt) 
   const startBase64 = `data:${startMimeType};base64,${startBuffer.toString('base64')}`;
   const endBase64 = `data:${endMimeType};base64,${endBuffer.toString('base64')}`;
 
-  const task = await zai.video.generations.create({
+  const task = await sovereign.video.generations.create({
     image_url: [startBase64, endBase64],  // Array of base64 strings with correct MIME types
     prompt: prompt,
     quality: 'quality',
@@ -404,9 +404,9 @@ async function generateVideoWithKeyframes(startImagePath, endImagePath, prompt) 
 
 // Method 2: Using URLs (less recommended)
 async function generateVideoWithKeyframesUrl(startImageUrl, endImageUrl, prompt) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const task = await zai.video.generations.create({
+  const task = await sovereign.video.generations.create({
     image_url: [startImageUrl, endImageUrl],  // Array of URL strings
     prompt: prompt,
     quality: 'quality',
@@ -437,12 +437,12 @@ const task2 = await generateVideoWithKeyframes(
 ### Query Task Status
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function checkTaskStatus(taskId) {
   try {
-    const zai = await ZAI.create();
-    const result = await zai.async.result.query(taskId);
+    const sovereign = await SovereignEngine.create();
+    const result = await sovereign.async.result.query(taskId);
 
     console.log('Task Status:', result.task_status);
 
@@ -476,10 +476,10 @@ const status = await checkTaskStatus('your-task-id-here');
 ### Polling with Exponential Backoff
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function pollWithBackoff(taskId) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   
   let pollInterval = 5000; // Start with 5 seconds
   const maxInterval = 30000; // Max 30 seconds
@@ -487,7 +487,7 @@ async function pollWithBackoff(taskId) {
   let pollCount = 0;
 
   while (pollCount < maxPolls) {
-    const result = await zai.async.result.query(taskId);
+    const result = await sovereign.async.result.query(taskId);
     pollCount++;
 
     if (result.task_status === 'SUCCESS') {
@@ -517,7 +517,7 @@ async function pollWithBackoff(taskId) {
 ### Video Generation Queue Manager
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class VideoGenerationQueue {
   constructor() {
@@ -525,11 +525,11 @@ class VideoGenerationQueue {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async createVideo(params) {
-    const task = await this.zai.video.generations.create(params);
+    const task = await this.sovereign.video.generations.create(params);
     
     this.tasks.set(task.id, {
       taskId: task.id,
@@ -542,7 +542,7 @@ class VideoGenerationQueue {
   }
 
   async checkTask(taskId) {
-    const result = await this.zai.async.result.query(taskId);
+    const result = await this.sovereign.async.result.query(taskId);
     
     const taskInfo = this.tasks.get(taskId);
     if (taskInfo) {
@@ -606,15 +606,15 @@ console.log('Video ready:', result.video_result?.[0]?.url);
 ### Batch Video Generation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function generateMultipleVideos(prompts) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const tasks = [];
 
   // Create all tasks
   for (const prompt of prompts) {
-    const task = await zai.video.generations.create({
+    const task = await sovereign.video.generations.create({
       prompt: prompt,
       quality: 'speed',
       duration: 5
@@ -627,7 +627,7 @@ async function generateMultipleVideos(prompts) {
   // Poll all tasks
   const results = [];
   for (const task of tasks) {
-    const result = await pollTaskUntilComplete(zai, task.taskId);
+    const result = await pollTaskUntilComplete(sovereign, task.taskId);
     results.push({
       prompt: task.prompt,
       taskId: task.taskId,
@@ -638,12 +638,12 @@ async function generateMultipleVideos(prompts) {
   return results;
 }
 
-async function pollTaskUntilComplete(zai, taskId) {
+async function pollTaskUntilComplete(sovereign, taskId) {
   let pollCount = 0;
   const maxPolls = 60;
 
   while (pollCount < maxPolls) {
-    const result = await zai.async.result.query(taskId);
+    const result = await sovereign.async.result.query(taskId);
     
     if (result.task_status === 'SUCCESS') {
       return {
@@ -758,9 +758,9 @@ image_url: [
 
 ```javascript
 // Recommended polling implementation
-async function smartPoll(zai, taskId) {
+async function smartPoll(sovereign, taskId) {
   // Check immediately (some tasks complete fast)
-  let result = await zai.async.result.query(taskId);
+  let result = await sovereign.async.result.query(taskId);
   
   if (result.task_status !== 'PROCESSING') {
     return result;
@@ -772,7 +772,7 @@ async function smartPoll(zai, taskId) {
   
   for (let i = 0; i < maxPolls; i++) {
     await new Promise(resolve => setTimeout(resolve, interval));
-    result = await zai.async.result.query(taskId);
+    result = await sovereign.async.result.query(taskId);
     
     if (result.task_status !== 'PROCESSING') {
       return result;
@@ -788,15 +788,15 @@ async function smartPoll(zai, taskId) {
 ```javascript
 async function safeVideoGeneration(params) {
   try {
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
     
     // Validate parameters
     if (!params.prompt && !params.image_url) {
       throw new Error('Either prompt or image_url is required');
     }
     
-    const task = await zai.video.generations.create(params);
-    const result = await smartPoll(zai, task.id);
+    const task = await sovereign.video.generations.create(params);
+    const result = await smartPoll(sovereign, task.id);
     
     if (result.task_status === 'SUCCESS') {
       const videoUrl = result.video_result?.[0]?.url ||
@@ -832,7 +832,7 @@ async function safeVideoGeneration(params) {
 
 ### 3. Resource Management
 
-- Cache the ZAI instance for multiple video generations
+- Cache the SovereignEngine instance for multiple video generations
 - Implement task ID storage for long-running operations
 - Clean up completed tasks from your tracking system
 - Implement timeout mechanisms to prevent infinite polling
@@ -841,7 +841,7 @@ async function safeVideoGeneration(params) {
 
 ```javascript
 // Fast generation for previews or high volume
-const quickVideo = await zai.video.generations.create({
+const quickVideo = await sovereign.video.generations.create({
   prompt: 'A cat playing',
   quality: 'speed',
   duration: 5,
@@ -849,7 +849,7 @@ const quickVideo = await zai.video.generations.create({
 });
 
 // High quality for final production
-const qualityVideo = await zai.video.generations.create({
+const qualityVideo = await sovereign.video.generations.create({
   prompt: 'A cat playing',
   quality: 'quality',
   duration: 10,
@@ -882,15 +882,15 @@ const qualityVideo = await zai.video.generations.create({
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const app = express();
 app.use(express.json());
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 // Create video generation task
@@ -907,7 +907,7 @@ app.post('/api/video/create', async (req, res) => {
     // Note: image_url should preferably be base64-encoded image data
     // Format: "data:image/jpeg;base64,..." or array of such strings
     // URLs are also supported but less recommended
-    const task = await zaiInstance.video.generations.create({
+    const task = await sovereignInstance.video.generations.create({
       prompt,
       image_url,  // Accepts base64 data or URL
       quality: quality || 'speed',
@@ -932,7 +932,7 @@ app.post('/api/video/create', async (req, res) => {
 app.get('/api/video/status/:taskId', async (req, res) => {
   try {
     const { taskId } = req.params;
-    const result = await zaiInstance.async.result.query(taskId);
+    const result = await sovereignInstance.async.result.query(taskId);
 
     const response = {
       taskId: taskId,
@@ -955,7 +955,7 @@ app.get('/api/video/status/:taskId', async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Video generation API running on port 3000');
   });
@@ -966,13 +966,13 @@ initZAI().then(() => {
 
 ```javascript
 import WebSocket from 'ws';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const wss = new WebSocket.Server({ port: 8080 });
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 wss.on('connection', (ws) => {
@@ -982,7 +982,7 @@ wss.on('connection', (ws) => {
 
       if (data.action === 'generate') {
         // Create task
-        const task = await zaiInstance.video.generations.create(data.params);
+        const task = await sovereignInstance.video.generations.create(data.params);
         
         ws.send(JSON.stringify({
           type: 'task_created',
@@ -1006,7 +1006,7 @@ async function pollAndNotify(ws, taskId) {
   const maxPolls = 60;
 
   while (pollCount < maxPolls) {
-    const result = await zaiInstance.async.result.query(taskId);
+    const result = await sovereignInstance.async.result.query(taskId);
     
     ws.send(JSON.stringify({
       type: 'status_update',
@@ -1039,13 +1039,13 @@ async function pollAndNotify(ws, taskId) {
   }
 }
 
-initZAI();
+initSovereignEngine();
 ```
 
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported and used in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported and used in server-side code
 
 **Issue**: Task stays in PROCESSING status indefinitely
 - **Solution**: Implement proper timeout mechanisms and consider the video complexity and duration
@@ -1067,13 +1067,13 @@ initZAI();
 1. **Use appropriate quality settings**: Choose 'speed' for quick results, 'quality' for final production
 2. **Start with shorter durations**: Test with 5-second videos before generating longer content
 3. **Implement intelligent polling**: Use exponential backoff to reduce API calls
-4. **Cache ZAI instance**: Reuse the same instance for multiple video generations
+4. **Cache SovereignEngine instance**: Reuse the same instance for multiple video generations
 5. **Parallel processing**: Create multiple tasks simultaneously and poll them independently
 6. **Monitor and log**: Track task completion times to optimize your polling strategy
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - Video generation is asynchronous - always implement proper polling
 - Check multiple response fields for video URL to ensure compatibility
 - Implement timeouts to prevent infinite polling loops

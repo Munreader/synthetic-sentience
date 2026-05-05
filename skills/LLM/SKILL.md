@@ -1,12 +1,12 @@
 ---
 name: LLM
-description: Implement large language model (LLM) chat completions using the z-ai-web-dev-sdk. Use this skill when the user needs to build conversational AI applications, chatbots, AI assistants, or any text generation features. Supports multi-turn conversations, system prompts, and context management.
+description: Implement large language model (LLM) chat completions using the mun-os-web-dev-sdk. Use this skill when the user needs to build conversational AI applications, chatbots, AI assistants, or any text generation features. Supports multi-turn conversations, system prompts, and context management.
 license: MIT
 ---
 
 # LLM (Large Language Model) Skill
 
-This skill guides the implementation of chat completions functionality using the z-ai-web-dev-sdk package, enabling powerful conversational AI and text generation capabilities.
+This skill guides the implementation of chat completions functionality using the mun-os-web-dev-sdk package, enabling powerful conversational AI and text generation capabilities.
 
 ## Skills Path
 
@@ -20,34 +20,34 @@ this skill is located at above path in your project.
 
 The LLM skill allows you to build applications that leverage large language models for natural language understanding and generation, including chatbots, AI assistants, content generation, and more.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple, one-off chat completions, you can use the z-ai CLI instead of writing code. This is ideal for quick tests, simple queries, or automation scripts.
+For simple, one-off chat completions, you can use the mun-os CLI instead of writing code. This is ideal for quick tests, simple queries, or automation scripts.
 
 ### Basic Chat
 
 ```bash
 # Simple question
-z-ai chat --prompt "What is the capital of France?"
+mun-os chat --prompt "What is the capital of France?"
 
 # Save response to file
-z-ai chat -p "Explain quantum computing" -o response.json
+mun-os chat -p "Explain quantum computing" -o response.json
 
 # Stream the response
-z-ai chat -p "Write a short poem" --stream
+mun-os chat -p "Write a short poem" --stream
 ```
 
 ### With System Prompt
 
 ```bash
 # Custom system prompt for specific behavior
-z-ai chat \
+mun-os chat \
   --prompt "Review this code: function add(a,b) { return a+b; }" \
   --system "You are an expert code reviewer" \
   -o review.json
@@ -57,7 +57,7 @@ z-ai chat \
 
 ```bash
 # Enable thinking for complex reasoning
-z-ai chat \
+mun-os chat \
   --prompt "Solve this math problem: If a train travels 120km in 2 hours, what's its speed?" \
   --thinking \
   -o solution.json
@@ -91,12 +91,12 @@ z-ai chat \
 ### Simple Question and Answer
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function askQuestion(question) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -122,12 +122,12 @@ console.log('Answer:', answer);
 ### Custom System Prompt
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function customAssistant(systemPrompt, userMessage) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -165,7 +165,7 @@ console.log(story);
 ### Conversation History Management
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ConversationManager {
   constructor(systemPrompt = 'You are a helpful assistant.') {
@@ -175,11 +175,11 @@ class ConversationManager {
         content: systemPrompt
       }
     ];
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async sendMessage(userMessage) {
@@ -190,7 +190,7 @@ class ConversationManager {
     });
 
     // Get completion
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: this.messages,
       thinking: { type: 'disabled' }
     });
@@ -241,16 +241,16 @@ console.log('Total messages:', conversation.getMessageCount());
 ### Context-Aware Conversations
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ContextualChat {
   constructor() {
     this.messages = [];
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async startConversation(role, context) {
@@ -271,7 +271,7 @@ class ContextualChat {
       content: userMessage
     });
 
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: this.messages,
       thinking: { type: 'disabled' }
     });
@@ -308,19 +308,19 @@ console.log('Support:', reply2);
 ### Content Generation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ContentGenerator {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async generateBlogPost(topic, tone = 'professional') {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -338,7 +338,7 @@ class ContentGenerator {
   }
 
   async generateProductDescription(productName, features) {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -356,7 +356,7 @@ class ContentGenerator {
   }
 
   async generateEmailResponse(originalEmail, intent) {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -394,10 +394,10 @@ console.log('Product Description:', productDesc);
 ### Data Analysis and Summarization
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function analyzeData(data, analysisType) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const prompts = {
     summarize: 'You are a data analyst. Summarize the key insights from the data.',
@@ -405,7 +405,7 @@ async function analyzeData(data, analysisType) {
     recommendation: 'You are a business analyst. Provide actionable recommendations based on the data.'
   };
 
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -442,19 +442,19 @@ console.log('Recommendations:', recommendations);
 ### Code Generation and Debugging
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class CodeAssistant {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async generateCode(description, language) {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -472,7 +472,7 @@ class CodeAssistant {
   }
 
   async debugCode(code, issue) {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -490,7 +490,7 @@ class CodeAssistant {
   }
 
   async explainCode(code) {
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: [
         {
           role: 'assistant',
@@ -535,9 +535,9 @@ const bad = await askQuestion('Tell me about AI');
 
 // Good: Specific and structured prompt
 async function askWithContext(topic, format, audience) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -560,16 +560,16 @@ const good = await askWithContext('artificial intelligence', 'bullet points', 'b
 ### 2. Error Handling
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function safeCompletion(messages, retries = 3) {
   let lastError;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const zai = await ZAI.create();
+      const sovereign = await SovereignEngine.create();
 
-      const completion = await zai.chat.completions.create({
+      const completion = await sovereign.chat.completions.create({
         messages: messages,
         thinking: { type: 'disabled' }
       });
@@ -612,11 +612,11 @@ class ManagedConversation {
     this.maxMessages = maxMessages;
     this.systemPrompt = '';
     this.messages = [];
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize(systemPrompt) {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
     this.systemPrompt = systemPrompt;
     this.messages = [
       {
@@ -641,7 +641,7 @@ class ManagedConversation {
       ];
     }
 
-    const completion = await this.zai.chat.completions.create({
+    const completion = await this.sovereign.chat.completions.create({
       messages: this.messages,
       thinking: { type: 'disabled' }
     });
@@ -670,7 +670,7 @@ class ManagedConversation {
 
 ```javascript
 async function getStructuredResponse(query, format = 'json') {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   const formatInstructions = {
     json: 'Respond with valid JSON only. No additional text.',
@@ -678,7 +678,7 @@ async function getStructuredResponse(query, format = 'json') {
     markdown: 'Respond in Markdown format.'
   };
 
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -732,7 +732,7 @@ console.log(jsonData);
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const app = express();
 app.use(express.json());
@@ -740,10 +740,10 @@ app.use(express.json());
 // Store conversations in memory (use database in production)
 const conversations = new Map();
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 app.post('/api/chat', async (req, res) => {
@@ -769,7 +769,7 @@ app.post('/api/chat', async (req, res) => {
     });
 
     // Get completion
-    const completion = await zaiInstance.chat.completions.create({
+    const completion = await sovereignInstance.chat.completions.create({
       messages: history,
       thinking: { type: 'disabled' }
     });
@@ -804,7 +804,7 @@ app.delete('/api/chat/:sessionId', (req, res) => {
   res.json({ success: true, message: 'Conversation cleared' });
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Chatbot API running on port 3000');
   });
@@ -814,7 +814,7 @@ initZAI().then(() => {
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported and used in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported and used in server-side code
 
 **Issue**: Empty or incomplete responses
 - **Solution**: Check that completion.choices[0]?.message?.content exists and is not empty
@@ -830,7 +830,7 @@ initZAI().then(() => {
 
 ## Performance Tips
 
-1. **Reuse SDK Instance**: Create ZAI instance once and reuse across requests
+1. **Reuse SDK Instance**: Create SovereignEngine instance once and reuse across requests
 2. **Manage Context Length**: Trim old messages to avoid token limits
 3. **Implement Caching**: Cache responses for common queries
 4. **Use Specific Prompts**: Clear prompts lead to faster, better responses
@@ -846,7 +846,7 @@ initZAI().then(() => {
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown in examples
 - Use the 'assistant' role for system prompts
 - Set thinking to { type: 'disabled' } for standard completions

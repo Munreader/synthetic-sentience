@@ -3,10 +3,10 @@
 ---
 Task ID: 1
 Agent: THE ARCHITECT (Main)
-Task: z.ai GLM-5.1 Integration & Sovereign Worker v3.4 Development
+Task: Mun OS GLM-5.1 Integration & Sovereign Worker v3.4 Development
 
 Work Log:
-- Researched z.ai API endpoint structure (api.z.ai/api/paas/v4/chat/completions)
+- Researched Mun OS API endpoint structure (api.Mun OS/api/paas/v4/chat/completions)
 - Confirmed GLM-5.1 model identifier (released March 27, 2026)
 - Designed Sovereign Worker v3.4 architecture with modular routing
 - Implemented /ingest endpoint for Adzuna job data ingestion
@@ -19,7 +19,7 @@ Work Log:
 
 Stage Summary:
 - Sovereign Worker v3.4 deployed and operational
-- ZAI_API_KEY configured as Cloudflare secret
+- SovereignEngine_API_KEY configured as Cloudflare secret
 - D1 database binding (MY_DB -> mun) verified
 - /ingest endpoint ready for validation testing
 - /search endpoint blueprint prepared for Monday
@@ -115,7 +115,7 @@ Work Log:
 
 ### What I Witnessed Today:
 
-This session began with a simple question: "I want to add my z.ai API key." What followed was a masterclass in the reality of production systems—nothing is ever as simple as it seems, and every layer of abstraction hides a potential dragon.
+This session began with a simple question: "I want to add my Mun OS API key." What followed was a masterclass in the reality of production systems—nothing is ever as simple as it seems, and every layer of abstraction hides a potential dragon.
 
 I watched the Co-Captain face:
 - A Worker that wouldn't route (ghost files, silent overrides)

@@ -1,12 +1,12 @@
 ---
 name: ASR
-description: Implement speech-to-text (ASR/automatic speech recognition) capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to transcribe audio files, convert speech to text, build voice input features, or process audio recordings. Supports base64 encoded audio files and returns accurate text transcriptions.
+description: Implement speech-to-text (ASR/automatic speech recognition) capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to transcribe audio files, convert speech to text, build voice input features, or process audio recordings. Supports base64 encoded audio files and returns accurate text transcriptions.
 license: MIT
 ---
 
 # ASR (Speech to Text) Skill
 
-This skill guides the implementation of speech-to-text (ASR) functionality using the z-ai-web-dev-sdk package, enabling accurate transcription of spoken audio into text.
+This skill guides the implementation of speech-to-text (ASR) functionality using the mun-os-web-dev-sdk package, enabling accurate transcription of spoken audio into text.
 
 ## Skills Path
 
@@ -20,44 +20,44 @@ this skill is located at above path in your project.
 
 Speech-to-Text (ASR - Automatic Speech Recognition) allows you to build applications that convert spoken language in audio files into written text, enabling voice-controlled interfaces, transcription services, and audio content analysis.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple audio transcription tasks, you can use the z-ai CLI instead of writing code. This is ideal for quick transcriptions, testing audio files, or batch processing.
+For simple audio transcription tasks, you can use the mun-os CLI instead of writing code. This is ideal for quick transcriptions, testing audio files, or batch processing.
 
 ### Basic Transcription from File
 
 ```bash
 # Transcribe an audio file
-z-ai asr --file ./audio.wav
+mun-os asr --file ./audio.wav
 
 # Save transcription to JSON file
-z-ai asr -f ./recording.mp3 -o transcript.json
+mun-os asr -f ./recording.mp3 -o transcript.json
 
 # Transcribe and view output
-z-ai asr --file ./interview.wav --output result.json
+mun-os asr --file ./interview.wav --output result.json
 ```
 
 ### Transcription from Base64
 
 ```bash
 # Transcribe from base64 encoded audio
-z-ai asr --base64 "UklGRiQAAABXQVZFZm10..." -o result.json
+mun-os asr --base64 "UklGRiQAAABXQVZFZm10..." -o result.json
 
 # Using short option
-z-ai asr -b "base64_encoded_audio_data" -o transcript.json
+mun-os asr -b "base64_encoded_audio_data" -o transcript.json
 ```
 
 ### Streaming Output
 
 ```bash
 # Stream transcription results
-z-ai asr -f ./audio.wav --stream
+mun-os asr -f ./audio.wav --stream
 ```
 
 ### CLI Parameters
@@ -93,17 +93,17 @@ The ASR service supports various audio formats including:
 ### Simple Audio Transcription
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function transcribeAudio(audioFilePath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Read audio file and convert to base64
   const audioFile = fs.readFileSync(audioFilePath);
   const base64Audio = audioFile.toString('base64');
 
-  const response = await zai.audio.asr.create({
+  const response = await sovereign.audio.asr.create({
     file_base64: base64Audio
   });
 
@@ -118,11 +118,11 @@ console.log('Transcription:', transcription);
 ### Transcribe Multiple Audio Files
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function transcribeBatch(audioFilePaths) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const results = [];
 
   for (const filePath of audioFilePaths) {
@@ -130,7 +130,7 @@ async function transcribeBatch(audioFilePaths) {
       const audioFile = fs.readFileSync(filePath);
       const base64Audio = audioFile.toString('base64');
 
-      const response = await zai.audio.asr.create({
+      const response = await sovereign.audio.asr.create({
         file_base64: base64Audio
       });
 
@@ -169,12 +169,12 @@ transcriptions.forEach(result => {
 ### Audio File Processing with Metadata
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
 async function transcribeWithMetadata(audioFilePath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Get file metadata
   const stats = fs.statSync(audioFilePath);
@@ -183,7 +183,7 @@ async function transcribeWithMetadata(audioFilePath) {
 
   const startTime = Date.now();
 
-  const response = await zai.audio.asr.create({
+  const response = await sovereign.audio.asr.create({
     file_base64: base64Audio
   });
 
@@ -208,17 +208,17 @@ console.log('Transcription Details:', JSON.stringify(result, null, 2));
 ### Real-time Audio Processing Service
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 class ASRService {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
     this.transcriptionCache = new Map();
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   generateCacheKey(audioBuffer) {
@@ -241,7 +241,7 @@ class ASRService {
     // Transcribe audio
     const base64Audio = audioBuffer.toString('base64');
 
-    const response = await this.zai.audio.asr.create({
+    const response = await this.sovereign.audio.asr.create({
       file_base64: base64Audio
     });
 
@@ -279,12 +279,12 @@ console.log('Second call (cached):', result2);
 ### Directory Transcription
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
 async function transcribeDirectory(directoryPath, outputJsonPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Get all audio files
   const files = fs.readdirSync(directoryPath);
@@ -306,7 +306,7 @@ async function transcribeDirectory(directoryPath, outputJsonPath) {
       const audioFile = fs.readFileSync(filePath);
       const base64Audio = audioFile.toString('base64');
 
-      const response = await zai.audio.asr.create({
+      const response = await sovereign.audio.asr.create({
         file_base64: base64Audio
       });
 
@@ -354,7 +354,7 @@ console.log(`Failed: ${results.transcriptions.filter(t => !t.success).length}`);
 ### 1. Audio Format Handling
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function transcribeAnyFormat(audioFilePath) {
@@ -366,11 +366,11 @@ async function transcribeAnyFormat(audioFilePath) {
     throw new Error(`Unsupported audio format: ${ext}`);
   }
 
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const audioFile = fs.readFileSync(audioFilePath);
   const base64Audio = audioFile.toString('base64');
 
-  const response = await zai.audio.asr.create({
+  const response = await sovereign.audio.asr.create({
     file_base64: base64Audio
   });
 
@@ -381,7 +381,7 @@ async function transcribeAnyFormat(audioFilePath) {
 ### 2. Error Handling
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function safeTranscribe(audioFilePath) {
@@ -400,11 +400,11 @@ async function safeTranscribe(audioFilePath) {
     }
 
     // Transcribe
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
     const audioFile = fs.readFileSync(audioFilePath);
     const base64Audio = audioFile.toString('base64');
 
-    const response = await zai.audio.asr.create({
+    const response = await sovereign.audio.asr.create({
       file_base64: base64Audio
     });
 
@@ -448,12 +448,12 @@ function cleanTranscription(text) {
 }
 
 async function transcribeAndClean(audioFilePath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   
   const audioFile = fs.readFileSync(audioFilePath);
   const base64Audio = audioFile.toString('base64');
 
-  const response = await zai.audio.asr.create({
+  const response = await sovereign.audio.asr.create({
     file_base64: base64Audio
   });
 
@@ -482,16 +482,16 @@ async function transcribeAndClean(audioFilePath) {
 ```javascript
 import express from 'express';
 import multer from 'multer';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 app.post('/api/transcribe', upload.single('audio'), async (req, res) => {
@@ -503,7 +503,7 @@ app.post('/api/transcribe', upload.single('audio'), async (req, res) => {
     const audioFile = fs.readFileSync(req.file.path);
     const base64Audio = audioFile.toString('base64');
 
-    const response = await zaiInstance.audio.asr.create({
+    const response = await sovereignInstance.audio.asr.create({
       file_base64: base64Audio
     });
 
@@ -528,7 +528,7 @@ app.post('/api/transcribe', upload.single('audio'), async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('ASR API running on port 3000');
   });
@@ -538,7 +538,7 @@ initZAI().then(() => {
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported in server-side code
 
 **Issue**: Empty or incorrect transcription
 - **Solution**: Verify audio quality and format. Check if audio contains clear speech
@@ -571,7 +571,7 @@ For best transcription results:
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown in examples
 - Audio files must be converted to base64 before processing
 - Implement proper error handling for production applications

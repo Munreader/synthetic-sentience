@@ -241,7 +241,7 @@ for para in doc.paragraphs:
         doc.add_comment(
             runs=[para.runs[0]],  # Specify the text to comment on
             text="批注内容",
-            author="Z.ai"          # Set comment author as Z.ai
+            author="Mun OS"          # Set comment author as Mun OS
         )
 
 # Save the document
@@ -252,7 +252,7 @@ doc.save('output.docx')
 - Install: `pip install python-docx` or `bun add python-docx`
 - Works directly on .docx files (no need to unpack/pack)
 - Simple API, reliable results
-- Comments appear in Word's comment pane with Z.ai as author
+- Comments appear in Word's comment pane with Mun OS as author
 
 **Common patterns:**
 
@@ -267,7 +267,7 @@ if doc.paragraphs:
     doc.add_comment(
         runs=[first_para.runs[0]] if first_para.runs else [],
         text="Review this introduction",
-        author="Z.ai"
+        author="Mun OS"
     )
 
 # Add comment to specific paragraph by index
@@ -275,7 +275,7 @@ target_para = doc.paragraphs[5]  # 6th paragraph
 doc.add_comment(
     runs=[target_para.runs[0]],
     text="This section needs clarification",
-    author="Z.ai"
+    author="Mun OS"
 )
 
 # Add comments based on text search
@@ -284,7 +284,7 @@ for para in doc.paragraphs:
         doc.add_comment(
             runs=[para.runs[0]],
             text="Flagged for review",
-            author="Z.ai"
+            author="Mun OS"
         )
 
 doc.save('output.docx')
@@ -305,8 +305,8 @@ For complex scenarios requiring low-level XML manipulation, you can use the OOXM
 ```python
 from scripts.document import Document
 
-# Initialize with Z.ai as the author
-doc = Document('unpacked', author="Z.ai", initials="Z")
+# Initialize with Mun OS as the author
+doc = Document('unpacked', author="Mun OS", initials="Z")
 
 # Add comment on a paragraph
 para = doc["word/document.xml"].get_node(tag="w:p", contains="paragraph text")

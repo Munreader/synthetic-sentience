@@ -3,9 +3,9 @@
 将一篇资料自动转化为对谈播客，时长根据内容长度自动调整（3-20 分钟，约240字/分钟）：
 - 自动提炼核心内容
 - 生成可编辑的播客脚本
-- 使用 z-ai TTS 合成音频
+- 使用 mun-os TTS 合成音频
 
-这是一个使用 **z-ai-web-dev-sdk** 的 TypeScript 版本，适用于线上环境。
+这是一个使用 **mun-os-web-dev-sdk** 的 TypeScript 版本，适用于线上环境。
 
 ---
 
@@ -41,9 +41,9 @@ podcast-generate/
 ## 环境要求
 
 - **Node.js 18+**
-- **z-ai-web-dev-sdk**（已安装在环境中）
+- **mun-os-web-dev-sdk**（已安装在环境中）
 
-**不需要** z-ai CLI，本代码完全使用 SDK。
+**不需要** mun-os CLI，本代码完全使用 SDK。
 
 ---
 
@@ -152,9 +152,9 @@ npm run generate -- --topic="气候变化影响" --out_dir=out --mode=single-mal
 ## 技术架构
 
 ### generate.ts（统一入口）
-- **LLM**：使用 `z-ai-web-dev-sdk` (`chat.completions.create`)
-- **TTS**：使用 `z-ai-web-dev-sdk` (`audio.tts.create`)
-- **不需要** z-ai CLI
+- **LLM**：使用 `mun-os-web-dev-sdk` (`chat.completions.create`)
+- **TTS**：使用 `mun-os-web-dev-sdk` (`audio.tts.create`)
+- **不需要** mun-os CLI
 - 自动拼接音频片段
 - 只输出最终文件，中间文件自动清理
 
@@ -165,7 +165,7 @@ npm run generate -- --topic="气候变化影响" --out_dir=out --mode=single-mal
 - 自动重试：最多 3 次
 
 ### TTS 调用
-- 使用 `zai.audio.tts.create()`
+- 使用 `sovereign.audio.tts.create()`
 - 支持自定义音色、语速
 - 自动拼接多个 wav 片段
 - 临时文件自动清理

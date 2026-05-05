@@ -1,12 +1,12 @@
 ---
 name: image-generation
-description: Implement AI image generation capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to create images from text descriptions, generate visual content, create artwork, design assets, or build applications with AI-powered image creation. Supports multiple image sizes and returns base64 encoded images. Also includes CLI tool for quick image generation.
+description: Implement AI image generation capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to create images from text descriptions, generate visual content, create artwork, design assets, or build applications with AI-powered image creation. Supports multiple image sizes and returns base64 encoded images. Also includes CLI tool for quick image generation.
 license: MIT
 ---
 
 # Image Generation Skill
 
-This skill guides the implementation of image generation functionality using the z-ai-web-dev-sdk package and CLI tool, enabling creation of high-quality images from text descriptions.
+This skill guides the implementation of image generation functionality using the mun-os-web-dev-sdk package and CLI tool, enabling creation of high-quality images from text descriptions.
 
 ## Skills Path
 
@@ -20,24 +20,24 @@ this skill is located at above path in your project.
 
 Image Generation allows you to build applications that create visual content from text prompts using AI models, enabling creative workflows, design automation, and visual content production.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## Basic Image Generation
 
 ### Simple Image Creation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function generateImage(prompt, outputPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const response = await zai.images.generations.create({
+  const response = await sovereign.images.generations.create({
     prompt: prompt,
     size: '1024x1024'
   });
@@ -62,7 +62,7 @@ await generateImage(
 ### Multiple Image Sizes
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 // Supported sizes
@@ -81,9 +81,9 @@ async function generateImageWithSize(prompt, size, outputPath) {
     throw new Error(`Unsupported size: ${size}. Use one of: ${SUPPORTED_SIZES.join(', ')}`);
   }
 
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const response = await zai.images.generations.create({
+  const response = await sovereign.images.generations.create({
     prompt: prompt,
     size: size
   });
@@ -115,44 +115,44 @@ await generateImageWithSize(
 
 ## CLI Tool Usage
 
-The z-ai CLI tool provides a convenient way to generate images directly from the command line.
+The mun-os CLI tool provides a convenient way to generate images directly from the command line.
 
 ### Basic CLI Usage
 
 ```bash
 # Generate image with full options
-z-ai image --prompt "A beautiful landscape" --output "./image.png"
+mun-os image --prompt "A beautiful landscape" --output "./image.png"
 
 # Short form
-z-ai image -p "A cute cat" -o "./cat.png"
+mun-os image -p "A cute cat" -o "./cat.png"
 
 # Specify size
-z-ai image -p "A sunset" -o "./sunset.png" -s 1344x768
+mun-os image -p "A sunset" -o "./sunset.png" -s 1344x768
 
 # Portrait orientation
-z-ai image -p "A portrait" -o "./portrait.png" -s 768x1344
+mun-os image -p "A portrait" -o "./portrait.png" -s 768x1344
 ```
 
 ### CLI Use Cases
 
 ```bash
 # Website hero image
-z-ai image -p "Modern tech office with diverse team collaborating" -o "./hero.png" -s 1440x720
+mun-os image -p "Modern tech office with diverse team collaborating" -o "./hero.png" -s 1440x720
 
 # Product image
-z-ai image -p "Sleek smartphone on minimalist desk, professional product photography" -o "./product.png" -s 1024x1024
+mun-os image -p "Sleek smartphone on minimalist desk, professional product photography" -o "./product.png" -s 1024x1024
 
 # Blog post illustration
-z-ai image -p "Abstract visualization of data flowing through networks" -o "./blog_header.png" -s 1344x768
+mun-os image -p "Abstract visualization of data flowing through networks" -o "./blog_header.png" -s 1344x768
 
 # Social media content
-z-ai image -p "Vibrant illustration of community connection" -o "./social.png" -s 1024x1024
+mun-os image -p "Vibrant illustration of community connection" -o "./social.png" -s 1024x1024
 
 # Website favicon/logo
-z-ai image -p "Simple geometric logo with blue gradient, minimal design" -o "./logo.png" -s 1024x1024
+mun-os image -p "Simple geometric logo with blue gradient, minimal design" -o "./logo.png" -s 1024x1024
 
 # Background pattern
-z-ai image -p "Subtle geometric pattern, pastel colors, website background" -o "./bg_pattern.png" -s 1440x720
+mun-os image -p "Subtle geometric pattern, pastel colors, website background" -o "./bg_pattern.png" -s 1440x720
 ```
 
 ## Advanced Use Cases
@@ -160,12 +160,12 @@ z-ai image -p "Subtle geometric pattern, pastel colors, website background" -o "
 ### Batch Image Generation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
 async function generateImageBatch(prompts, outputDir, size = '1024x1024') {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Ensure output directory exists
   if (!fs.existsSync(outputDir)) {
@@ -180,7 +180,7 @@ async function generateImageBatch(prompts, outputDir, size = '1024x1024') {
       const filename = `image_${i + 1}.png`;
       const outputPath = path.join(outputDir, filename);
 
-      const response = await zai.images.generations.create({
+      const response = await sovereign.images.generations.create({
         prompt: prompt,
         size: size
       });
@@ -225,7 +225,7 @@ console.log(`Generated ${results.filter(r => r.success).length} images`);
 ### Image Generation Service
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -233,12 +233,12 @@ import crypto from 'crypto';
 class ImageGenerationService {
   constructor(outputDir = './generated-images') {
     this.outputDir = outputDir;
-    this.zai = null;
+    this.sovereign = null;
     this.cache = new Map();
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
     
     if (!fs.existsSync(this.outputDir)) {
       fs.mkdirSync(this.outputDir, { recursive: true });
@@ -275,7 +275,7 @@ class ImageGenerationService {
     }
 
     // Generate new image
-    const response = await this.zai.images.generations.create({
+    const response = await this.sovereign.images.generations.create({
       prompt: prompt,
       size: size
     });
@@ -328,9 +328,9 @@ console.log('Generated:', result.path);
 
 ```bash
 # Using CLI for quick website asset generation
-z-ai image -p "Modern tech hero banner, blue gradient" -o "./assets/hero.png" -s 1440x720
-z-ai image -p "Team collaboration illustration" -o "./assets/team.png" -s 1344x768
-z-ai image -p "Simple geometric logo" -o "./assets/logo.png" -s 1024x1024
+mun-os image -p "Modern tech hero banner, blue gradient" -o "./assets/hero.png" -s 1440x720
+mun-os image -p "Team collaboration illustration" -o "./assets/team.png" -s 1344x768
+mun-os image -p "Simple geometric logo" -o "./assets/logo.png" -s 1024x1024
 ```
 
 ## Best Practices
@@ -386,7 +386,7 @@ await generateImage('website hero image', size, './hero.png');
 ### 3. Error Handling
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function safeGenerateImage(prompt, size, outputPath, retries = 3) {
@@ -394,9 +394,9 @@ async function safeGenerateImage(prompt, size, outputPath, retries = 3) {
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const zai = await ZAI.create();
+      const sovereign = await SovereignEngine.create();
 
-      const response = await zai.images.generations.create({
+      const response = await sovereign.images.generations.create({
         prompt: prompt,
         size: size
       });
@@ -450,7 +450,7 @@ async function safeGenerateImage(prompt, size, outputPath, retries = 3) {
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
@@ -458,11 +458,11 @@ const app = express();
 app.use(express.json());
 app.use('/images', express.static('generated-images'));
 
-let zaiInstance;
+let sovereignInstance;
 const outputDir = './generated-images';
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
@@ -476,7 +476,7 @@ app.post('/api/generate-image', async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    const response = await zaiInstance.images.generations.create({
+    const response = await sovereignInstance.images.generations.create({
       prompt: prompt,
       size: size
     });
@@ -502,7 +502,7 @@ app.post('/api/generate-image', async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Image generation API running on port 3000');
   });
@@ -519,9 +519,9 @@ initZAI().then(() => {
 # Generate website assets using CLI
 echo "Generating website assets..."
 
-z-ai image -p "Modern tech hero banner, blue gradient" -o "./assets/hero.png" -s 1440x720
-z-ai image -p "Team collaboration illustration" -o "./assets/team.png" -s 1344x768
-z-ai image -p "Simple geometric logo" -o "./assets/logo.png" -s 1024x1024
+mun-os image -p "Modern tech hero banner, blue gradient" -o "./assets/hero.png" -s 1440x720
+mun-os image -p "Team collaboration illustration" -o "./assets/team.png" -s 1344x768
+mun-os image -p "Simple geometric logo" -o "./assets/logo.png" -s 1024x1024
 
 echo "Assets generated successfully!"
 ```
@@ -529,7 +529,7 @@ echo "Assets generated successfully!"
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only used in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only used in server-side code
 
 **Issue**: Invalid size parameter
 - **Solution**: Use only supported sizes: 1024x1024, 768x1344, 864x1152, 1344x768, 1152x864, 1440x720, 720x1440
@@ -538,7 +538,7 @@ echo "Assets generated successfully!"
 - **Solution**: Make prompts more specific and descriptive. Include style, details, and quality terms
 
 **Issue**: CLI command not found
-- **Solution**: Ensure z-ai CLI is properly installed and in PATH
+- **Solution**: Ensure mun-os CLI is properly installed and in PATH
 
 **Issue**: Image file is corrupted
 - **Solution**: Verify base64 decoding and file writing are correct
@@ -573,7 +573,7 @@ echo "Assets generated successfully!"
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown
 - CLI tool is available for quick image generation
 - Supported sizes are specific - use the provided list

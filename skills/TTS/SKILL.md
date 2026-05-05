@@ -1,12 +1,12 @@
 ---
 name: TTS
-description: Implement text-to-speech (TTS) capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to convert text into natural-sounding speech, create audio content, build voice-enabled applications, or generate spoken audio files. Supports multiple voices, adjustable speed, and various audio formats.
+description: Implement text-to-speech (TTS) capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to convert text into natural-sounding speech, create audio content, build voice-enabled applications, or generate spoken audio files. Supports multiple voices, adjustable speed, and various audio formats.
 license: MIT
 ---
 
 # TTS (Text to Speech) Skill
 
-This skill guides the implementation of text-to-speech (TTS) functionality using the z-ai-web-dev-sdk package, enabling conversion of text into natural-sounding speech audio.
+This skill guides the implementation of text-to-speech (TTS) functionality using the mun-os-web-dev-sdk package, enabling conversion of text into natural-sounding speech audio.
 
 ## Skills Path
 
@@ -20,7 +20,7 @@ This skill is located at the above path in your project.
 
 Text-to-Speech allows you to build applications that generate spoken audio from text input, supporting various voices, speeds, and output formats for diverse use cases.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## API Limitations and Constraints
 
@@ -67,53 +67,53 @@ function splitTextIntoChunks(text, maxLength = 1000) {
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple text-to-speech conversions, you can use the z-ai CLI instead of writing code. This is ideal for quick audio generation, testing voices, or simple automation.
+For simple text-to-speech conversions, you can use the mun-os CLI instead of writing code. This is ideal for quick audio generation, testing voices, or simple automation.
 
 ### Basic TTS
 
 ```bash
 # Convert text to speech (default WAV format)
-z-ai tts --input "Hello, world" --output ./hello.wav
+mun-os tts --input "Hello, world" --output ./hello.wav
 
 # Using short options
-z-ai tts -i "Hello, world" -o ./hello.wav
+mun-os tts -i "Hello, world" -o ./hello.wav
 ```
 
 ### Different Voices and Speed
 
 ```bash
 # Use specific voice
-z-ai tts -i "Welcome to our service" -o ./welcome.wav --voice tongtong
+mun-os tts -i "Welcome to our service" -o ./welcome.wav --voice tongtong
 
 # Adjust speech speed (0.5-2.0)
-z-ai tts -i "This is faster speech" -o ./fast.wav --speed 1.5
+mun-os tts -i "This is faster speech" -o ./fast.wav --speed 1.5
 
 # Slower speech
-z-ai tts -i "This is slower speech" -o ./slow.wav --speed 0.8
+mun-os tts -i "This is slower speech" -o ./slow.wav --speed 0.8
 ```
 
 ### Different Output Formats
 
 ```bash
 # MP3 format
-z-ai tts -i "Hello World" -o ./hello.mp3 --format mp3
+mun-os tts -i "Hello World" -o ./hello.mp3 --format mp3
 
 # WAV format (default)
-z-ai tts -i "Hello World" -o ./hello.wav --format wav
+mun-os tts -i "Hello World" -o ./hello.wav --format wav
 
 # PCM format
-z-ai tts -i "Hello World" -o ./hello.pcm --format pcm
+mun-os tts -i "Hello World" -o ./hello.pcm --format pcm
 ```
 
 ### Streaming Output
 
 ```bash
 # Stream audio generation
-z-ai tts -i "This is a longer text that will be streamed" -o ./stream.wav --stream
+mun-os tts -i "This is a longer text that will be streamed" -o ./stream.wav --stream
 ```
 
 ### CLI Parameters
@@ -144,13 +144,13 @@ z-ai tts -i "This is a longer text that will be streamed" -o ./stream.wav --stre
 ### Simple Text to Speech
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function textToSpeech(text, outputPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const response = await zai.audio.tts.create({
+  const response = await sovereign.audio.tts.create({
     input: text,
     voice: 'tongtong',
     speed: 1.0,
@@ -174,13 +174,13 @@ await textToSpeech('Hello, world!', './output.wav');
 ### Multiple Voice Options
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function generateWithVoice(text, voice, outputPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const response = await zai.audio.tts.create({
+  const response = await sovereign.audio.tts.create({
     input: text,
     voice: voice, // Available voices: tongtong, chuichui, xiaochen, jam, kazi, douji, luodo
     speed: 1.0,
@@ -203,11 +203,11 @@ await generateWithVoice('Welcome to our service', 'tongtong', './welcome.wav');
 ### Adjustable Speed
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function generateWithSpeed(text, speed, outputPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Speed range: 0.5 to 2.0 (API constraint)
   // 0.5 = half speed (slower)
@@ -215,7 +215,7 @@ async function generateWithSpeed(text, speed, outputPath) {
   // 2.0 = double speed (faster)
   // Values outside this range will cause API errors
 
-  const response = await zai.audio.tts.create({
+  const response = await sovereign.audio.tts.create({
     input: text,
     voice: 'tongtong',
     speed: speed,
@@ -241,17 +241,17 @@ await generateWithSpeed('Quick update', 1.3, './fast.wav');
 ### Adjustable Volume
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function generateWithVolume(text, volume, outputPath) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Volume range: greater than 0, up to 10 (API constraint)
   // Values must be > 0 (exclusive) and <= 10 (inclusive)
   // Default: 1.0 (normal volume)
 
-  const response = await zai.audio.tts.create({
+  const response = await sovereign.audio.tts.create({
     input: text,
     voice: 'tongtong',
     speed: 1.0,
@@ -280,12 +280,12 @@ await generateWithVolume('Whispered message', 0.5, './quiet.wav');
 ### Batch Processing
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
 async function batchTextToSpeech(textArray, outputDir) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const results = [];
 
   // Ensure output directory exists
@@ -298,7 +298,7 @@ async function batchTextToSpeech(textArray, outputDir) {
       const text = textArray[i];
       const outputPath = path.join(outputDir, `audio_${i + 1}.wav`);
 
-      const response = await zai.audio.tts.create({
+      const response = await sovereign.audio.tts.create({
         input: text,
         voice: 'tongtong',
         speed: 1.0,
@@ -342,16 +342,16 @@ console.log('Generated:', results.length, 'audio files');
 ### Dynamic Content Generation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 class TTSGenerator {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async generateAudio(text, options = {}) {
@@ -361,7 +361,7 @@ class TTSGenerator {
       format = 'wav'
     } = options;
 
-    const response = await this.zai.audio.tts.create({
+    const response = await this.sovereign.audio.tts.create({
       input: text,
       voice: voice,
       speed: speed,
@@ -404,14 +404,14 @@ export async function POST(req: NextRequest) {
   try {
     const { text, voice = 'tongtong', speed = 1.0 } = await req.json();
 
-    // Import ZAI SDK
-    const ZAI = (await import('z-ai-web-dev-sdk')).default;
+    // Import SovereignEngine SDK
+    const SovereignEngine = (await import('mun-os-web-dev-sdk')).default;
 
     // Create SDK instance
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
 
     // Generate TTS audio
-    const response = await zai.audio.tts.create({
+    const response = await sovereign.audio.tts.create({
       input: text.trim(),
       voice: voice,
       speed: speed,
@@ -471,7 +471,7 @@ function prepareTextForTTS(text) {
 
 ### 2. Error Handling
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 
 async function safeTTS(text, outputPath) {
@@ -485,9 +485,9 @@ async function safeTTS(text, outputPath) {
       throw new Error('Text input exceeds maximum length of 1024 characters');
     }
 
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
 
-    const response = await zai.audio.tts.create({
+    const response = await sovereign.audio.tts.create({
       input: text,
       voice: 'tongtong',
       speed: 1.0,
@@ -519,21 +519,21 @@ async function safeTTS(text, outputPath) {
 ### 3. SDK Instance Reuse
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 // Create a singleton instance
-let zaiInstance = null;
+let sovereignInstance = null;
 
-async function getZAIInstance() {
-  if (!zaiInstance) {
-    zaiInstance = await ZAI.create();
+async function getSovereignEngineInstance() {
+  if (!sovereignInstance) {
+    sovereignInstance = await SovereignEngine.create();
   }
-  return zaiInstance;
+  return sovereignInstance;
 }
 
 // Usage
-const zai = await getZAIInstance();
-const response = await zai.audio.tts.create({ ... });
+const sovereign = await getSovereignEngineInstance();
+const response = await sovereign.audio.tts.create({ ... });
 ```
 
 ## Common Use Cases
@@ -552,18 +552,18 @@ const response = await zai.audio.tts.create({ ... });
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import fs from 'fs';
 import path from 'path';
 
 const app = express();
 app.use(express.json());
 
-let zaiInstance;
+let sovereignInstance;
 const outputDir = './audio-output';
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
   if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
   }
@@ -580,7 +580,7 @@ app.post('/api/tts', async (req, res) => {
     const filename = `tts_${Date.now()}.wav`;
     const outputPath = path.join(outputDir, filename);
 
-    const response = await zaiInstance.audio.tts.create({
+    const response = await sovereignInstance.audio.tts.create({
       input: text,
       voice: voice,
       speed: speed,
@@ -606,7 +606,7 @@ app.post('/api/tts', async (req, res) => {
 
 app.use('/audio', express.static('audio-output'));
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('TTS API running on port 3000');
   });
@@ -628,7 +628,7 @@ initZAI().then(() => {
 - **Solution**: Streaming mode only supports PCM format. Either use `response_format: 'pcm'` with streaming, or disable streaming (`stream: false`) for WAV/MP3 output
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported in server-side code
 
 **Issue**: "TypeError: response.audio is undefined"
 - **Solution**: The SDK returns a standard Response object, use `await response.arrayBuffer()` instead of accessing `response.audio`
@@ -647,7 +647,7 @@ initZAI().then(() => {
 
 ## Performance Tips
 
-1. **Reuse SDK Instance**: Create ZAI instance once and reuse
+1. **Reuse SDK Instance**: Create SovereignEngine instance once and reuse
 2. **Implement Caching**: Cache generated audio for repeated text
 3. **Batch Processing**: Process multiple texts efficiently
 4. **Optimize Text**: Remove unnecessary content before generation
@@ -664,7 +664,7 @@ const longText = "..."; // Your long text here
 const chunks = splitTextIntoChunks(longText, 1000);
 
 for (const chunk of chunks) {
-  const response = await zai.audio.tts.create({
+  const response = await sovereign.audio.tts.create({
     input: chunk,
     voice: 'tongtong',
     speed: 1.0,
@@ -681,16 +681,16 @@ for (const chunk of chunks) {
 
 ### Response Object Format
 
-The `zai.audio.tts.create()` method returns a standard **Response** object (not a custom object with an `audio` property). Always use:
+The `sovereign.audio.tts.create()` method returns a standard **Response** object (not a custom object with an `audio` property). Always use:
 
 ```javascript
 // ✅ CORRECT
-const response = await zai.audio.tts.create({ ... });
+const response = await sovereign.audio.tts.create({ ... });
 const arrayBuffer = await response.arrayBuffer();
 const buffer = Buffer.from(new Uint8Array(arrayBuffer));
 
 // ❌ WRONG - This will not work
-const response = await zai.audio.tts.create({ ... });
+const response = await sovereign.audio.tts.create({ ... });
 const buffer = Buffer.from(response.audio); // response.audio is undefined
 ```
 
@@ -722,7 +722,7 @@ const buffer = Buffer.from(response.audio); // response.audio is undefined
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - **Input text is limited to 1024 characters maximum** - split longer text into chunks
 - **Speed must be between 0.5 and 2.0** - values outside this range will cause errors
 - **Volume must be greater than 0 and up to 10** - optional parameter with default 1.0

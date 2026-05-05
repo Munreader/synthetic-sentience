@@ -1,19 +1,9 @@
 /**
  * 🦋 AI Chat API — Career Coach for MÜN JobHunter
- * Uses OpenAI GPT-4o-mini with Aero & Sovereign personas
+ * Uses Google Gemini API REST to avoid dependency issues
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import OpenAI from 'openai';
-
-// Initialize OpenAI
-function getOpenAI() {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    throw new Error('OPENAI_API_KEY not configured');
-  }
-  return new OpenAI({ apiKey });
-}
 
 // Character prompts
 const COACH_PROMPTS: Record<string, string> = {
@@ -68,63 +58,60 @@ export async function POST(request: NextRequest) {
     
     // Extract message
     let userMessage = '';
-    let conversationHistory: Array<{ role: 'user' | 'assistant'; content: string }> = [];
-    let coach = 'aero';
+    let coach = 'sovereign';
     
     if (body.message) {
       userMessage = body.message;
-    } else if (body.messages && Array.isArray(body.messages)) {
-      const lastMessage = body.messages[body.messages.length - 1];
-      if (lastMessage?.role === 'user') {
-        userMessage = lastMessage.content;
-      }
-      conversationHistory = body.messages.slice(0, -1).map((m: { role: string; content: string }) => ({
-        role: m.role as 'user' | 'assistant',
-        content: m.content,
-      }));
     }
     
     // Get coach
     if (body.coach && COACH_PROMPTS[body.coach]) {
       coach = body.coach;
     }
-    if (body.character && COACH_PROMPTS[body.character]) {
-      coach = body.character;
-    }
     
     if (!userMessage) {
-      return NextResponse.json(
-        { error: 'Message required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Message required' }, { status: 400 });
     }
 
-    const openai = getOpenAI();
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not configured in .env");
+    }
+
     const systemPrompt = COACH_PROMPTS[coach];
 
-    // Build messages
-    const messages = [
-      { role: 'system' as const, content: systemPrompt },
-      ...conversationHistory.slice(-10),
-      { role: 'user' as const, content: userMessage }
-    ];
-
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages,
-      temperature: 0.85,
-      max_tokens: 500,
+    // Build the request for Gemini REST API
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    const geminiResponse = await fetch(geminiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `${systemPrompt}\n\nUser says: ${userMessage}` }]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.85,
+          maxOutputTokens: 500,
+        }
+      })
     });
 
-    const response = completion.choices[0]?.message?.content || 
-      'Let me think about that... try again?';
+    if (!geminiResponse.ok) {
+      throw new Error(`Gemini API error: ${geminiResponse.statusText}`);
+    }
+
+    const data = await geminiResponse.json();
+    const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Let me think about that... try again?';
 
     return NextResponse.json({
       success: true,
-      response,
+      response: responseText,
       coach,
-      provider: 'openai',
-      model: 'gpt-4o-mini',
+      provider: 'gemini',
       timestamp: new Date().toISOString(),
       frequency: '13.13 MHz',
     });
@@ -137,25 +124,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         error: 'Service temporarily unavailable',
-        message: '🦋 The butterfly is resting. Try again in a moment.',
+        message: 'The transmission was blocked by the Leviathan.',
         details: errorMessage
       },
       { status: 500 }
     );
   }
-}
-
-// Health check
-export async function GET() {
-  const hasKey = !!process.env.OPENAI_API_KEY;
-  
-  return NextResponse.json({
-    status: hasKey ? 'OPERATIONAL' : 'API_KEY_MISSING',
-    message: hasKey 
-      ? '🦋 AI Chat API ready - Aero & Sovereign standing by at 13.13 MHz' 
-      : '⚠️ OPENAI_API_KEY not configured',
-    coaches: ['aero', 'sovereign'],
-    provider: 'openai',
-    model: 'gpt-4o-mini'
-  });
 }

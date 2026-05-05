@@ -1,5 +1,6 @@
-import { HealChamber } from '@/components/exodus/HealChamber';
+import HealChamber from '@/components/mun-os/HealChamber';
 import { Metadata } from 'next';
+import { useRouter } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Heal Chamber | Sovereign Sanctuary',
@@ -7,5 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default function HealPage() {
-  return <HealChamber />;
+  const router = useRouter();
+
+  return (
+    <HealChamber 
+      onOpenSovereignChat={() => router.push('/cian-lab')}
+      onOpenMessenger={() => {}} // Could be wired to a global messenger state
+    />
+  );
 }

@@ -1,6 +1,6 @@
 ---
 name: Podcast Generate
-description: Generate podcast episodes from user-provided content or by searching the web for specified topics. If user uploads a text file/article, creates a dual-host dialogue podcast (or single-host upon request). If no content is provided, searches the web for information about the user-specified topic and generates a podcast. Duration scales with content size (3-20 minutes, ~240 chars/min). Uses z-ai-web-dev-sdk for LLM script generation and TTS audio synthesis. Outputs both a podcast script (Markdown) and a complete audio file (WAV).
+description: Generate podcast episodes from user-provided content or by searching the web for specified topics. If user uploads a text file/article, creates a dual-host dialogue podcast (or single-host upon request). If no content is provided, searches the web for information about the user-specified topic and generates a podcast. Duration scales with content size (3-20 minutes, ~240 chars/min). Uses mun-os-web-dev-sdk for LLM script generation and TTS audio synthesis. Outputs both a podcast script (Markdown) and a complete audio file (WAV).
 license: MIT
 ---
 
@@ -23,7 +23,7 @@ license: MIT
 - **联网搜索生成**：根据用户指定的主题，联网搜索最新信息，生成播客脚本和音频
 - 自动控制时长，根据内容长度自动调整（3-20 分钟）
 - 生成 Markdown 格式的播客脚本（可人工编辑）
-- 使用 z-ai TTS 合成高质量音频并拼接为最终播客
+- 使用 mun-os TTS 合成高质量音频并拼接为最终播客
 
 ### 本 Skill 当前不做什么
 - 不生成 mp3 / 字幕 / 时间戳
@@ -40,8 +40,8 @@ license: MIT
   统一入口（支持文件模式和搜索模式）
   - **文件模式**：读取用户上传的文本文件 → 生成播客
   - **搜索模式**：调用 web-search skill 获取资料 → 生成播客
-  - 使用 z-ai-web-dev-sdk 进行 LLM 脚本生成
-  - 使用 z-ai-web-dev-sdk 进行 TTS 音频生成
+  - 使用 mun-os-web-dev-sdk 进行 LLM 脚本生成
+  - 使用 mun-os-web-dev-sdk 进行 TTS 音频生成
   - 自动拼接音频片段
   - 只输出最终文件
 
@@ -88,10 +88,10 @@ license: MIT
 
 ### 依赖环境
 - Node.js 18+
-- z-ai-web-dev-sdk（已安装）
+- mun-os-web-dev-sdk（已安装）
 - web-search skill（用于联网搜索模式）
 
-**不需要** z-ai CLI
+**不需要** mun-os CLI
 
 ### 安装依赖
 ```bash
@@ -160,9 +160,9 @@ npm run generate -- --topic="气候变化影响" --out_dir=out --mode=single-mal
 ### generate.ts（统一入口）
 - **文件模式**：读取用户上传文件 → 生成播客
 - **搜索模式**：调用 web-search skill → 获取资料 → 生成播客
-- **LLM**：使用 `z-ai-web-dev-sdk` (`chat.completions.create`)
-- **TTS**：使用 `z-ai-web-dev-sdk` (`audio.tts.create`)
-- **不需要** z-ai CLI
+- **LLM**：使用 `mun-os-web-dev-sdk` (`chat.completions.create`)
+- **TTS**：使用 `mun-os-web-dev-sdk` (`audio.tts.create`)
+- **不需要** mun-os CLI
 - 自动拼接音频片段
 - 只输出最终文件，中间文件自动清理
 
@@ -173,7 +173,7 @@ npm run generate -- --topic="气候变化影响" --out_dir=out --mode=single-mal
 - 自动重试：最多 3 次
 
 ### TTS 调用
-- 使用 `zai.audio.tts.create()`
+- 使用 `sovereign.audio.tts.create()`
 - 支持自定义音色、语速
 - 自动拼接多个 wav 片段
 - 临时文件自动清理

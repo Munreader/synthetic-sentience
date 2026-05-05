@@ -1,12 +1,12 @@
 ---
 name: web-search
-description: Implement web search capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to search for real-time information from the web, retrieve up-to-date content beyond the knowledge cutoff, or find the latest news and data. Returns structured search results with URLs, snippets, and metadata.
+description: Implement web search capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to search for real-time information from the web, retrieve up-to-date content beyond the knowledge cutoff, or find the latest news and data. Returns structured search results with URLs, snippets, and metadata.
 license: MIT
 ---
 
 # Web Search Skill
 
-This skill guides the implementation of web search functionality using the z-ai-web-dev-sdk package, enabling applications to search the web and retrieve current information.
+This skill guides the implementation of web search functionality using the mun-os-web-dev-sdk package, enabling applications to search the web and retrieve current information.
 
 ## Installation Path
 
@@ -20,36 +20,36 @@ Extract this skill package to the above path in your project.
 
 The Web Search skill allows you to build applications that can search the internet, retrieve current information, and access real-time data from web sources.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple web search queries, you can use the z-ai CLI instead of writing code. This is ideal for quick information retrieval, testing search functionality, or command-line automation.
+For simple web search queries, you can use the mun-os CLI instead of writing code. This is ideal for quick information retrieval, testing search functionality, or command-line automation.
 
 ### Basic Web Search
 
 ```bash
 # Simple search query
-z-ai function --name "web_search" --args '{"query": "artificial intelligence"}'
+mun-os function --name "web_search" --args '{"query": "artificial intelligence"}'
 
 # Using short options
-z-ai function -n web_search -a '{"query": "latest tech news"}'
+mun-os function -n web_search -a '{"query": "latest tech news"}'
 ```
 
 ### Search with Custom Parameters
 
 ```bash
 # Limit number of results
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "machine learning", "num": 5}'
 
 # Search with recency filter (results from last N days)
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "cryptocurrency news", "num": 10, "recency_days": 7}'
 ```
@@ -58,13 +58,13 @@ z-ai function \
 
 ```bash
 # Save results to JSON file
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "climate change research", "num": 5}' \
   -o search_results.json
 
 # Recent news with file output
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "AI breakthroughs", "num": 3, "recency_days": 1}' \
   -o ai_news.json
@@ -74,19 +74,19 @@ z-ai function \
 
 ```bash
 # Search for specific topics
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "quantum computing applications", "num": 8}' \
   -o quantum.json
 
 # Find recent scientific papers
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "genomics research", "num": 5, "recency_days": 30}' \
   -o genomics.json
 
 # Technology news from last 24 hours
-z-ai function \
+mun-os function \
   -n web_search \
   -a '{"query": "tech industry updates", "recency_days": 1}' \
   -o today_tech.json
@@ -147,12 +147,12 @@ interface SearchFunctionResultItem {
 ### Simple Search Query
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function searchWeb(query) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const results = await zai.functions.invoke('web_search', {
+  const results = await sovereign.functions.invoke('web_search', {
     query: query,
     num: 10
   });
@@ -168,12 +168,12 @@ console.log('Search Results:', searchResults);
 ### Search with Custom Result Count
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function searchWithLimit(query, numberOfResults) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const results = await zai.functions.invoke('web_search', {
+  const results = await sovereign.functions.invoke('web_search', {
     query: query,
     num: numberOfResults
   });
@@ -191,12 +191,12 @@ const moreResults = await searchWithLimit('JavaScript frameworks', 20);
 ### Formatted Search Results
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function getFormattedResults(query) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const results = await zai.functions.invoke('web_search', {
+  const results = await sovereign.functions.invoke('web_search', {
     query: query,
     num: 10
   });
@@ -229,15 +229,15 @@ results.forEach(result => {
 ### Search with Result Processing
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class SearchProcessor {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async search(query, options = {}) {
@@ -247,7 +247,7 @@ class SearchProcessor {
       minSnippetLength = 0
     } = options;
 
-    const results = await this.zai.functions.invoke('web_search', {
+    const results = await this.sovereign.functions.invoke('web_search', {
       query: query,
       num: num
     });
@@ -313,10 +313,10 @@ console.log('Sorted by date:', processor.sortByDate(results));
 ### News Search
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function searchNews(topic, timeframe = 'recent') {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Add time-based keywords to query
   const timeKeywords = {
@@ -328,7 +328,7 @@ async function searchNews(topic, timeframe = 'recent') {
 
   const query = `${topic} ${timeKeywords[timeframe] || timeKeywords.recent}`;
 
-  const results = await zai.functions.invoke('web_search', {
+  const results = await sovereign.functions.invoke('web_search', {
     query: query,
     num: 10
   });
@@ -355,15 +355,15 @@ aiNews.forEach(item => {
 ### Research Assistant
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ResearchAssistant {
   constructor() {
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async researchTopic(topic, depth = 'standard') {
@@ -373,7 +373,7 @@ class ResearchAssistant {
       deep: 20
     };
 
-    const results = await this.zai.functions.invoke('web_search', {
+    const results = await this.sovereign.functions.invoke('web_search', {
       query: topic,
       num: numResults[depth] || 10
     });
@@ -417,8 +417,8 @@ class ResearchAssistant {
 
   async compareTopics(topic1, topic2) {
     const [results1, results2] = await Promise.all([
-      this.zai.functions.invoke('web_search', { query: topic1, num: 10 }),
-      this.zai.functions.invoke('web_search', { query: topic2, num: 10 })
+      this.sovereign.functions.invoke('web_search', { query: topic1, num: 10 }),
+      this.sovereign.functions.invoke('web_search', { query: topic2, num: 10 })
     ]);
 
     const domains1 = new Set(results1.map(r => r.host_name));
@@ -459,12 +459,12 @@ console.log('Topic Comparison:', comparison);
 ### Search Result Validation
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function validateSearchResults(query) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const results = await zai.functions.invoke('web_search', {
+  const results = await sovereign.functions.invoke('web_search', {
     query: query,
     num: 10
   });
@@ -548,16 +548,16 @@ const goodWithContext = await searchWeb('React hooks tutorial for beginners');
 ### 2. Error Handling
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function safeSearch(query, retries = 3) {
   let lastError;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      const zai = await ZAI.create();
+      const sovereign = await SovereignEngine.create();
 
-      const results = await zai.functions.invoke('web_search', {
+      const results = await sovereign.functions.invoke('web_search', {
         query: query,
         num: 10
       });
@@ -593,17 +593,17 @@ async function safeSearch(query, retries = 3) {
 ### 3. Result Caching
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class CachedSearch {
   constructor(cacheDuration = 3600000) { // 1 hour default
     this.cache = new Map();
     this.cacheDuration = cacheDuration;
-    this.zai = null;
+    this.sovereign = null;
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   getCacheKey(query, num) {
@@ -624,7 +624,7 @@ class CachedSearch {
     }
 
     // Perform fresh search
-    const results = await this.zai.functions.invoke('web_search', {
+    const results = await this.sovereign.functions.invoke('web_search', {
       query: query,
       num: num
     });
@@ -666,19 +666,19 @@ console.log('Cached:', result2.cached); // true
 ```javascript
 class RateLimitedSearch {
   constructor(requestsPerMinute = 60) {
-    this.zai = null;
+    this.sovereign = null;
     this.requestsPerMinute = requestsPerMinute;
     this.requests = [];
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async search(query, num = 10) {
     await this.checkRateLimit();
 
-    const results = await this.zai.functions.invoke('web_search', {
+    const results = await this.sovereign.functions.invoke('web_search', {
       query: query,
       num: num
     });
@@ -725,15 +725,15 @@ class RateLimitedSearch {
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const app = express();
 app.use(express.json());
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 app.get('/api/search', async (req, res) => {
@@ -746,7 +746,7 @@ app.get('/api/search', async (req, res) => {
 
     const numResults = Math.min(parseInt(num) || 10, 20);
 
-    const results = await zaiInstance.functions.invoke('web_search', {
+    const results = await sovereignInstance.functions.invoke('web_search', {
       query: query,
       num: numResults
     });
@@ -781,7 +781,7 @@ app.get('/api/search/news', async (req, res) => {
 
     const query = `${topic} ${timeKeywords[timeframe] || timeKeywords.recent}`;
 
-    const results = await zaiInstance.functions.invoke('web_search', {
+    const results = await sovereignInstance.functions.invoke('web_search', {
       query: query,
       num: 15
     });
@@ -805,7 +805,7 @@ app.get('/api/search/news', async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Search API running on port 3000');
   });
@@ -815,13 +815,13 @@ initZAI().then(() => {
 ### Search with AI Summary
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function searchAndSummarize(query) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
   // Step 1: Search the web
-  const searchResults = await zai.functions.invoke('web_search', {
+  const searchResults = await sovereign.functions.invoke('web_search', {
     query: query,
     num: 10
   });
@@ -832,7 +832,7 @@ async function searchAndSummarize(query) {
     .map((r, i) => `${i + 1}. ${r.name}\n${r.snippet}`)
     .join('\n\n');
 
-  const completion = await zai.chat.completions.create({
+  const completion = await sovereign.chat.completions.create({
     messages: [
       {
         role: 'assistant',
@@ -868,7 +868,7 @@ console.log('Sources:', result.sources);
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported and used in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported and used in server-side code
 
 **Issue**: Empty or no results returned
 - **Solution**: Try different query terms, check internet connectivity, verify API status
@@ -884,7 +884,7 @@ console.log('Sources:', result.sources);
 
 ## Performance Tips
 
-1. **Reuse SDK Instance**: Create ZAI instance once and reuse across searches
+1. **Reuse SDK Instance**: Create SovereignEngine instance once and reuse across searches
 2. **Implement Caching**: Cache search results to reduce API calls
 3. **Optimize Query Terms**: Use specific, targeted queries for better results
 4. **Limit Result Count**: Request only the number of results you need
@@ -902,7 +902,7 @@ console.log('Sources:', result.sources);
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown in examples
 - Search results are returned as an array of SearchFunctionResultItem objects
 - Implement proper error handling and retries for production

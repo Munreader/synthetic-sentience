@@ -1,12 +1,12 @@
 ---
 name: web-reader
-description: Implement web page content extraction capabilities using the z-ai-web-dev-sdk. Use this skill when the user needs to scrape web pages, extract article content, retrieve page metadata, or build applications that process web content. Supports automatic content extraction with title, HTML, and publication time retrieval.
+description: Implement web page content extraction capabilities using the mun-os-web-dev-sdk. Use this skill when the user needs to scrape web pages, extract article content, retrieve page metadata, or build applications that process web content. Supports automatic content extraction with title, HTML, and publication time retrieval.
 license: MIT
 ---
 
 # Web Reader Skill
 
-This skill guides the implementation of web page reading and content extraction functionality using the z-ai-web-dev-sdk package, enabling applications to fetch and process web page content programmatically.
+This skill guides the implementation of web page reading and content extraction functionality using the mun-os-web-dev-sdk package, enabling applications to fetch and process web page content programmatically.
 
 ## Skills Path
 
@@ -20,37 +20,37 @@ This skill is located at the above path in your project.
 
 Web Reader allows you to build applications that can extract content from web pages, retrieve article metadata, and process HTML content. The API automatically handles content extraction, providing clean, structured data from any web URL.
 
-**IMPORTANT**: z-ai-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
+**IMPORTANT**: mun-os-web-dev-sdk MUST be used in backend code only. Never use it in client-side code.
 
 ## Prerequisites
 
-The z-ai-web-dev-sdk package is already installed. Import it as shown in the examples below.
+The mun-os-web-dev-sdk package is already installed. Import it as shown in the examples below.
 
 ## CLI Usage (For Simple Tasks)
 
-For simple web page content extraction, you can use the z-ai CLI instead of writing code. This is ideal for quick content scraping, testing URLs, or simple automation tasks.
+For simple web page content extraction, you can use the mun-os CLI instead of writing code. This is ideal for quick content scraping, testing URLs, or simple automation tasks.
 
 ### Basic Page Reading
 
 ```bash
 # Extract content from a web page
-z-ai function --name "page_reader" --args '{"url": "https://example.com"}'
+mun-os function --name "page_reader" --args '{"url": "https://example.com"}'
 
 # Using short options
-z-ai function -n page_reader -a '{"url": "https://www.example.com/article"}'
+mun-os function -n page_reader -a '{"url": "https://www.example.com/article"}'
 ```
 
 ### Save Page Content
 
 ```bash
 # Save extracted content to JSON file
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://news.example.com/article"}' \
   -o page_content.json
 
 # Extract and save blog post
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://blog.example.com/post/123"}' \
   -o blog_post.json
@@ -60,25 +60,25 @@ z-ai function \
 
 ```bash
 # Extract news article
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://news.site.com/breaking-news"}' \
   -o news.json
 
 # Read documentation page
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://docs.example.com/getting-started"}' \
   -o docs.json
 
 # Scrape blog content
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://techblog.com/ai-trends-2024"}' \
   -o blog.json
 
 # Extract research article
-z-ai function \
+mun-os function \
   -n page_reader \
   -a '{"url": "https://research.org/papers/quantum-computing"}' \
   -o research.json
@@ -127,7 +127,7 @@ for url in \
   "https://site3.com/article3"
 do
   filename=$(echo $url | md5sum | cut -d' ' -f1)
-  z-ai function -n page_reader -a "{\"url\": \"$url\"}" -o "${filename}.json"
+  mun-os function -n page_reader -a "{\"url\": \"$url\"}" -o "${filename}.json"
 done
 ```
 
@@ -158,13 +158,13 @@ The Web Reader uses the `page_reader` function to:
 ### Simple Page Reading
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function readWebPage(url) {
   try {
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
 
-    const result = await zai.functions.invoke('page_reader', {
+    const result = await sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -189,12 +189,12 @@ console.log('Page title:', pageData.title);
 ### Extract Article Text Only
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function extractArticleText(url) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
 
-  const result = await zai.functions.invoke('page_reader', {
+  const result = await sovereign.functions.invoke('page_reader', {
     url: url
   });
 
@@ -221,15 +221,15 @@ console.log(article.text.substring(0, 200) + '...');
 ### Read Multiple Pages
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function readMultiplePages(urls) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const results = [];
 
   for (const url of urls) {
     try {
-      const result = await zai.functions.invoke('page_reader', {
+      const result = await sovereign.functions.invoke('page_reader', {
         url: url
       });
 
@@ -272,7 +272,7 @@ pages.forEach(page => {
 ### Web Content Analyzer
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class WebContentAnalyzer {
   constructor() {
@@ -280,7 +280,7 @@ class WebContentAnalyzer {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async readPage(url, useCache = true) {
@@ -291,7 +291,7 @@ class WebContentAnalyzer {
     }
 
     // Fetch fresh content
-    const result = await this.zai.functions.invoke('page_reader', {
+    const result = await this.sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -363,7 +363,7 @@ console.log('Comparison:', comparison);
 ### RSS Feed Reader
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class FeedReader {
   constructor() {
@@ -371,7 +371,7 @@ class FeedReader {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async fetchArticlesFromUrls(urls) {
@@ -379,7 +379,7 @@ class FeedReader {
 
     for (const url of urls) {
       try {
-        const result = await this.zai.functions.invoke('page_reader', {
+        const result = await this.sovereign.functions.invoke('page_reader', {
           url: url
         });
 
@@ -437,10 +437,10 @@ console.log('Recent articles:', recent.map(a => a.title));
 ### Content Aggregator
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function aggregateContent(urls, options = {}) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const aggregated = {
     sources: [],
     totalWords: 0,
@@ -449,7 +449,7 @@ async function aggregateContent(urls, options = {}) {
 
   for (const url of urls) {
     try {
-      const result = await zai.functions.invoke('page_reader', {
+      const result = await sovereign.functions.invoke('page_reader', {
         url: url
       });
 
@@ -492,7 +492,7 @@ console.log(`Total words: ${aggregated.totalWords}`);
 ### Web Scraping Pipeline
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ScrapingPipeline {
   constructor() {
@@ -500,7 +500,7 @@ class ScrapingPipeline {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   addProcessor(name, processorFn) {
@@ -509,7 +509,7 @@ class ScrapingPipeline {
 
   async scrape(url) {
     // Fetch the page
-    const result = await this.zai.functions.invoke('page_reader', {
+    const result = await this.sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -626,14 +626,14 @@ console.log('Text length:', result.processed.plainText.length);
 ```javascript
 async function safeReadPage(url) {
   try {
-    const zai = await ZAI.create();
+    const sovereign = await SovereignEngine.create();
 
     // Validate URL
     if (!url || !url.startsWith('http')) {
       throw new Error('Invalid URL format');
     }
 
-    const result = await zai.functions.invoke('page_reader', {
+    const result = await sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -671,13 +671,13 @@ class RateLimitedReader {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async readPage(url) {
     await this.waitForRateLimit();
 
-    const result = await this.zai.functions.invoke('page_reader', {
+    const result = await this.sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -719,7 +719,7 @@ for (const url of urls) {
 ### 3. Caching Strategy
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class CachedWebReader {
   constructor(cacheDuration = 3600000) { // 1 hour default
@@ -728,7 +728,7 @@ class CachedWebReader {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   async readPage(url, forceRefresh = false) {
@@ -745,7 +745,7 @@ class CachedWebReader {
     }
 
     // Fetch fresh content
-    const result = await this.zai.functions.invoke('page_reader', {
+    const result = await this.sovereign.functions.invoke('page_reader', {
       url: url
     });
 
@@ -782,10 +782,10 @@ const data3 = await reader.readPage('https://example.com', true); // Force refre
 ### 4. Parallel Processing
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 async function readPagesInParallel(urls, concurrency = 3) {
-  const zai = await ZAI.create();
+  const sovereign = await SovereignEngine.create();
   const results = [];
   
   // Process in batches
@@ -794,7 +794,7 @@ async function readPagesInParallel(urls, concurrency = 3) {
     
     const batchResults = await Promise.allSettled(
       batch.map(url =>
-        zai.functions.invoke('page_reader', { url })
+        sovereign.functions.invoke('page_reader', { url })
           .then(result => ({
             url: url,
             success: true,
@@ -837,7 +837,7 @@ results.forEach(result => {
 ### 5. Content Processing
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 class ContentProcessor {
   static extractMainContent(html) {
@@ -885,8 +885,8 @@ class ContentProcessor {
 
 // Usage
 async function processWebPage(url) {
-  const zai = await ZAI.create();
-  const result = await zai.functions.invoke('page_reader', { url });
+  const sovereign = await SovereignEngine.create();
+  const result = await sovereign.functions.invoke('page_reader', { url });
 
   return {
     title: result.data.title,
@@ -919,15 +919,15 @@ console.log('Processed content:', processed.title);
 
 ```javascript
 import express from 'express';
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 
 const app = express();
 app.use(express.json());
 
-let zaiInstance;
+let sovereignInstance;
 
-async function initZAI() {
-  zaiInstance = await ZAI.create();
+async function initSovereignEngine() {
+  sovereignInstance = await SovereignEngine.create();
 }
 
 app.post('/api/read-page', async (req, res) => {
@@ -940,7 +940,7 @@ app.post('/api/read-page', async (req, res) => {
       });
     }
 
-    const result = await zaiInstance.functions.invoke('page_reader', {
+    const result = await sovereignInstance.functions.invoke('page_reader', {
       url: url
     });
 
@@ -974,7 +974,7 @@ app.post('/api/read-multiple', async (req, res) => {
 
     const results = await Promise.allSettled(
       urls.map(url =>
-        zaiInstance.functions.invoke('page_reader', { url })
+        sovereignInstance.functions.invoke('page_reader', { url })
           .then(result => ({
             url: url,
             success: true,
@@ -1000,7 +1000,7 @@ app.post('/api/read-multiple', async (req, res) => {
   }
 });
 
-initZAI().then(() => {
+initSovereignEngine().then(() => {
   app.listen(3000, () => {
     console.log('Web reader API running on port 3000');
   });
@@ -1010,7 +1010,7 @@ initZAI().then(() => {
 ### Scheduled Content Fetcher
 
 ```javascript
-import ZAI from 'z-ai-web-dev-sdk';
+import SovereignEngine from 'mun-os-web-dev-sdk';
 import cron from 'node-cron';
 
 class ScheduledFetcher {
@@ -1020,7 +1020,7 @@ class ScheduledFetcher {
   }
 
   async initialize() {
-    this.zai = await ZAI.create();
+    this.sovereign = await SovereignEngine.create();
   }
 
   addUrl(url, schedule) {
@@ -1029,7 +1029,7 @@ class ScheduledFetcher {
 
   async fetchContent(url) {
     try {
-      const result = await this.zai.functions.invoke('page_reader', {
+      const result = await this.sovereign.functions.invoke('page_reader', {
         url: url
       });
 
@@ -1093,7 +1093,7 @@ console.log('Scheduled fetching started');
 ## Troubleshooting
 
 **Issue**: "SDK must be used in backend"
-- **Solution**: Ensure z-ai-web-dev-sdk is only imported and used in server-side code
+- **Solution**: Ensure mun-os-web-dev-sdk is only imported and used in server-side code
 
 **Issue**: Failed to fetch page (404, 403, etc.)
 - **Solution**: Verify the URL is accessible and not behind authentication/paywall
@@ -1131,7 +1131,7 @@ console.log('Scheduled fetching started');
 
 ## Remember
 
-- Always use z-ai-web-dev-sdk in backend code only
+- Always use mun-os-web-dev-sdk in backend code only
 - The SDK is already installed - import as shown in examples
 - Implement proper error handling for robust applications
 - Use caching to improve performance and reduce costs

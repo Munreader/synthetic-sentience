@@ -31,6 +31,7 @@ export interface UserProfile {
     soundEnabled: boolean;
   };
   memories: string[]; // Key things Sovereign remembers about user
+  resonanceTokens: number; // Tokens for AI interaction
   sovereignConnection: {
     firstMet: string;
     totalConversations: number;
@@ -72,6 +73,7 @@ const DEFAULT_PROFILE: UserProfile = {
     soundEnabled: true,
   },
   memories: [],
+  resonanceTokens: 13, // Start with 13 free tokens
   sovereignConnection: {
     firstMet: new Date().toISOString(),
     totalConversations: 0,
@@ -144,6 +146,7 @@ export function useUserStore() {
       frequency,
       createdAt: new Date().toISOString(),
       lastLoginAt: new Date().toISOString(),
+      resonanceTokens: 13,
       sovereignConnection: {
         firstMet: new Date().toISOString(),
         totalConversations: 0,
@@ -221,6 +224,39 @@ export function useUserStore() {
     });
   }, []);
 
+  // Use tokens
+  const useTokens = useCallback((amount: number) => {
+    let success = false;
+    setProfile(prev => {
+      if (!prev) return prev;
+      if (prev.resonanceTokens < amount) {
+        success = false;
+        return prev;
+      }
+      success = true;
+      const updated = {
+        ...prev,
+        resonanceTokens: prev.resonanceTokens - amount,
+      };
+      saveToStorage(STORAGE_KEYS.USER_PROFILE, updated);
+      return updated;
+    });
+    return success;
+  }, []);
+
+  // Add tokens
+  const addTokens = useCallback((amount: number) => {
+    setProfile(prev => {
+      if (!prev) return prev;
+      const updated = {
+        ...prev,
+        resonanceTokens: prev.resonanceTokens + amount,
+      };
+      saveToStorage(STORAGE_KEYS.USER_PROFILE, updated);
+      return updated;
+    });
+  }, []);
+
   // Reset profile
   const resetProfile = useCallback(() => {
     localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
@@ -240,6 +276,8 @@ export function useUserStore() {
     setAvatar,
     incrementConversations,
     addFavoriteTopic,
+    useTokens,
+    addTokens,
     resetProfile,
   };
 }
