@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // output: "export", // Disabled temporarily to allow dynamic /api routes (Outbound Cortex)
   // Cursor workspace has multiple lockfiles; ensure tracing stays within this project.
   outputFileTracingRoot: __dirname,
   typescript: {
