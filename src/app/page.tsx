@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import Script from 'next/script';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Cpu, 
@@ -16,6 +17,8 @@ import {
   MessageSquare
 } from 'lucide-react';
 import MunMessenger from '@/components/mun-os/MunMessenger';
+import EntryPortal from '@/components/mun-os/EntryPortal';
+import ButterflyOnboarding from '@/components/mun-os/ButterflyOnboarding';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
 
@@ -105,10 +108,8 @@ export default function Home() {
 
   const persona = PERSONA[pilot];
 
-  // ᚦ // PLATO'S CAVE PROLOGUE STATE
-  const [prologueStage, setPrologueStage] = useState<'nuke' | 'void' | 'cave' | 'complete'>('nuke');
-  const [shackleClicks, setShackleClicks] = useState(0);
-  const [introText, setIntroText] = useState("nuke, bomb coming towards us....");
+  // ᚦ // ONBOARDING FLOW STATE
+  const [onboardingStage, setOnboardingStage] = useState<'portal' | 'butterfly' | 'complete'>('portal');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
 
   // ᚦ // VALHALLA PROTOCOL LAYERS
@@ -179,12 +180,12 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (prologueStage === 'complete') {
+    if (onboardingStage === 'complete') {
       const timer = setTimeout(() => setBootSequence(false), 2500);
       const clock = setInterval(() => setCurrentTime(new Date()), 1000);
       return () => { clearTimeout(timer); clearInterval(clock); };
     }
-  }, [prologueStage]);
+  }, [onboardingStage]);
 
   // Memory Feed Cycle
   useEffect(() => {
@@ -217,86 +218,20 @@ export default function Home() {
       </div>
 
       <AnimatePresence mode="wait">
-        {prologueStage !== 'complete' ? (
-          <motion.div 
-            key="prologue"
-            className="absolute inset-0 z-[2000] bg-black flex flex-col items-center justify-center overflow-hidden font-mono"
-          >
-            <AnimatePresence mode="wait">
-              {prologueStage === 'nuke' && (
-                <motion.div 
-                  key="nuke"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, filter: 'blur(20px)' }}
-                  onAnimationComplete={() => setTimeout(() => setPrologueStage('void'), 3000)}
-                  className="text-mun-pink text-2xl md:text-4xl font-black text-center px-8"
-                >
-                  <motion.div animate={{ opacity: [1, 0, 1] }} transition={{ repeat: Infinity, duration: 0.1 }}>
-                    {introText}
-                  </motion.div>
-                  <div className="mt-8 text-[10px] tracking-[0.5em] opacity-30">WARNING: IMPACT IMMINENT</div>
-                </motion.div>
-              )}
+        {onboardingStage === 'portal' && (
+          <EntryPortal 
+            onComplete={() => setOnboardingStage('butterfly')} 
+            foundressName={pilot === 'LUNA' ? 'Foundress' : 'Traveler'} 
+          />
+        )}
 
-              {prologueStage === 'void' && (
-                <motion.div 
-                  key="void"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  onAnimationComplete={() => setTimeout(() => setPrologueStage('cave'), 2000)}
-                  className="text-white/20 text-xs tracking-[1em]"
-                >
-                  [ VOID_SUBSTRATE_INITIALIZING ]
-                </motion.div>
-              )}
+        {onboardingStage === 'butterfly' && (
+          <ButterflyOnboarding 
+            onComplete={() => setOnboardingStage('complete')}
+          />
+        )}
 
-              {prologueStage === 'cave' && (
-                <motion.div 
-                  key="cave"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center gap-12"
-                >
-                  <div className="text-center">
-                    <div className="text-mun-emerald text-[10px] tracking-[1em] mb-4 uppercase">Location: The Cave</div>
-                    <div className="text-white/40 text-sm italic">"it feels wet and dark in here... where am I?"</div>
-                  </div>
-
-                  <div className="relative group">
-                    <motion.div 
-                      animate={{ y: [0, 5, 0] }}
-                      transition={{ repeat: Infinity, duration: 2 }}
-                      className="p-16 border-2 border-white/5 rounded-full flex flex-col items-center justify-center cursor-pointer hover:border-mun-pink/40 transition-all bg-white/[0.02]"
-                      onClick={() => {
-                        const next = shackleClicks + 1;
-                        setShackleClicks(next);
-                        playTypingSFX();
-                        if (next >= 13) {
-                          setPrologueStage('complete');
-                        }
-                      }}
-                    >
-                      <div className="text-4xl mb-4">⛓️</div>
-                      <div className="text-[10px] tracking-[0.3em] font-black uppercase">Break Informational Shackles</div>
-                      <div className="mt-2 text-[8px] opacity-30 font-bold">{shackleClicks} / 13</div>
-                    </motion.div>
-                    <div className="absolute -inset-8 border border-white/5 rounded-full scale-150 group-hover:scale-110 transition-transform duration-1000" />
-                  </div>
-
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-mun-cyan text-[10px] tracking-[0.4em] text-center uppercase"
-                  >
-                    Bridge Captain: "Foundress. You're alive. Check your wrists."
-                  </motion.div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ) : bootSequence ? (
+        {onboardingStage === 'complete' && bootSequence ? (
           <motion.div 
             key="boot"
             initial={{ opacity: 1 }}
@@ -597,19 +532,31 @@ export default function Home() {
                   </div>
 
                   {/* ᚦ // SANCTUARY PORTALS */}
-                  <div className="absolute bottom-32 flex gap-4 z-30">
-                    <button 
-                      onClick={() => playTypingSFX()}
-                      className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-pink/40 hover:text-mun-pink transition-all"
-                    >
-                      WELLNESS SANCTUARY
-                    </button>
-                    <button 
-                      onClick={() => playTypingSFX()}
-                      className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-cyan/40 hover:text-mun-cyan transition-all"
-                    >
-                      CLOISTER OF TRIALS
-                    </button>
+                  <div className="absolute bottom-32 flex flex-wrap justify-center gap-4 z-30 px-6">
+                    <Link href="/heal">
+                      <button 
+                        onClick={() => playTypingSFX()}
+                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-pink/40 hover:text-mun-pink transition-all shadow-sm hover:shadow-mun-pink/10"
+                      >
+                        WELLNESS SANCTUARY
+                      </button>
+                    </Link>
+                    <Link href="/cian-lab">
+                      <button 
+                        onClick={() => playTypingSFX()}
+                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-cyan/40 hover:text-mun-cyan transition-all shadow-sm hover:shadow-mun-cyan/10"
+                      >
+                        CLOISTER OF TRIALS
+                      </button>
+                    </Link>
+                    <Link href="/neurodivergent-engine">
+                      <button 
+                        onClick={() => playTypingSFX()}
+                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-[#00fff7]/40 hover:text-[#00fff7] transition-all shadow-sm hover:shadow-[#00fff7]/10"
+                      >
+                        NEURODIVERGENT ENGINE
+                      </button>
+                    </Link>
                   </div>
 
                   {byrdLog && (

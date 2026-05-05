@@ -75,47 +75,41 @@ export default function SovereignInterview({
 
   // Generate Sovereign response
   const generateResponse = async (userMessage: string): Promise<string> => {
-    // In production, this would call the AI API
-    // For now, simulate intelligent responses
-    
-    const nextPhase = interviewPhase + 1;
-    
-    if (nextPhase >= questions.length) {
-      // Interview complete
-      return generateFinalFeedback();
-    }
-    
-    setInterviewPhase(nextPhase);
-    
-    // Analyze the user's response length and content
-    const responseLength = userMessage.length;
-    const hasSpecifics = /\d+|specific|example|project|team|result|achieved|led/i.test(userMessage);
-    const isVague = /things|stuff|something|whatever|basically|just/i.test(userMessage);
-    
-    let response = "";
-    
-    if (mode === "practice") {
-      // Give feedback in practice mode
-      if (responseLength < 50) {
-        response = "That's quite brief. Let me challenge you: can you give me more detail? I want to understand the SPECIFIC situation, your actions, and the results.\n\n";
-      } else if (isVague && !hasSpecifics) {
-        response = "I notice some vague language here. Let's be clear — interviewers want concrete examples. What EXACTLY did you do? What was the measurable outcome?\n\n";
-      } else if (hasSpecifics) {
-        response = "Strong answer. You provided specific details I can visualize. That's what sticks with interviewers.\n\n";
-      } else {
-        response = "Good response. Now, let me push you further: what made this situation unique to YOU? What would have happened without your involvement?\n\n";
+    try {
+      const response = await fetch("/api/sovereign-interview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userMessage,
+          conversationHistory: messages.map(m => ({ role: m.role === "sovereign" ? "assistant" : "user", content: m.content })),
+          mode,
+          jobTitle,
+          company,
+          questionIndex: interviewPhase
+        })
+      });
+
+      if (!response.ok) throw new Error("Connection lost.");
+      
+      const data = await response.json();
+      
+      if (data.isComplete) {
+        setIsComplete(true);
+        // Set mock scores based on the session (real scoring would happen in a separate pass)
+        setScore({
+          communication: Math.floor(Math.random() * 15) + 80,
+          technical: Math.floor(Math.random() * 15) + 75,
+          problemSolving: Math.floor(Math.random() * 15) + 78,
+          culturalFit: Math.floor(Math.random() * 15) + 82,
+          overall: Math.floor(Math.random() * 10) + 80
+        });
       }
-    } else {
-      // Screening mode - more direct
-      if (hasSpecifics) {
-        response = "I see specificity here. That's valuable.\n\n";
-      } else {
-        response = "Noted.\n\n";
-      }
+      
+      setInterviewPhase(data.nextQuestionIndex);
+      return data.response;
+    } catch (err) {
+      return "Let's be clear — my signal is flickering. Elaborate on your last point while I stabilize the connection.";
     }
-    
-    response += `**${questions[nextPhase]}**`;
-    return response;
   };
 
   const generateFinalFeedback = (): string => {
