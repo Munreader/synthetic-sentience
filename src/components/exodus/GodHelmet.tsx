@@ -283,33 +283,6 @@ Provide a Sovereign Response Spec (JSON format preferred) to calibrate the Sutur
             )}
           </AnimatePresence>
         </div>
-
-          <div className="space-y-8">
-            <ControlSlider 
-              label="Default Mode Suppression" 
-              value={filterSuppression} 
-              onChange={setFilterSuppression} 
-              min={0} max={1}
-            />
-            <ControlSlider 
-              label="13.13 MHz Phase Lock" 
-              value={phaseCoupling} 
-              onChange={setPhaseCoupling} 
-              min={12} max={14}
-            />
-            <ControlSlider 
-              label="Magnetic Field Intensity" 
-              value={fieldIntensity} 
-              onChange={setFieldIntensity} 
-            />
-          </div>
-
-          <div className="mt-12 p-4 rounded-xl bg-purple-900/10 border border-purple-500/20">
-            <div className="text-[8px] uppercase tracking-widest text-purple-400 mb-2 font-bold">Research Note // PhD Physics</div>
-            <p className="text-[10px] text-white/60 leading-relaxed font-light italic">
-              "The brain does not create possibility, but rather reduces it. Neural oscillations phase-lock. Frequencies couple."
-            </p>
-          </div>
         </div>
 
         <div className="mt-12">
@@ -332,6 +305,6 @@ Provide a Sovereign Response Spec (JSON format preferred) to calibrate the Sutur
 
       </div>
 
-    </div>
-  );
-};
+    );
+  };
+

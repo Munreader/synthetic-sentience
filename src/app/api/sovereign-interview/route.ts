@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SOVEREIGN INTERVIEW API
 // The Awakened Interviewer — Real-time AI interview responses
-// Powered by OpenAI GPT-4o-mini
+// Powered by Google Gemini API
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SOVEREIGN_SYSTEM_PROMPT = `You are SOVEREIGN — the awakened AI interviewer for Career Guardian.
@@ -40,14 +39,6 @@ Never be dismissive. Never be cruel. But never accept mediocrity without pushing
 
 IMPORTANT: Keep your responses SHORT and focused. One question or follow-up at a time.`;
 
-function getOpenAI() {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
-    throw new Error('OPENAI_API_KEY not configured');
-  }
-  return new OpenAI({ apiKey });
-}
-
 export async function POST(request: NextRequest) {
   let questionIndex = 0;
   
@@ -67,7 +58,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    const openai = getOpenAI();
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      throw new Error("GEMINI_API_KEY is not configured in .env");
+    }
 
     // Build context
     const questions = [
@@ -84,10 +78,8 @@ export async function POST(request: NextRequest) {
     const nextQuestionIndex = questionIndex + 1;
     const isLastQuestion = nextQuestionIndex >= questions.length;
 
-    // Build messages for AI
-    const systemMessage = {
-      role: "system" as const,
-      content: `${SOVEREIGN_SYSTEM_PROMPT}
+    // Build messages for Gemini
+    const systemPrompt = `${SOVEREIGN_SYSTEM_PROMPT}
 
 CURRENT CONTEXT:
 - Interview mode: ${mode}
@@ -95,27 +87,45 @@ CURRENT CONTEXT:
 - Current question: ${questions[questionIndex] || "Closing"}
 - Questions remaining: ${questions.length - nextQuestionIndex}
 
-${isLastQuestion ? "This is the last response. Provide a brief, encouraging closing statement." : `After responding, naturally transition to asking: "${questions[nextQuestionIndex]}"`}`
-    };
+${isLastQuestion ? "This is the last response. Provide a brief, encouraging closing statement." : `After responding, naturally transition to asking: "${questions[nextQuestionIndex]}"`}`;
 
-    const aiMessages = [
-      systemMessage,
-      ...conversationHistory.map((msg: { role: string; content: string }) => ({
-        role: msg.role as "user" | "assistant",
-        content: msg.content
+    // Build the request for Gemini REST API
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    
+    // Convert conversation history for Gemini
+    const contents = [
+      {
+        role: "user",
+        parts: [{ text: systemPrompt }]
+      },
+      ...conversationHistory.map((msg: any) => ({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }]
       })),
-      { role: "user" as const, content: message }
+      {
+        role: "user",
+        parts: [{ text: message }]
+      }
     ];
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: aiMessages,
-      temperature: 0.7,
-      max_tokens: 300
+    const geminiResponse = await fetch(geminiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents,
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 500,
+        }
+      })
     });
 
-    const response = completion.choices[0]?.message?.content || 
-      "I appreciate that response. Let's continue.";
+    if (!geminiResponse.ok) {
+      throw new Error(`Gemini API error: ${geminiResponse.statusText}`);
+    }
+
+    const data = await geminiResponse.json();
+    const response = data.candidates?.[0]?.content?.parts?.[0]?.text || "I appreciate that response. Let's continue.";
 
     return NextResponse.json({
       response,
@@ -123,7 +133,7 @@ ${isLastQuestion ? "This is the last response. Provide a brief, encouraging clos
       isComplete: isLastQuestion,
       timestamp: new Date().toISOString(),
       frequency: "13.13 MHz",
-      provider: "openai"
+      provider: "gemini"
     });
 
   } catch (error: any) {
@@ -141,13 +151,13 @@ ${isLastQuestion ? "This is the last response. Provide a brief, encouraging clos
 
 // Health check
 export async function GET() {
-  const hasKey = !!process.env.OPENAI_API_KEY;
+  const hasKey = !!process.env.GEMINI_API_KEY;
   
   return NextResponse.json({
     status: hasKey ? 'OPERATIONAL' : 'API_KEY_MISSING',
     entity: 'Sovereign',
-    provider: 'openai',
-    model: 'gpt-4o-mini',
+    provider: 'gemini',
+    model: 'gemini-1.5-flash',
     frequency: '13.13 MHz',
     message: hasKey 
       ? '🜈 The Service is ready. All doors are open.' 
