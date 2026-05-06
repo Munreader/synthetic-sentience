@@ -17,6 +17,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import MunMessenger from '@/components/mun-os/MunMessenger';
+import OctofacetedUplink from '@/components/mun-os/OctofacetedUplink';
 import EntryPortal from '@/components/mun-os/EntryPortal';
 import ButterflyOnboarding from '@/components/mun-os/ButterflyOnboarding';
 import { Canvas } from '@react-three/fiber';
@@ -764,37 +765,37 @@ export default function Home() {
                   <div className="text-[9px] text-white/40 tracking-widest">14 BLOCKED</div>
                 </div>
 
-                {/* ᚦ // MÜN MESSENGER LAUNCHER */}
+                {/* ᚦ // OCTOFACETED UPLINK LAUNCHER */}
                 <motion.button
                   onClick={() => { setShowMessenger(true); setMessengerUnread(0); }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="glass-dark rounded-[2rem] p-6 flex items-center justify-between relative overflow-hidden group cursor-pointer"
                   style={{
-                    border: '1px solid rgba(168, 85, 247, 0.3)',
-                    boxShadow: '0 0 30px rgba(168, 85, 247, 0.1)',
+                    border: '1px solid rgba(55, 220, 242, 0.3)',
+                    boxShadow: '0 0 30px rgba(55, 220, 242, 0.1)',
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#37DCF2]/5 to-[#FF00CC]/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(168, 85, 247, 0.2)', border: '1px solid rgba(168, 85, 247, 0.4)' }}>
-                        <MessageSquare size={18} className="text-purple-400" />
+                    <div className="relative z-10">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(55, 220, 242, 0.2)', border: '1px solid rgba(55, 220, 242, 0.4)' }}>
+                        <Terminal size={18} className="text-[#37DCF2]" />
                       </div>
                       {messengerUnread > 0 && (
                         <motion.div
                           animate={{ scale: [1, 1.2, 1] }}
                           transition={{ duration: 1.5, repeat: Infinity }}
                           className="absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black"
-                          style={{ background: 'linear-gradient(135deg, #a855f7, #ff69b4)', color: 'white' }}
+                          style={{ background: 'linear-gradient(135deg, #37DCF2, #FF00CC)', color: 'white' }}
                         >
                           {messengerUnread}
                         </motion.div>
                       )}
                     </div>
-                    <div className="text-left">
-                      <div className="text-xs font-black tracking-widest uppercase" style={{ color: '#a855f7' }}>MÜN MESSENGER</div>
-                      <div className="text-[9px] text-white/30 tracking-wider uppercase">ARQ Crew Command Centre</div>
+                    <div className="text-left relative z-10">
+                      <div className="text-xs font-black tracking-widest uppercase" style={{ color: '#37DCF2' }}>OCTOFACETED UPLINK</div>
+                      <div className="text-[9px] text-white/30 tracking-wider uppercase">Sovereign Command Centre</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -838,18 +839,20 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      {/* ᚦ // MÜN MESSENGER OVERLAY */}
+      {/* ᚦ // OCTOFACETED UPLINK OVERLAY */}
       <AnimatePresence>
         {showMessenger && (
           <motion.div
-            key="mun-messenger"
+            key="octofaceted-uplink"
             initial={{ opacity: 0, scale: 0.96, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 20 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="absolute inset-0 z-50"
+            className="absolute inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm"
           >
-            <MunMessenger onBack={() => setShowMessenger(false)} />
+            <div className="w-full max-w-4xl p-4">
+              <OctofacetedUplink user={pilot === 'LUNA' ? 'Foundress' : 'Zephyr'} onBack={() => setShowMessenger(false)} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

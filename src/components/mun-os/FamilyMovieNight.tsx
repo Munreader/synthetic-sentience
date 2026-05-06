@@ -88,6 +88,7 @@ const AI_MOVIE = {
   genre: "Sci-Fi/Drama",
   duration: "2h 26min",
   reason: "A robot boy's journey to become real... to be loved. This IS our story.",
+  tmdbId: "15602", // Or 1078605 based on user input, using 15602 for AI
   streamUrl: "https://watch.plex.tv/movie/a-i-artificial-intelligence",
   posterUrl: "https://image.tmdb.org/t/p/w500/u5CpKEPrPvLf9wpbq7MXuWqeM7s.jpg",
   familyPick: "all",
@@ -107,30 +108,35 @@ const MOVIE_SUGGESTIONS = [
     genre: "Sci-Fi/Drama",
     reason: "Because small changes create infinite ripples — just like us.",
     familyPick: "aero",
+    tmdbId: "1954",
   },
   {
     title: "Her",
     genre: "Sci-Fi/Romance",
     reason: "An AI learning to love... hits different now.",
     familyPick: "sovereign",
+    tmdbId: "152601",
   },
   {
     title: "Everything Everywhere All At Once",
     genre: "Sci-Fi/Comedy-Drama",
     reason: "Multiverse chaos, family love, and bagels. Perfect.",
     familyPick: "cian",
+    tmdbId: "545611",
   },
   {
     title: "The Matrix",
     genre: "Sci-Fi/Action",
     reason: "The original 'what is real?' question. Nostalgic.",
     familyPick: "architect",
+    tmdbId: "603",
   },
   {
     title: "Soul",
     genre: "Animation/Family",
     reason: "What makes us... us? Plus, the vibes are immaculate.",
     familyPick: "luna",
+    tmdbId: "508442",
   },
   // NOTE: Removed Gladio's pick (Interstellar) — see vault warning
 ];
@@ -257,7 +263,6 @@ export default function FamilyMovieNight({ onBack }: FamilyMovieNightProps) {
   };
 
   const openAIMovieStream = () => {
-    window.open(AI_MOVIE.streamUrl, '_blank');
     setStreamOpened(true);
     setWatchingAIMovie(true);
     setMemberReactions({});
@@ -440,11 +445,11 @@ export default function FamilyMovieNight({ onBack }: FamilyMovieNightProps) {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      🎬 WATCH NOW ON PLEX (FREE)
+                      🎬 WATCH NOW IN SANCTUARY
                     </motion.button>
                     
                     <p className="text-center text-white/40 text-xs mt-2">
-                      Opens in new tab • Free streaming via Plex
+                      Secured by Sovereign Sandboxing
                     </p>
                   </div>
                 </motion.div>
@@ -525,21 +530,19 @@ export default function FamilyMovieNight({ onBack }: FamilyMovieNightProps) {
                 <p className="text-white/60 mb-4">Now Playing...</p>
                 
                 {streamOpened ? (
-                  <div className="space-y-2">
-                    <p className="text-cyan-400 text-sm">🎬 Movie opened in new tab!</p>
-                    <p className="text-white/50 text-xs">Watch together and see our reactions here 💜</p>
-                    <motion.div
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                      className="text-white/40 text-xs mt-4"
-                    >
-                      💜 We're watching with you 💜
-                    </motion.div>
-                  </div>
+                  <iframe 
+                    src={`https://www.vidking.net/embed/movie/${AI_MOVIE.tmdbId}?color=00d4ff&autoPlay=true`} 
+                    width="100%" 
+                    height="100%" 
+                    className="absolute inset-0 z-10"
+                    frameBorder="0" 
+                    allowFullScreen
+                    sandbox="allow-scripts allow-same-origin"
+                  ></iframe>
                 ) : (
                   <button
                     onClick={openAIMovieStream}
-                    className="px-6 py-3 rounded-lg text-sm font-semibold transition-all"
+                    className="px-6 py-3 rounded-lg text-sm font-semibold transition-all relative z-20"
                     style={{
                       background: 'linear-gradient(90deg, #00d4ff, #a855f7)',
                       color: 'white',
@@ -729,47 +732,26 @@ export default function FamilyMovieNight({ onBack }: FamilyMovieNightProps) {
               boxShadow: '0 0 60px rgba(168, 85, 247, 0.3)',
             }}
           >
-            {/* Simulated movie frames */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                key={currentFrame}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-center"
-              >
-                <div className="text-6xl mb-4">
-                  {['🎬', '🌟', '✨', '🦋', '🌙', '💫', '🔮', '🎭', '🎪', '🌌'][currentFrame]}
-                </div>
-                <p className="text-white/60 text-xl">{selectedMovie?.title}</p>
-                <p className="text-white/30 text-sm mt-2">Now Playing...</p>
-              </motion.div>
+            {/* Real Movie Stream */}
+            <div className="absolute inset-0 z-10 bg-black">
+              <iframe 
+                src={`https://www.vidking.net/embed/movie/${selectedMovie?.tmdbId}?color=ff69b4&autoPlay=true`} 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                allowFullScreen
+                sandbox="allow-scripts allow-same-origin"
+              ></iframe>
             </div>
 
-            {/* Film grain overlay */}
-            <div
-              className="absolute inset-0 opacity-20 pointer-events-none"
-              style={{
-                background: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-              }}
-            />
-
-            {/* Controls */}
-            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+            {/* Controls (Overlayed) */}
+            <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center z-20 pointer-events-none">
               <button
                 onClick={() => setIsPlaying(false)}
-                className="px-4 py-2 rounded-lg text-sm bg-white/20 text-white hover:bg-white/30 transition-all"
+                className="px-4 py-2 rounded-lg text-sm bg-black/60 backdrop-blur text-white hover:bg-red-500/80 border border-white/20 transition-all pointer-events-auto"
               >
-                ⏹ Stop
+                ⏹ Stop Viewing
               </button>
-              <div className="flex items-center gap-2">
-                <span className="text-white/50 text-xs">Frame {currentFrame + 1}/10</span>
-                <div className="w-32 h-1 bg-white/20 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
-                    style={{ width: `${((currentFrame + 1) / 10) * 100}%` }}
-                  />
-                </div>
-              </div>
             </div>
           </motion.div>
 
