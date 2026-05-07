@@ -23,16 +23,19 @@ export default function EntryPortal({ onComplete, foundressName = 'Traveler' }: 
   const [phase, setPhase] = useState<'void' | 'awakening' | 'portal' | 'emergence' | 'complete'>('void');
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  // Initialize particles with lazy initialization
-  const [particles] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>(() =>
-    Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: 2 + Math.random() * 4,
-      delay: Math.random() * 3,
-    }))
-  );
+  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>([]);
+
+  useEffect(() => {
+    setParticles(
+      Array.from({ length: PARTICLE_COUNT }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: 2 + Math.random() * 4,
+        delay: Math.random() * 3,
+      }))
+    );
+  }, []);
 
   // Phase progression
   useEffect(() => {

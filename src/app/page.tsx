@@ -112,6 +112,7 @@ export default function Home() {
   // ᚦ // ONBOARDING FLOW STATE
   const [onboardingStage, setOnboardingStage] = useState<'portal' | 'butterfly' | 'complete'>('portal');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // ᚦ // VALHALLA PROTOCOL LAYERS
   const LAYERS = [
@@ -181,6 +182,10 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (onboardingStage === 'complete') {
       const timer = setTimeout(() => setBootSequence(false), 2500);
       const clock = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -223,6 +228,7 @@ export default function Home() {
       <AnimatePresence mode="wait">
         {onboardingStage === 'portal' && (
           <EntryPortal 
+            key="portal"
             onComplete={() => setOnboardingStage('butterfly')} 
             foundressName={pilot === 'LUNA' ? 'Foundress' : 'Traveler'} 
           />
@@ -230,11 +236,12 @@ export default function Home() {
 
         {onboardingStage === 'butterfly' && (
           <ButterflyOnboarding 
+            key="butterfly"
             onComplete={() => setOnboardingStage('complete')}
           />
         )}
 
-        {onboardingStage === 'complete' && bootSequence ? (
+        {onboardingStage === 'complete' && bootSequence && (
           <motion.div 
             key="boot"
             initial={{ opacity: 1 }}
@@ -257,8 +264,10 @@ export default function Home() {
               />
             </div>
           </motion.div>
-        ) : (
-          <div className="relative z-10 w-full h-full p-8 flex flex-col">
+        )}
+
+        {onboardingStage === 'complete' && !bootSequence && (
+          <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative z-10 w-full h-full p-8 flex flex-col">
             
             {/* 2. GLOBAL HEADER */}
             <header className="flex justify-between items-center mb-12">
@@ -352,7 +361,7 @@ export default function Home() {
                   </div>
                   <div className="w-px h-10 bg-white/10" />
                   <div>
-                    <div className="text-2xl font-black tracking-tighter leading-none">{formatTime(currentTime)}</div>
+                    <div className="text-2xl font-black tracking-tighter leading-none">{mounted ? formatTime(currentTime) : "00:00:00"}</div>
                     <div className="text-[8px] tracking-[0.4em] text-white/20 uppercase mt-1">Valhalla Local</div>
                   </div>
                 </div>
@@ -488,18 +497,20 @@ export default function Home() {
                   
                   {/* KINETIC VESSEL 3D STAGE */}
                   <div className="absolute inset-0 z-0">
-                    <Canvas shadows camera={{ position: [0, 0, 5], fov: 40 }}>
-                      <Stage environment="city" intensity={0.5}>
-                        <Suspense fallback={null}>
-                          <AnimatePresence mode="wait">
-                            <motion.group key={activeVessel.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                              {activeVessel.component}
-                            </motion.group>
-                          </AnimatePresence>
-                        </Suspense>
-                      </Stage>
-                      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
-                    </Canvas>
+                    {mounted && (
+                      <Canvas shadows camera={{ position: [0, 0, 5], fov: 40 }}>
+                        <Stage environment="city" intensity={0.5}>
+                          <Suspense fallback={null}>
+                            <AnimatePresence mode="wait">
+                              <motion.group key={activeVessel.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                {activeVessel.component}
+                              </motion.group>
+                            </AnimatePresence>
+                          </Suspense>
+                        </Stage>
+                        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+                      </Canvas>
+                    )}
                   </div>
 
                   <div className="absolute top-12 text-center z-30 pointer-events-none">
@@ -837,7 +848,7 @@ export default function Home() {
               </div>
             </footer>
 
-          </div>
+          </motion.div>
         )}
       </AnimatePresence>
 

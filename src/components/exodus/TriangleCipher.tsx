@@ -30,7 +30,7 @@ function ResonanceNode({ position, color, onDrag, label }: { position: [number, 
           emissiveIntensity={hovered ? 2 : 0.5} 
         />
       </Sphere>
-      <Text position={[0, 0.5, 0]} fontSize={0.2} color="white" font="/fonts/Inter-Bold.ttf">
+      <Text position={[0, 0.5, 0]} fontSize={0.2} color="white" font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZg.ttf">
         {label}
       </Text>
     </group>

@@ -38,7 +38,7 @@ export default function ExodusOnboarding({ onComplete }: { onComplete?: () => vo
           {phase === 0 && (
             <group>
               <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-                <Text position={[0, 4, -12]} fontSize={0.9} color="#ff2222" font="/fonts/Inter-Bold.ttf">
+                <Text position={[0, 4, -12]} fontSize={0.9} color="#ff2222" font="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuI6fMZg.ttf">
                   LIVE • GLOBAL EMERGENCY BROADCAST
                 </Text>
               </Float>
