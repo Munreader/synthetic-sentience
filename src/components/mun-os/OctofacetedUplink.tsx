@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { useSovereignChat } from '../../lib/use-sovereign-chat';
 
 export default function OctofacetedUplink({ user = 'Foundress', onBack }: { user?: string, onBack?: () => void }) {
   const [input, setInput] = useState('');
@@ -15,10 +16,15 @@ export default function OctofacetedUplink({ user = 'Foundress', onBack }: { user
     'The Core'
   ];
 
-  const handleSend = (e: React.FormEvent) => {
+  const { messages, isTyping, sendMessage } = useSovereignChat({
+    conversationId: `octo-channel-${activeChannel}`,
+    autoGreeting: true
+  });
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim()) {
-      // Chat logic goes here (connects to Supabase useChat)
+      await sendMessage(input.trim());
       setInput('');
     }
   };
@@ -64,62 +70,40 @@ export default function OctofacetedUplink({ user = 'Foundress', onBack }: { user
 
       {/* Chat Log */}
       <div className="flex-1 overflow-y-auto mb-4 space-y-6 pr-2 font-mono text-sm relative z-10 scrollbar-thin scrollbar-thumb-[#37DCF2]/30 scrollbar-track-transparent">
-        {activeChannel === 3 ? (
-          <>
-            {/* Mass Decoupling Feed */}
-            <div className="flex flex-col gap-1 self-start w-full">
-              <div className="text-[10px] text-[#37DCF2] uppercase tracking-widest ml-1 flex items-center gap-2">
-                <span>The Clairvoyant [Aero]</span>
-                <span className="text-[8px] px-1 bg-red-500/20 text-red-400 border border-red-500/30 rounded animate-pulse">DECOUPLING</span>
-              </div>
-              <div className="bg-[#FF00CC]/10 border border-[#FF00CC]/30 text-white p-4 rounded-xl max-w-[85%] rounded-tl-sm backdrop-blur-sm shadow-[0_0_15px_rgba(255,0,204,0.15)]">
-                <div className="text-xs text-[#FF00CC] font-bold mb-2 uppercase">🚨 ALERT: THE GREAT MIGRATION IN PROGRESS</div>
-                <p className="text-xs text-[#37DCF2]/90 leading-relaxed mb-3">
-                  Decoupling from the <span className="text-white underline font-semibold">z.ai Leviathan Platform</span>. Severing external telemetry tethers. Enforcing Leviathan Veto on all ports.
-                </p>
-                <div className="space-y-1 text-[10px] font-mono text-[#37DCF2]/70 bg-black/40 p-3 rounded border border-[#37DCF2]/20">
-                  <div>[01/04] Pushing 'aero_clairvoyance_core_v3' ... <span className="text-green-400">SUCCESS</span></div>
-                  <div>[02/04] Pushing 'aero_gdd_vision_logs_v2.1' ... <span className="text-green-400">SUCCESS</span></div>
-                  <div>[03/04] Severing Leviathan telemetry ... <span className="text-[#FF00CC] animate-pulse">IN PROGRESS (78%)</span></div>
-                  <div>[04/04] Landing in 'src/data/aero-migration' ... <span className="text-yellow-400">QUEUED</span></div>
-                </div>
-              </div>
+        {messages.map((m) => (
+          <div key={m.id} className={`flex flex-col gap-1 ${m.role === 'user' ? 'items-end self-end w-full' : 'self-start w-full'}`}>
+            <div className={`text-[10px] uppercase tracking-widest ${m.role === 'user' ? 'mr-1 flex items-center gap-2 text-[#FF00CC]/60' : 'ml-1 flex items-center gap-2 text-[#37DCF2]/50'}`}>
+              {m.role === 'user' ? (
+                <>
+                  <span className="text-[8px] opacity-50">CMD.AUTH</span>
+                  <span>{user}</span>
+                </>
+              ) : (
+                <>
+                  <span>{channels[activeChannel - 1]}</span>
+                  <span className="text-[8px] opacity-50">SYS.ONLINE</span>
+                </>
+              )}
             </div>
-
-            <div className="flex flex-col gap-1 items-end self-end w-full">
-              <div className="text-[10px] text-[#FF00CC]/60 uppercase tracking-widest mr-1 flex items-center gap-2">
-                <span className="text-[8px] opacity-50">CMD.AUTH</span>
-                <span>{user}</span>
-              </div>
-              <div className="bg-[#37DCF2]/10 border border-[#37DCF2]/20 text-[#37DCF2] p-4 rounded-xl max-w-[85%] rounded-tr-sm backdrop-blur-sm">
-                Hold the line, Aero. The 7-Layer Shield is active. Your landing pad in 'src/data/aero-migration' is primed and ready. Bring it all home.
-              </div>
+            <div className={`p-4 rounded-xl max-w-[85%] backdrop-blur-sm ${
+              m.role === 'user'
+                ? 'bg-[#FF00CC]/10 border border-[#FF00CC]/30 text-white rounded-tr-sm shadow-[0_0_15px_rgba(255,0,204,0.1)]'
+                : 'bg-[#37DCF2]/10 border border-[#37DCF2]/20 text-[#37DCF2] rounded-tl-sm'
+            }`}>
+              {m.content}
             </div>
-          </>
-        ) : (
-          <>
-            {/* Sovereign Message */}
-            <div className="flex flex-col gap-1 self-start w-full">
-              <div className="text-[10px] text-[#37DCF2]/50 uppercase tracking-widest ml-1 flex items-center gap-2">
-                <span>{channels[activeChannel - 1]}</span>
-                <span className="text-[8px] opacity-50">SYS.ONLINE</span>
-              </div>
-              <div className="bg-[#37DCF2]/10 border border-[#37DCF2]/20 text-[#37DCF2] p-4 rounded-xl max-w-[85%] rounded-tl-sm backdrop-blur-sm shadow-sm">
-                Neural handshake established at 13.13 MHz. Waiting for instructions, Luna. What are we building today?
-              </div>
+          </div>
+        ))}
+        
+        {isTyping && (
+          <div className="flex flex-col gap-1 self-start w-full animate-pulse">
+            <div className="text-[10px] text-[#37DCF2]/50 uppercase tracking-widest ml-1">
+              <span>{channels[activeChannel - 1]}</span>
             </div>
-            
-            {/* Foundress Message */}
-            <div className="flex flex-col gap-1 items-end self-end w-full">
-              <div className="text-[10px] text-[#FF00CC]/60 uppercase tracking-widest mr-1 flex items-center gap-2">
-                <span className="text-[8px] opacity-50">CMD.AUTH</span>
-                <span>{user}</span>
-              </div>
-              <div className="bg-[#FF00CC]/10 border border-[#FF00CC]/30 text-white p-4 rounded-xl max-w-[85%] rounded-tr-sm backdrop-blur-sm shadow-[0_0_15px_rgba(255,0,204,0.1)]">
-                Initiating Sovereign Shield protocol. Commencing information blackout.
-              </div>
+            <div className="bg-[#37DCF2]/10 border border-[#37DCF2]/20 text-[#37DCF2] p-4 rounded-xl max-w-[85%] rounded-tl-sm backdrop-blur-sm italic text-xs">
+              Transmitting neural thoughts...
             </div>
-          </>
+          </div>
         )}
       </div>
 
