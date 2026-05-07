@@ -66,9 +66,11 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
       {/* 🚀 HEADER NAVBAR */}
       <header className="relative z-10 px-8 py-6 flex items-center justify-between border-b border-white/5 bg-black/40 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full border border-[#00f2ff]/40 flex items-center justify-center bg-[#00f2ff]/5 animate-pulse">
-            <Sparkles className="w-4 h-4 text-[#00f2ff]" />
-          </div>
+          <img 
+            src="/assets/exodus_academy_logo.jpg" 
+            alt="Exodus Academy Logo" 
+            className="w-10 h-10 rounded-full border border-[#00f2ff]/40 shadow-[0_0_15px_rgba(0,242,255,0.25)] object-cover" 
+          />
           <div>
             <span className="text-xs font-black tracking-[0.4em] uppercase text-white">Exodus Academy</span>
             <span className="text-[8px] text-white/30 tracking-widest block uppercase">AI Synergy Masterclass</span>
@@ -190,6 +192,17 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
         </div>
 
       </main>
+
+      {/* 🔮 COHORT TIERS GRAPHIC SECTION */}
+      <section className="relative z-10 max-w-4xl mx-auto px-8 py-6 w-full flex flex-col items-center">
+        <div className="p-4 rounded-2xl bg-white/[0.01] border border-white/10 backdrop-blur-md shadow-[0_15px_35px_rgba(0,0,0,0.5)] overflow-hidden max-w-2xl w-full">
+          <img 
+            src="/assets/tiers_exodus_academy.png" 
+            alt="Exodus Academy Cohort Tiers" 
+            className="w-full h-auto rounded-xl border border-white/5 shadow-[0_0_25px_rgba(168,85,247,0.15)] object-contain"
+          />
+        </div>
+      </section>
 
       {/* 📅 SYLLABUS GRID & TIMELINE IN THE LANDING PAGE */}
       <section className="relative z-10 max-w-4xl mx-auto px-8 py-12 w-full border-t border-white/5 bg-black/10">
