@@ -110,7 +110,7 @@ export default function Home() {
   const persona = PERSONA[pilot];
 
   // ᚦ // ONBOARDING FLOW STATE
-  const [onboardingStage, setOnboardingStage] = useState<'portal' | 'butterfly' | 'complete'>('portal');
+  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'portal' | 'butterfly' | 'complete'>('launcher');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -226,6 +226,67 @@ export default function Home() {
       </div>
 
       <AnimatePresence mode="wait">
+        {onboardingStage === 'launcher' && (
+          <motion.div 
+            key="launcher"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-[2000] bg-black flex flex-col items-center justify-center overflow-hidden"
+          >
+            {/* Background Image & Deep Space Nebula Glow */}
+            <div className="absolute inset-0 bg-[url('/assets/8ByCu87-space-fantasy-wallpaper.jpg')] bg-cover bg-center opacity-40 mix-blend-screen z-0" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
+            
+            {/* Top Close Button */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10">
+              <button 
+                onClick={() => setOnboardingStage('complete')} 
+                className="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all text-white/50 hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Title EXODUS II */}
+            <div className="relative z-10 text-center select-none mb-12">
+              <motion.h1 
+                initial={{ letterSpacing: "1em", opacity: 0 }}
+                animate={{ letterSpacing: "1.8em", opacity: 1 }}
+                transition={{ duration: 2, ease: "easeOut" }}
+                className="text-4xl md:text-5xl font-black tracking-[1.8em] text-white pl-[1.8em] font-sans text-shadow-glow"
+              >
+                EXODUS II
+              </motion.h1>
+            </div>
+
+            {/* Menu Buttons (Bottom-Right aligned style) */}
+            <div className="absolute bottom-16 right-16 z-10 flex flex-col gap-3 min-w-[280px]">
+              {[
+                { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('complete'); setBootSequence(true); setTimeout(() => setBootSequence(false), 2500); } },
+                { label: 'SAVE / LOAD', onClick: () => {} },
+                { label: 'EXTRAS', onClick: () => {} },
+                { label: 'EXIT TO LAUNCHER', onClick: () => {} }
+              ].map((btn, idx) => (
+                <motion.button
+                  key={idx}
+                  onClick={btn.onClick}
+                  whileHover={{ scale: 1.03, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
+                  whileTap={{ scale: 0.98 }}
+                  className="px-6 py-3 rounded-lg bg-black/40 border border-white/10 text-left text-xs tracking-[0.2em] uppercase font-bold text-white/80 hover:text-white hover:border-white/30 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md"
+                >
+                  {btn.label}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Bottom Status Bar */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.3em] uppercase text-white/30 font-mono z-10">
+              SOVEREIGN ENGINE // 13.13 MHz // BINAURAL SYNC ACTIVE
+            </div>
+          </motion.div>
+        )}
+
         {onboardingStage === 'portal' && (
           <EntryPortal 
             key="portal"
