@@ -159,8 +159,23 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
                   key="optin-form"
                   className="space-y-4"
                 >
-                  <p className="text-[10px] text-white/50 leading-relaxed uppercase">
-                    Connect your Google profile to secure early-bird access codes, live stream notifications, and premium asset templates.
+                  <a
+                    href="https://buy.stripe.com/fZudRbbu42yid4rgqOgMw01"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#00f2ff] to-[#a855f7] hover:opacity-90 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(0,242,255,0.25)] block text-center"
+                  >
+                    Enroll in Academy ($50) <ArrowRight className="w-4 h-4" />
+                  </a>
+
+                  <div className="flex items-center my-2">
+                    <div className="h-px bg-white/10 flex-grow" />
+                    <span className="px-3 text-[8px] text-white/30 uppercase tracking-widest">or</span>
+                    <div className="h-px bg-white/10 flex-grow" />
+                  </div>
+
+                  <p className="text-[9px] text-white/40 leading-relaxed uppercase">
+                    Connect your Google profile below to secure free early-bird notifications and asset previews.
                   </p>
 
                   <button
@@ -169,14 +184,14 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
                     className="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/30 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2.5 transition-all text-white/95"
                   >
                     <Mail className="w-4 h-4 text-[#00f2ff]" />
-                    {isSubmitting ? "SYNCING..." : "Join with Google"}
+                    {isSubmitting ? "SYNCING..." : "Join Free Early Access"}
                   </button>
 
                   <div className="h-px bg-white/5 my-2" />
 
                   <button
                     onClick={onLaunchDemo}
-                    className="w-full py-3 rounded-xl bg-white/[0.01] border border-dashed border-white/10 hover:border-white/30 text-[9px] tracking-widest text-white/40 hover:text-white/80 transition-all uppercase font-bold"
+                    className="w-full py-2 rounded-xl bg-white/[0.01] border border-dashed border-white/10 hover:border-white/30 text-[9px] tracking-widest text-white/40 hover:text-white/80 transition-all uppercase font-bold"
                   >
                     Or Explore Finished Product Demo
                   </button>
