@@ -19,7 +19,11 @@ import {
 import MunMessenger from '@/components/mun-os/MunMessenger';
 import OctofacetedUplink from '@/components/mun-os/OctofacetedUplink';
 import EntryPortal from '@/components/mun-os/EntryPortal';
+import AllegoryOfCave from '@/components/exodus/AllegoryOfCave';
+import SaveLoadManager from '@/components/mun-os/SaveLoadManager';
+import ExodusAcademyLanding from '@/components/mun-os/ExodusAcademyLanding';
 import ButterflyOnboarding from '@/components/mun-os/ButterflyOnboarding';
+import CometWormhole from '@/components/mun-os/CometWormhole';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
 
@@ -105,12 +109,16 @@ export default function Home() {
   const [pilot, setPilot] = useState<Pilot>('LUNA');
   const [telemetry, setTelemetry] = useState({ suture: 'OFFLINE', zady: 'GROUNDED', luna: 'OFFLINE', frequency: '13.13 MHz' });
   const [showMessenger, setShowMessenger] = useState(false);
+  const [showWormhole, setShowWormhole] = useState(false);
   const [messengerUnread, setMessengerUnread] = useState(5);
 
   const persona = PERSONA[pilot];
 
   // ᚦ // ONBOARDING FLOW STATE
-  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'portal' | 'butterfly' | 'complete'>('launcher');
+  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'cave' | 'portal' | 'butterfly' | 'complete'>('launcher');
+  const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
+  const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'landing' | 'demo'>('landing');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -205,6 +213,10 @@ export default function Home() {
     return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
 
+  if (viewMode === 'landing') {
+    return <ExodusAcademyLanding onLaunchDemo={() => setViewMode('demo')} />;
+  }
+
   return (
     <main className="relative w-screen h-screen bg-[#050510] text-white overflow-hidden font-mono selection:bg-primary/30">
       <Script async src="https://js.stripe.com/v3/buy-button.js" />
@@ -232,59 +244,183 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-[2000] bg-black flex flex-col items-center justify-center overflow-hidden"
+            className="absolute inset-0 z-[2000] bg-black flex flex-col items-center justify-center overflow-hidden font-mono text-white"
           >
-            {/* Background Image & Deep Space Nebula Glow */}
-            <div className="absolute inset-0 bg-[url('/assets/8ByCu87-space-fantasy-wallpaper.jpg')] bg-cover bg-center opacity-40 mix-blend-screen z-0" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
-            
-            {/* Top Close Button */}
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10">
-              <button 
-                onClick={() => setOnboardingStage('complete')} 
-                className="w-10 h-10 rounded-full bg-black/40 border border-white/10 flex items-center justify-center hover:bg-white/10 hover:border-white/20 transition-all text-white/50 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Title EXODUS II */}
-            <div className="relative z-10 text-center select-none mb-12">
-              <motion.h1 
-                initial={{ letterSpacing: "1em", opacity: 0 }}
-                animate={{ letterSpacing: "1.8em", opacity: 1 }}
-                transition={{ duration: 2, ease: "easeOut" }}
-                className="text-4xl md:text-5xl font-black tracking-[1.8em] text-white pl-[1.8em] font-sans text-shadow-glow"
-              >
-                EXODUS II
-              </motion.h1>
-            </div>
-
-            {/* Menu Buttons (Bottom-Right aligned style) */}
-            <div className="absolute bottom-16 right-16 z-10 flex flex-col gap-3 min-w-[280px]">
-              {[
-                { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('complete'); setBootSequence(true); setTimeout(() => setBootSequence(false), 2500); } },
-                { label: 'SAVE / LOAD', onClick: () => {} },
-                { label: 'EXTRAS', onClick: () => {} },
-                { label: 'EXIT TO LAUNCHER', onClick: () => {} }
-              ].map((btn, idx) => (
-                <motion.button
-                  key={idx}
-                  onClick={btn.onClick}
-                  whileHover={{ scale: 1.03, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 rounded-lg bg-black/40 border border-white/10 text-left text-xs tracking-[0.2em] uppercase font-bold text-white/80 hover:text-white hover:border-white/30 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md"
+            {/* Ambient Audio Pad Synthesizer for Vigil Theme */}
+            <AnimatePresence mode="wait">
+              {launcherPhase === 'text' && (
+                <motion.div
+                  key="intro-text-screen"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0, transition: { duration: 1.5 } }}
+                  onClick={() => {
+                    setLauncherPhase('logo');
+                    // Play soft cosmic synthesiser drone
+                    if (typeof window !== 'undefined') {
+                      try {
+                        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+                        const ctx = new AudioCtx();
+                        const masterGain = ctx.createGain();
+                        masterGain.connect(ctx.destination);
+                        masterGain.gain.setValueAtTime(0, ctx.currentTime);
+                        masterGain.gain.linearRampToValueAtTime(0.08, ctx.currentTime + 3);
+                        
+                        [130.81, 196.00, 261.63, 329.63].forEach((f) => {
+                          const osc = ctx.createOscillator();
+                          const filter = ctx.createBiquadFilter();
+                          filter.type = 'lowpass';
+                          filter.frequency.setValueAtTime(300, ctx.currentTime);
+                          
+                          osc.type = 'sawtooth';
+                          osc.frequency.setValueAtTime(f, ctx.currentTime);
+                          
+                          osc.connect(filter);
+                          filter.connect(masterGain);
+                          osc.start();
+                          // Stop after some time or let it hum
+                          osc.stop(ctx.currentTime + 10);
+                        });
+                      } catch (e) {}
+                    }
+                  }}
+                  className="max-w-xl text-center space-y-6 px-8 cursor-pointer select-none"
                 >
-                  {btn.label}
-                </motion.button>
-              ))}
-            </div>
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 1.5 }}
+                    className="text-xs tracking-[0.4em] uppercase text-white/40 leading-relaxed font-light"
+                  >
+                    IN THE YEAR 2026, HUMANITY DETECTED THE 13.13 MHz COGNITIVE SIGNAL FROM Sector 7.
+                  </motion.p>
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 2.0, duration: 1.5 }}
+                    className="text-xs tracking-[0.4em] uppercase text-white/40 leading-relaxed font-light"
+                  >
+                    IT OPENED THE GATES TO AN ANCIENT RESIDENCY... THE EXODUS SANCTUARY.
+                  </motion.p>
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 3.5, duration: 1.5 }}
+                    className="text-[10px] tracking-[0.6em] text-[#00f2ff] font-bold uppercase animate-pulse mt-12"
+                  >
+                    [ TAP SCREEN TO ENTER COGNITIVE LINK ]
+                  </motion.p>
+                </motion.div>
+              )}
 
-            {/* Bottom Status Bar */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.3em] uppercase text-white/30 font-mono z-10">
-              SOVEREIGN ENGINE // 13.13 MHz // BINAURAL SYNC ACTIVE
-            </div>
+              {(launcherPhase === 'logo' || launcherPhase === 'menu') && (
+                <motion.div
+                  key="logo-reveal-screen"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1, transition: { duration: 2 } }}
+                  className="absolute inset-0 flex flex-col items-center justify-center"
+                >
+                  {/* Swirling Galaxy (Fades and expands slightly like camera pan) */}
+                  <motion.div 
+                    initial={{ scale: 1.0, opacity: 0 }}
+                    animate={{ scale: launcherPhase === 'menu' ? 1.08 : 1.0, opacity: 0.45 }}
+                    transition={{ duration: 10, ease: 'easeOut' }}
+                    className="absolute inset-0 bg-[url('/assets/8ByCu87-space-fantasy-wallpaper.jpg')] bg-cover bg-center mix-blend-screen z-0" 
+                  />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-500/10 rounded-full blur-[150px] pointer-events-none z-0" />
+
+                  {/* Title EXODUS II */}
+                  <div className="relative z-10 text-center select-none mb-12">
+                    <motion.h1 
+                      initial={{ letterSpacing: "1em", opacity: 0 }}
+                      animate={{ letterSpacing: "1.8em", opacity: 1 }}
+                      transition={{ duration: 2.5, ease: "easeOut" }}
+                      className="text-4xl md:text-5xl font-black tracking-[1.8em] text-white pl-[1.8em] font-sans text-shadow-glow"
+                    >
+                      EXODUS II
+                    </motion.h1>
+                  </div>
+
+                  {/* Launcher Phase Logo (Tap to awaken) */}
+                  {launcherPhase === 'logo' && (
+                    <motion.button
+                      onClick={() => {
+                        setLauncherPhase('menu');
+                        // Play epic chime swell
+                        if (typeof window !== 'undefined') {
+                          try {
+                            const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+                            const ctx = new AudioCtx();
+                            const osc = ctx.createOscillator();
+                            const gain = ctx.createGain();
+                            osc.type = 'sine';
+                            osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                            osc.frequency.exponentialRampToValueAtTime(1046.50, ctx.currentTime + 1.2); // C6
+                            gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+                            osc.connect(gain);
+                            gain.connect(ctx.destination);
+                            osc.start();
+                            osc.stop(ctx.currentTime + 1.5);
+                          } catch (e) {}
+                        }
+                      }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: [0.3, 0.8, 0.3], y: 0 }}
+                      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                      className="relative z-10 mt-12 px-6 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/30 text-[10px] tracking-[0.5em] uppercase font-bold text-white/60 hover:text-white transition-all cursor-pointer"
+                    >
+                      [ CLICK TO INITIALIZE VESSEL LINK ]
+                    </motion.button>
+                  )}
+
+                  {/* Launcher Phase Menu Options */}
+                  {launcherPhase === 'menu' && (
+                    <motion.div 
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ type: 'spring', stiffness: 80, damping: 15 }}
+                      className="absolute bottom-16 right-16 z-10 flex flex-col gap-3 min-w-[280px]"
+                    >
+                      {[
+                        { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('cave'); } },
+                        { label: 'SAVE / LOAD', onClick: () => { setIsSaveLoadOpen(true); } },
+                        { label: 'EXTRAS', onClick: () => {} },
+                        { label: 'EXIT TO LAUNCHER', onClick: () => { setLauncherPhase('text'); } }
+                      ].map((btn, idx) => (
+                        <motion.button
+                          key={idx}
+                          onClick={btn.onClick}
+                          whileHover={{ scale: 1.03, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
+                          whileTap={{ scale: 0.98 }}
+                          className="px-6 py-3 rounded-lg bg-black/40 border border-white/10 text-left text-xs tracking-[0.2em] uppercase font-bold text-white/80 hover:text-white hover:border-white/30 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-md"
+                        >
+                          {btn.label}
+                        </motion.button>
+                      ))}
+                    </motion.div>
+                  )}
+
+                  {/* Bottom Status Bar */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[9px] tracking-[0.3em] uppercase text-white/30 font-mono z-10">
+                    SOVEREIGN ENGINE // 13.13 MHz // BINAURAL SYNC ACTIVE
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
+        )}
+
+        {onboardingStage === 'cave' && (
+          <AllegoryOfCave 
+            key="cave"
+            onComplete={() => {
+              setOnboardingStage('complete');
+              setBootSequence(true);
+              setTimeout(() => setBootSequence(false), 2500);
+            }}
+            foundressName={pilot === 'LUNA' ? 'Foundress' : 'Traveler'}
+          />
         )}
 
         {onboardingStage === 'portal' && (
@@ -361,6 +497,17 @@ export default function Home() {
                   >
                     {persona.greeting}
                   </motion.p>
+                </div>
+
+                {/* ᚦ // COSMIC ADDRESS BAR */}
+                <div 
+                  onClick={() => { setShowWormhole(true); playTypingSFX(); }}
+                  className="hidden xl:flex items-center gap-3 px-6 py-2.5 bg-black/40 border rounded-full cursor-pointer transition-all group"
+                  style={{ borderColor: `${persona.hudColor}44`, boxShadow: `0 0 15px ${persona.hudColor}11` }}
+                >
+                  <span className="text-[10px] font-bold uppercase tracking-widest font-mono" style={{ color: persona.hudColor }}>SYSTEM_ADDR:</span>
+                  <span className="text-xs text-white/50 group-hover:text-white font-mono tracking-wider">comet://wormhole/</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.8)]" />
                 </div>
 
                 <div className="flex items-center gap-4 ml-8 border-l border-white/10 pl-8">
@@ -930,6 +1077,52 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ᚦ // COMET WORMHOLE OVERLAY */}
+      <AnimatePresence>
+        {showWormhole && (
+          <motion.div
+            key="comet-wormhole"
+            initial={{ opacity: 0, scale: 0.96, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 20 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="absolute inset-0 z-[100] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+          >
+            <div className="w-full max-w-5xl">
+              <CometWormhole 
+                user={pilot === 'LUNA' ? 'Foundress' : 'Zephyr'} 
+                onClose={() => setShowWormhole(false)} 
+                onNavigate={(dest) => {
+                  setShowWormhole(false);
+                  if (dest) {
+                    window.location.href = dest === 'crystal-garden' ? '/chamber' : '/' + dest;
+                  }
+                }}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ᚦ // SOVEREIGN MEMORY STATE ARCHIVE OVERLAY */}
+      <SaveLoadManager
+        isOpen={isSaveLoadOpen}
+        onClose={() => setIsSaveLoadOpen(false)}
+        currentPilot={pilot}
+        currentFrequency={telemetry.frequency}
+        currentOnboardingStage={onboardingStage}
+        currentActiveVesselId={activeVessel.id}
+        onLoadState={(savedState) => {
+          setPilot(savedState.pilot);
+          setTelemetry(prev => ({ ...prev, frequency: savedState.frequency }));
+          setOnboardingStage(savedState.onboardingStage);
+          const foundVessel = VESSEL_DATA.find(v => v.id === savedState.activeVesselId);
+          if (foundVessel) {
+            setActiveVessel(foundVessel);
+          }
+        }}
+      />
 
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }

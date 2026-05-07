@@ -15,6 +15,7 @@ export { default as PlazaContainer } from './PlazaContainer'
 export { default as AdventureProtocol } from './AdventureProtocol'
 export { default as HealingSanctuary } from './HealingSanctuary'
 export { default as EntryPortal } from './EntryPortal'
+export { default as CometWormhole } from './CometWormhole'
 
 // Types
 export type { HypeLevel } from '@/lib/family-db'
