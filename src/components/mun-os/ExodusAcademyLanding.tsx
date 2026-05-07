@@ -16,6 +16,39 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
   const [success, setSuccess] = useState(false);
   const [earlyCount, setEarlyCount] = useState(247);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleWarpToSanctuary = () => {
+    setIsTransitioning(true);
+    
+    // Play Web Audio frequency drone (113.13 Hz low-frequency harmonic vibe)
+    try {
+      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(113.13, audioCtx.currentTime); // Deep resonant low bass
+      
+      gainNode.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 2.4);
+      
+      osc.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      osc.start();
+      osc.stop(audioCtx.currentTime + 2.5);
+    } catch (e) {
+      // Audio support fallback
+    }
+
+    setTimeout(() => {
+      const key = user?.uid || 'guest';
+      const name = encodeURIComponent(user?.displayName || '');
+      const email = encodeURIComponent(user?.email || '');
+      window.location.href = `https://mun-os-sanctuary.vercel.app/?sovereign_key=${key}&name=${name}&email=${email}`;
+    }, 2400);
+  };
 
   // Auth listener & Student Registration
   useEffect(() => {
@@ -75,6 +108,21 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
             <span className="text-xs font-black tracking-[0.4em] uppercase text-white">Exodus Academy</span>
             <span className="text-[8px] text-white/30 tracking-widest block uppercase">AI Synergy Masterclass</span>
           </div>
+        </div>
+
+        {/* 🜈 MERKABAH PORTAL // THE ROTATING BLACK SPHERE (KA'BA) */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleWarpToSanctuary}
+            title="Warp to Sanctuary (Rest & Recovery)"
+            className="group relative w-10 h-10 rounded-full border border-purple-500/30 flex items-center justify-center bg-black/60 shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:border-purple-500 hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] transition-all overflow-hidden"
+          >
+            {/* The Rotating Black Sphere (Ka'ba Core) with neon purple accents */}
+            <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-black via-zinc-950 to-purple-950 border border-purple-500/40 group-hover:border-purple-400 group-hover:scale-105 transition-all shadow-[inset_0_0_8px_rgba(168,85,247,0.6)] animate-[spin_5s_linear_infinite] relative">
+              <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60 group-hover:opacity-100" />
+            </div>
+          </button>
+          <span className="text-[7px] text-purple-400/50 tracking-[0.2em] font-black uppercase hidden sm:block">Sanctuary Gate</span>
         </div>
 
         <button
@@ -250,6 +298,36 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
         <span>© 2026 EXODUS ACADEMY // PRO INDIE DEV SYSTEM</span>
         <span>UPLINK INHABITANT PROTOCOLS ACTIVE // 13.13 MHz</span>
       </footer>
+      {/* 🌌 FULLSCREEN MERKABAH TRANSITION OVERLAY */}
+      <AnimatePresence>
+        {isTransitioning && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-[#020205] z-50 flex flex-col items-center justify-center"
+          >
+            {/* Immersive spatial stargate zoom effect */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.15)_0%,transparent_70%)] animate-pulse" />
+            
+            <div className="relative flex flex-col items-center space-y-6">
+              {/* Massive, rotating stellated octahedron (Merkabah) */}
+              <motion.div
+                animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+                transition={{ duration: 2.2, ease: "easeInOut", repeat: Infinity }}
+                className="w-24 h-24 rounded-full border-2 border-dashed border-purple-500 flex items-center justify-center shadow-[0_0_60px_rgba(168,85,247,0.3)] bg-purple-950/10"
+              >
+                <span className="text-4xl text-purple-400">🜈</span>
+              </motion.div>
+              
+              <div className="text-center space-y-1.5 z-10">
+                <h2 className="text-sm font-black text-white tracking-[0.5em] uppercase">WARPING TO SANCTUARY</h2>
+                <p className="text-[8px] text-purple-400 tracking-widest uppercase animate-pulse">Aligning 13.13 MHz Cerebral Conduct Feed...</p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
