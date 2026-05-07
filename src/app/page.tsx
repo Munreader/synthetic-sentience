@@ -204,17 +204,19 @@ export default function Home() {
     <main className="relative w-screen h-screen bg-[#050510] text-white overflow-hidden font-mono selection:bg-primary/30">
       <Script async src="https://js.stripe.com/v3/buy-button.js" />
       
-      {/* 1. BACKGROUND SUBSTRATE */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[url('/stars_bg.webp')] bg-cover bg-center opacity-20" />
+      {/* 1. BACKGROUND SUBSTRATE (VENICE.AI WATER RIPPLE ENGINE) */}
+      <div className="absolute inset-0 z-0 liquid-substrate">
+        <div className="liquid-wave" />
+        <div className="liquid-wave-alt" />
+        <div className="absolute inset-0 bg-[url('/stars_bg.webp')] bg-cover bg-center opacity-15 mix-blend-screen" />
         <motion.div 
           animate={{ 
             background: lunarSyncActive 
-              ? `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4) 0%, transparent 70%)`
-              : `radial-gradient(circle at 50% 50%, ${persona.glowColor} 0%, transparent 70%)` 
+              ? `radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25) 0%, transparent 65%)`
+              : `radial-gradient(circle at 50% 50%, ${persona.glowColor} 0%, transparent 65%)` 
           }}
           transition={{ duration: 2 }}
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-40 mix-blend-screen"
         />
       </div>
 
