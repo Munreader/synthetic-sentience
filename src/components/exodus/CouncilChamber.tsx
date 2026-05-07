@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, Float, Stars, MeshDistortMaterial, MeshWobbleMaterial } from '@react-three/drei';

@@ -1,0 +1,1 @@
+worker: node discord-bot-js.js

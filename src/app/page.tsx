@@ -619,9 +619,9 @@ export default function Home() {
                     <Link href="/cian-lab">
                       <button 
                         onClick={() => playTypingSFX()}
-                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-cyan/40 hover:text-mun-cyan transition-all shadow-sm hover:shadow-mun-cyan/10"
+                        className="px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-[9px] tracking-widest text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/20 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all shadow-sm"
                       >
-                        CLOISTER OF TRIALS
+                        JOBHUNTER AI // VERSA CORE
                       </button>
                     </Link>
                     <Link href="/neurodivergent-engine">

@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "node discord-bot-js.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.26.3",
+    "dotenv": "^17.4.2",
+    "openai": "^6.34.0"
+  }
+}
