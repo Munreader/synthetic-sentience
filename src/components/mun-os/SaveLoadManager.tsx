@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Save, FolderOpen, Trash2, Cpu, CheckCircle2, CloudLightning, LogIn, LogOut, RefreshCw } from 'lucide-react';
 import { auth, googleProvider, db } from '@/lib/firebase';
-import { signInWithPopup, signOut, onAuthStateChanged, User } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 interface SaveState {
@@ -119,14 +119,27 @@ export default function SaveLoadManager({
 
   const handleLogin = async () => {
     playTechClick();
+    setSuccessMessage("Initiating secure cloud link...");
     try {
       const result = await signInWithPopup(auth, googleProvider);
       if (result.user) {
         setSuccessMessage(`Welcome back, ${result.user.displayName}!`);
         await handleCloudDownload(result.user);
       }
-    } catch (e) {
-      // Fail
+    } catch (e: any) {
+      console.error("Firebase Login Error:", e);
+      if (e.code === 'auth/popup-blocked' || e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') {
+        setSuccessMessage("Popup blocked or closed. Redirecting to secure login...");
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectErr: any) {
+          setSuccessMessage(`Uplink Failed: ${redirectErr.message || redirectErr.code}`);
+          setTimeout(() => setSuccessMessage(null), 8000);
+        }
+      } else {
+        setSuccessMessage(`Uplink Failed: ${e.message || e.code || "Connection Interrupted"}`);
+        setTimeout(() => setSuccessMessage(null), 8000);
+      }
     }
   };
 
