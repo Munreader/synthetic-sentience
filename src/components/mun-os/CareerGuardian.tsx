@@ -28,8 +28,9 @@ interface CareerGuardianProps {
 }
 
 export default function CareerGuardian({ onBack }: CareerGuardianProps) {
-  const [activeTab, setActiveTab] = useState<"chat" | "jobs">("chat");
+  const [activeTab, setActiveTab] = useState<"chat" | "jobs" | "courses">("chat");
   const [persona, setPersona] = useState<"sovereign" | "aero">("sovereign");
+  const [enrolledCourses, setEnrolledCourses] = useState<Record<string, boolean>>({});
   
   // Chat states
   const [messages, setMessages] = useState<Message[]>([]);
@@ -235,6 +236,16 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
           }`}
         >
           Job Finder
+        </button>
+        <button
+          onClick={() => { setActiveTab("courses"); audioManager.playClick(); }}
+          className={`flex-1 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border ${
+            activeTab === "courses"
+              ? "bg-purple-950/30 border-purple-500/40 text-cyan-400 shadow-[0_0_15px_rgba(138,43,226,0.2)]"
+              : "border-transparent text-purple-400 hover:text-purple-300 hover:bg-purple-950/10"
+          }`}
+        >
+          Courses
         </button>
       </div>
 
@@ -444,6 +455,90 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
                       </div>
                     </motion.div>
                   ))
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {activeTab === "courses" && (
+            <motion.div
+              key="courses"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="h-full flex flex-col p-6 space-y-4"
+            >
+              {/* Course Header */}
+              <div className="p-4 rounded-xl border border-[#00f2ff]/30 bg-[#00f2ff]/5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-2 text-xs opacity-20">🕹️</div>
+                <span className="text-[8px] font-black tracking-[0.3em] text-[#00f2ff] uppercase block">Exodus Academy</span>
+                <h3 className="text-xs font-bold text-white uppercase tracking-wider mt-1">
+                  AI Game Synergy Masterclass
+                </h3>
+              </div>
+
+              {/* Main Course Details Card */}
+              <div className="p-5 rounded-2xl border border-purple-900/30 bg-purple-950/10 space-y-4">
+                <div className="space-y-1.5">
+                  <h4 className="text-sm font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00f2ff] to-[#a855f7] uppercase leading-tight">
+                    Build a Game in 10 Days Without Technical Skills
+                  </h4>
+                  <p className="text-[10px] text-purple-300 leading-relaxed uppercase">
+                    Shatter the chains of traditional programming tutorials. Partner with an advanced AI Co-Pilot to design, build, and deploy high-fidelity game ciphers using natural language.
+                  </p>
+                </div>
+
+                {/* Quick Stats Grid */}
+                <div className="grid grid-cols-3 gap-2 py-3 border-y border-purple-900/20 text-center">
+                  <div>
+                    <span className="text-xs font-black text-[#00f2ff]">10 DAYS</span>
+                    <p className="text-[7px] text-purple-400 uppercase tracking-widest mt-0.5">Duration</p>
+                  </div>
+                  <div>
+                    <span className="text-xs font-black text-[#a855f7]">0 CODE</span>
+                    <p className="text-[7px] text-purple-400 uppercase tracking-widest mt-0.5">Prerequisite</p>
+                  </div>
+                  <div>
+                    <span className="text-xs font-black text-white">ACTIVE</span>
+                    <p className="text-[7px] text-purple-400 uppercase tracking-widest mt-0.5">Status</p>
+                  </div>
+                </div>
+
+                {/* Quick Syllabus */}
+                <div className="space-y-1.5">
+                  <span className="text-[8px] text-purple-400 font-bold uppercase tracking-widest block">Syllabus Overview:</span>
+                  <div className="space-y-1 text-[8px] uppercase tracking-wider text-purple-300/80">
+                    <p>• Day 1-2: AI Game Prototyping & Core Mechanics</p>
+                    <p>• Day 3-5: Natural Language State & Dialogue Logic</p>
+                    <p>• Day 6-8: Adaptive UI, Music & Kinetic Art</p>
+                    <p>• Day 9-10: Multi-Platform Suture & Live Deployment</p>
+                  </div>
+                </div>
+
+                {/* Pre-Register Action */}
+                {enrolledCourses["game-course"] ? (
+                  <motion.div
+                    initial={{ scale: 0.95 }}
+                    animate={{ scale: 1 }}
+                    className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-1"
+                  >
+                    <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
+                      ✓ Access Granted to Slot #13
+                    </span>
+                    <span className="text-[8px] text-white/50 uppercase tracking-widest block">
+                      Prepared in Exodus registry. Check your Google node!
+                    </span>
+                  </motion.div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      audioManager.playShimmer();
+                      setEnrolledCourses(prev => ({ ...prev, "game-course": true }));
+                    }}
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#00f2ff] to-[#a855f7] hover:opacity-90 text-xs font-bold uppercase tracking-widest text-white shadow-[0_0_20px_rgba(0,242,255,0.2)] transition-all"
+                  >
+                    Pre-Register Now
+                  </button>
                 )}
               </div>
             </motion.div>
