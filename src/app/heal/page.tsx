@@ -9,7 +9,7 @@ export default function HealPage() {
   return (
     <HealChamber 
       onBack={() => router.push('/')}
-      onOpenSovereignChat={() => router.push('/cian-lab')}
+      onOpenSovereignChat={() => router.push('/career')}
       onOpenMessenger={() => {}} // Could be wired to a global messenger state
     />
   );
