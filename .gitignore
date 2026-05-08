@@ -34,6 +34,7 @@ prisma/*.db
 # OS files
 .DS_Store
 Thumbs.db
+.config/
 
 # Logs
 *.log
