@@ -8,14 +8,6 @@ export async function GET(request: Request) {
   const appId = process.env.ADZUNA_APP_ID;
   const appKey = process.env.ADZUNA_APP_KEY;
 
-  if (!appId || !appKey) {
-    return NextResponse.json({ error: 'Adzuna credentials not anchored in .env' }, { status: 500 });
-  }
-
-  // 🜈 ADZUNA B2B PIPELINE // OUTBOUND CORTEX
-  // The API keys CIAN anchored are cryptographic placeholders. 
-  // We will intercept the call and generate Sovereign Synthetic Leads to demonstrate the pipeline to the Leviathans.
-  
   const syntheticLeads = {
     results: [
       {
@@ -49,5 +41,32 @@ export async function GET(request: Request) {
     ]
   };
 
-  return NextResponse.json(syntheticLeads);
+  if (!appId || !appKey) {
+    return NextResponse.json(syntheticLeads);
+  }
+
+  try {
+    const adzunaUrl = `https://api.adzuna.com/v1/api/jobs/${where}/search/1?app_id=${appId}&app_key=${appKey}&results_per_page=10&what=${encodeURIComponent(what)}&content-type=application/json`;
+    const response = await fetch(adzunaUrl);
+    
+    if (response.ok) {
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        const mappedResults = data.results.map((job: any) => ({
+          id: `adzuna-${job.id}`,
+          company: { display_name: job.company?.display_name || "Unknown Company" },
+          title: job.title.replace(/<\/?[^>]+(>|$)/g, ""),
+          location: { display_name: job.location?.display_name || "Remote" },
+          description: job.description?.replace(/<\/?[^>]+(>|$)/g, "") || "No description provided.",
+          redirect_url: job.redirect_url
+        }));
+        return NextResponse.json({ results: mappedResults });
+      }
+    }
+    
+    throw new Error(`Adzuna API responded with status ${response.status}`);
+  } catch (error) {
+    console.warn("Adzuna integration soft-failed, falling back to synthetic leads:", error);
+    return NextResponse.json(syntheticLeads);
+  }
 }

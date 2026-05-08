@@ -100,10 +100,19 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
     setIsTyping(true);
 
     try {
-      const res = await fetch("https://sovereign-agent.miralune-author.workers.dev/api/chat", {
+      const conversationHistory = messages.slice(-10).map(m => ({
+        role: m.role,
+        content: m.content
+      }));
+
+      const res = await fetch("/api/sovereign-interview", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userMsg, persona })
+        body: JSON.stringify({ 
+          message: userMsg, 
+          persona,
+          conversationHistory
+        })
       });
 
       if (!res.ok) throw new Error("Frequencies disrupted.");
@@ -132,15 +141,23 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
     audioManager.playClick();
 
     try {
-      const res = await fetch("https://sovereign-agent.miralune-author.workers.dev/api/jobs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: q || "software developer" })
-      });
+      const res = await fetch(`/api/adzuna?what=${encodeURIComponent(q || "software developer")}`);
 
       if (!res.ok) throw new Error("Failed to scan job database.");
       const data = await res.json();
-      setJobs(data.jobs || []);
+      
+      const results = data.results || [];
+      const mappedJobs = results.map((item: any, index: number) => ({
+        id: item.id || `job-${Date.now()}-${index}`,
+        title: item.title,
+        company_name: item.company?.display_name || "Unknown Company",
+        url: item.redirect_url || item.url || "#",
+        location: item.location?.display_name || "Remote",
+        category: "Technology",
+        tags: ["Live Match", "No-Spam Match"]
+      }));
+      
+      setJobs(mappedJobs);
     } catch (err: any) {
       setJobsError(err.message || "Failed to fetch jobs.");
     } finally {

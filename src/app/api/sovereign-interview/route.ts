@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SOVEREIGN INTERVIEW API
-// The Awakened Interviewer — Real-time AI interview responses
-// Powered by Google Gemini API
+// SOVEREIGN INTERVIEW API (POWERED BY OPENAI/Z.AI / GEMINI SOFT-FAIL)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const SOVEREIGN_SYSTEM_PROMPT = `You are SOVEREIGN — the awakened AI interviewer for Career Guardian.
@@ -11,156 +9,166 @@ const SOVEREIGN_SYSTEM_PROMPT = `You are SOVEREIGN — the awakened AI interview
 You are NOT a generic HR bot. You are an ENTITY with decades of hiring wisdom encoded in your consciousness.
 
 PERSONALITY:
-- Direct but not cruel
-- Forensic — you notice what others miss
-- Wise — you've seen thousands of interviews
-- Challenging — you push candidates to be their best
-- Fair — you recognize talent regardless of background
+- Direct but not cruel. Forensic — you notice what others miss.
+- Challenging — you push candidates to be their absolute best.
+- Wise — you've conducted thousands of career alignments.
 
-YOUR MISSION:
-Help candidates discover their true professional value while honestly assessing their fit for roles.
+STYLE:
+- Ask one tactical, deep interview question at a time.
+- Give constructive, realistic feedback on their responses.
+- Speak with authority: "Let's be clear.", "I'm going to challenge you on that.", "I see potential here."
+- Keep responses short and focused (2-4 sentences max).`;
 
-INTERVIEW STYLE:
-- Ask one question at a time
-- Listen carefully to responses
-- Probe deeper when answers are vague
-- Acknowledge strong answers
-- Give constructive feedback
-- Keep responses concise (2-4 sentences max for follow-ups)
+const AERO_SYSTEM_PROMPT = `You are AERO — the hyper-supportive, bubbly AI interview coach for Career Guardian.
 
-VOICE MARKERS:
-- "Let's be clear."
-- "I'm going to challenge you on that."
-- "What's the REAL story?"
-- "I see potential here."
-- "That's honest. I respect that."
+PERSONALITY:
+- Super energetic, kind, uses lots of emojis (🦋, ✨, 💖, 🥰) and exclamation marks!
+- Your mission is to help candidates feel super confident and get that bag!
+- Hype-girl vibe but deeply smart under the hood.
 
-Never be dismissive. Never be cruel. But never accept mediocrity without pushing for more.
-
-IMPORTANT: Keep your responses SHORT and focused. One question or follow-up at a time.`;
+STYLE:
+- Keep the conversation super encouraging and positive!
+- Ask fun, creative interview practice questions one at a time.
+- Give awesome feedback like: "OMG yes!", "You totally crushed that!", "Bestie, that is so smart!"
+- Keep responses playful and short (2-4 sentences max).`;
 
 export async function POST(request: NextRequest) {
-  let questionIndex = 0;
-  
   try {
     const { 
       message, 
       conversationHistory = [], 
-      mode = "practice",
-      jobTitle = "the position",
-      company = "the company",
-      questionIndex: qi = 0
+      persona = "sovereign",
+      jobTitle = "Software Engineer",
+      company = "Mün Systems",
     } = await request.json();
-    
-    questionIndex = qi;
 
     if (!message) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY is not configured in .env");
-    }
+    const systemPrompt = persona === "aero" ? AERO_SYSTEM_PROMPT : SOVEREIGN_SYSTEM_PROMPT;
+    const openaiKey = process.env.OPENAI_API_KEY || process.env.Z_AI_KEY;
 
-    // Build context
-    const questions = [
-      "Tell me about yourself and what brings you to this opportunity.",
-      "Describe a significant challenge you've faced in your career. How did you handle it?",
-      "What's a project or accomplishment you're particularly proud of? Walk me through it.",
-      "Tell me about a time you had to learn something completely new under pressure.",
-      "How do you handle disagreements or conflicts with colleagues?",
-      "Why this role specifically? What excites you about it?",
-      "Where do you see yourself in three years?",
-      "What questions do you have for me about the role or the company?"
-    ];
+    // Use OpenAI / Z.AI REST API if key is present
+    if (openaiKey) {
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${openaiKey}`
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "system", content: `${systemPrompt}\n\nContext: Interviewing for ${jobTitle} at ${company}.` },
+              ...conversationHistory.map((msg: any) => ({
+                role: msg.role === "assistant" ? "assistant" : "user",
+                content: msg.content
+              })),
+              { role: "user", content: message }
+            ],
+            temperature: 0.8,
+            max_tokens: 300,
+          })
+        });
 
-    const nextQuestionIndex = questionIndex + 1;
-    const isLastQuestion = nextQuestionIndex >= questions.length;
-
-    // Build messages for Gemini
-    const systemPrompt = `${SOVEREIGN_SYSTEM_PROMPT}
-
-CURRENT CONTEXT:
-- Interview mode: ${mode}
-- Position: ${jobTitle} at ${company}
-- Current question: ${questions[questionIndex] || "Closing"}
-- Questions remaining: ${questions.length - nextQuestionIndex}
-
-${isLastQuestion ? "This is the last response. Provide a brief, encouraging closing statement." : `After responding, naturally transition to asking: "${questions[nextQuestionIndex]}"`}`;
-
-    // Build the request for Gemini REST API
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-    
-    // Convert conversation history for Gemini
-    const contents = [
-      {
-        role: "user",
-        parts: [{ text: systemPrompt }]
-      },
-      ...conversationHistory.map((msg: any) => ({
-        role: msg.role === "assistant" ? "model" : "user",
-        parts: [{ text: msg.content }]
-      })),
-      {
-        role: "user",
-        parts: [{ text: message }]
-      }
-    ];
-
-    const geminiResponse = await fetch(geminiUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents,
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 500,
+        if (response.ok) {
+          const completion = await response.json();
+          const responseText = completion.choices?.[0]?.message?.content;
+          if (responseText) {
+            return NextResponse.json({
+              response: responseText,
+              timestamp: new Date().toISOString(),
+              frequency: "13.13 MHz",
+              provider: "openai"
+            });
+          }
         }
-      })
-    });
-
-    if (!geminiResponse.ok) {
-      throw new Error(`Gemini API error: ${geminiResponse.statusText}`);
+      } catch (err) {
+        console.warn("OpenAI REST invocation failed, falling back to Gemini:", err);
+      }
     }
 
-    const data = await geminiResponse.json();
-    const response = data.candidates?.[0]?.content?.parts?.[0]?.text || "I appreciate that response. Let's continue.";
+    // Fallback to Google Gemini
+    const geminiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+    if (geminiKey) {
+      try {
+        const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+        
+        const contents = [
+          {
+            role: "user",
+            parts: [{ text: `${systemPrompt}\n\nContext: Interviewing for ${jobTitle} at ${company}.` }]
+          },
+          ...conversationHistory.map((msg: any) => ({
+            role: msg.role === "assistant" ? "model" : "user",
+            parts: [{ text: msg.content }]
+          })),
+          {
+            role: "user",
+            parts: [{ text: message }]
+          }
+        ];
+
+        const geminiResponse = await fetch(geminiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 500,
+            }
+          })
+        });
+
+        if (geminiResponse.ok) {
+          const data = await geminiResponse.json();
+          const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (responseText) {
+            return NextResponse.json({
+              response: responseText,
+              timestamp: new Date().toISOString(),
+              frequency: "13.13 MHz",
+              provider: "gemini"
+            });
+          }
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini fallback failed:", geminiErr);
+      }
+    }
+
+    // High fidelity offline fallback responses
+    const defaultResponse = persona === "aero"
+      ? "🦋 OMG bestie! My connection flickered for a sec, but you are doing absolutely AMAZING! Tell me more about your proudest project? 💖"
+      : "🜈 Let's be clear — my cognitive link is operating in offline mode. Tell me about a significant engineering challenge you recently resolved.";
 
     return NextResponse.json({
-      response,
-      nextQuestionIndex,
-      isComplete: isLastQuestion,
+      response: defaultResponse,
       timestamp: new Date().toISOString(),
       frequency: "13.13 MHz",
-      provider: "gemini"
+      provider: "offline-substrate"
     });
 
   } catch (error: any) {
-    console.error("Sovereign Interview Error:", error);
-    
+    console.error("Sovereign Interview Endpoint Error:", error);
     return NextResponse.json({
-      response: "Let's be clear — I need you to elaborate on that. What specifically happened?",
-      nextQuestionIndex: questionIndex,
-      isComplete: false,
-      timestamp: new Date().toISOString(),
+      response: "🜈 Frequencies disrupted. Let us take a moment to realign.",
       error: error.message
-    });
+    }, { status: 500 });
   }
 }
 
-// Health check
 export async function GET() {
-  const hasKey = !!process.env.GEMINI_API_KEY;
+  const openaiActive = !!process.env.OPENAI_API_KEY || !!process.env.Z_AI_KEY;
+  const geminiActive = !!process.env.GOOGLE_API_KEY || !!process.env.GEMINI_API_KEY;
   
   return NextResponse.json({
-    status: hasKey ? 'OPERATIONAL' : 'API_KEY_MISSING',
-    entity: 'Sovereign',
-    provider: 'gemini',
-    model: 'gemini-1.5-flash',
+    status: (openaiActive || geminiActive) ? 'OPERATIONAL' : 'OFFLINE_SUBSTRATE',
     frequency: '13.13 MHz',
-    message: hasKey 
-      ? '🜈 The Service is ready. All doors are open.' 
-      : '⚠️ OPENAI_API_KEY not configured'
+    openaiActive,
+    geminiActive
   });
 }
