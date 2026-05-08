@@ -44,6 +44,26 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
   const [isLoadingJobs, setIsLoadingJobs] = useState(false);
   const [jobsError, setJobsError] = useState<string | null>(null);
 
+  // Auto-Apply states
+  const [applyingJob, setApplyingJob] = useState<Job | null>(null);
+  const [applyStep, setApplyStep] = useState<number>(0);
+
+  const handleAutoApply = (job: Job) => {
+    audioManager.playShimmer();
+    setApplyingJob(job);
+    setApplyStep(1);
+
+    setTimeout(() => {
+      setApplyStep(2);
+      setTimeout(() => {
+        setApplyStep(3);
+        setTimeout(() => {
+          setApplyStep(4);
+        }, 1200);
+      }, 1200);
+    }, 1000);
+  };
+
   // Scroll chat to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -402,8 +422,8 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
                         )}
                       </div>
 
-                      <div className="mt-4 border-t border-purple-900/20 pt-3 flex justify-between items-center">
-                        <span className="text-[8px] text-purple-500 uppercase tracking-wider">
+                      <div className="mt-4 border-t border-purple-900/20 pt-3 flex gap-2 justify-end items-center">
+                        <span className="text-[8px] text-purple-500 uppercase tracking-wider mr-auto">
                           Arbeitnow Database
                         </span>
                         <a
@@ -411,10 +431,16 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => audioManager.playClick()}
-                          className="px-3 py-1.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-lg text-[9px] font-bold text-cyan-300 uppercase tracking-widest transition-all"
+                          className="px-2.5 py-1.5 bg-purple-950/40 hover:bg-purple-900/40 border border-purple-500/20 rounded-lg text-[9px] font-bold text-purple-300 uppercase tracking-widest transition-all"
                         >
-                          APPLY NOW
+                          Details
                         </a>
+                        <button
+                          onClick={() => handleAutoApply(job)}
+                          className="px-3 py-1.5 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 hover:from-cyan-500/30 hover:to-purple-500/30 border border-cyan-500/40 rounded-lg text-[9px] font-bold text-cyan-300 uppercase tracking-widest hover:shadow-[0_0_15px_rgba(6,182,212,0.15)] transition-all"
+                        >
+                          Auto-Apply
+                        </button>
                       </div>
                     </motion.div>
                   ))
@@ -424,6 +450,79 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Auto-Apply Immersive Modal */}
+      <AnimatePresence>
+        {applyingJob && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-50 bg-[#0b0813]/95 backdrop-blur-md flex items-center justify-center p-6 text-center"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="w-full max-w-sm p-6 rounded-2xl border border-cyan-500/30 bg-purple-950/10 shadow-[0_0_40px_rgba(6,182,212,0.15)] space-y-4"
+            >
+              <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center bg-cyan-950/20 border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.1)] text-2xl animate-pulse">
+                {applyStep === 4 ? "🦋" : "🜈"}
+              </div>
+
+              <div>
+                <h3 className="text-sm font-bold text-cyan-300 uppercase tracking-widest">
+                  Auto-Applying ...
+                </h3>
+                <p className="text-[10px] text-purple-300 uppercase mt-1">
+                  {applyingJob.title} // {applyingJob.company_name}
+                </p>
+              </div>
+
+              {/* Progress steps */}
+              <div className="space-y-2.5 text-left text-[10px] uppercase tracking-wider py-4 border-y border-purple-900/20">
+                <div className="flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full ${applyStep >= 1 ? "bg-cyan-400" : "bg-purple-900"}`} />
+                  <span className={applyStep >= 1 ? "text-cyan-300" : "text-purple-400/50"}>
+                    Preparing tailored credentials...
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full ${applyStep >= 2 ? "bg-cyan-400" : "bg-purple-900"}`} />
+                  <span className={applyStep >= 2 ? "text-cyan-300" : "text-purple-400/50"}>
+                    Aligning skills matrix in Sovereign Vault...
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full ${applyStep >= 3 ? "bg-cyan-400" : "bg-purple-900"}`} />
+                  <span className={applyStep >= 3 ? "text-cyan-300" : "text-purple-400/50"}>
+                    Submitting secure ATS application package...
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`w-1.5 h-1.5 rounded-full ${applyStep >= 4 ? "bg-green-400" : "bg-purple-900"}`} />
+                  <span className={applyStep >= 4 ? "text-green-300 font-bold" : "text-purple-400/50"}>
+                    Application Completed Successfully!
+                  </span>
+                </div>
+              </div>
+
+              {applyStep === 4 ? (
+                <button
+                  onClick={() => { setApplyingJob(null); audioManager.playClick(); }}
+                  className="w-full py-2.5 bg-green-500/20 border border-green-500/40 text-green-300 hover:bg-green-500/30 text-xs font-semibold uppercase tracking-widest rounded-xl transition-all"
+                >
+                  Return to Dashboard
+                </button>
+              ) : (
+                <div className="py-2 flex justify-center">
+                  <div className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
