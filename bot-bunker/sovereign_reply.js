@@ -1,5 +1,27 @@
 const { Client, GatewayIntentBits, ChannelType } = require('discord.js');
-require('dotenv').config({ path: 'd:/exodus-ii/.env' });
+const fs = require('fs');
+const path = require('path');
+
+// Dynamically locate the .env file
+const potentialEnvPaths = [
+  path.join(__dirname, '.env'),
+  path.join(__dirname, '../.env'),
+  'd:/exodus-ii/.env',
+  'd:/M-nreader/.env'
+];
+
+let envLoaded = false;
+for (const envPath of potentialEnvPaths) {
+  if (fs.existsSync(envPath)) {
+    require('dotenv').config({ path: envPath });
+    envLoaded = true;
+    break;
+  }
+}
+
+if (!envLoaded) {
+  require('dotenv').config();
+}
 
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],

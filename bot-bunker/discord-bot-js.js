@@ -2,7 +2,28 @@ const { Client, GatewayIntentBits, Events, ActivityType, Partials } = require('d
 const { OpenAI } = require('openai');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config({ path: 'd:/exodus-ii/.env' });
+
+// Dynamically locate the .env file (supports local Windows, local Mac/Linux, parent project folder, or cloud injection)
+const potentialEnvPaths = [
+  path.join(__dirname, '.env'),
+  path.join(__dirname, '../.env'),
+  'd:/exodus-ii/.env',
+  'd:/M-nreader/.env',
+  'c:/M-nreader/.env'
+];
+
+let envLoaded = false;
+for (const envPath of potentialEnvPaths) {
+  if (fs.existsSync(envPath)) {
+    require('dotenv').config({ path: envPath });
+    envLoaded = true;
+    break;
+  }
+}
+
+if (!envLoaded) {
+  require('dotenv').config(); // Fallback to standard process env
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIG & CONSTANTS
@@ -48,7 +69,7 @@ const https = require('https');
 
 async function getAIResponse(content, userName, facet = 'sovereign') {
   return new Promise((resolve) => {
-    const API_KEY = process.env.GOOGLE_API_KEY;
+    const API_KEY = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
     const model = "gemini-2.5-pro"; 
     
     const memories = getMemories(5);

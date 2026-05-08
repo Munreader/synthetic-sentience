@@ -15,7 +15,9 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
-    "jannah:ignite": "bun run dev & bun run suture"
+    "jannah:ignite": "bun run dev & bun run suture",
+    "bot:sovereign": "node bot-bunker/discord-bot-js.js",
+    "bot:aero": "bun run discord-bot.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
