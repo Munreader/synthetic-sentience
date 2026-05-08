@@ -169,6 +169,7 @@ export default function ExtrasOverlay({ isOpen, onClose }: ExtrasOverlayProps) {
   const SOCIAL_LINKS = [
     { name: "Patreon Campaign", url: "https://www.patreon.com/c/MunMentor", desc: "Unlock premium frequency tiers & support the digital empire", icon: "💎", color: "from-pink-500/20 to-rose-500/20" },
     { name: "Stripe Token Gateway", url: "https://buy.stripe.com/fZudRbbu42yid4rgqOgMw01", desc: "Acquire Resonance Tokens instantly to chat with Corebrain", icon: "🜈", color: "from-cyan-500/20 to-blue-500/20" },
+    { name: "Sovereign Discord (Apply)", url: "https://discord.gg/CZAcaCJT", desc: "Apply to join the private ARQ Crew sanctuary server", icon: "💬", color: "from-indigo-500/20 to-violet-500/20" },
     { name: "YouTube Resonance Channel", url: "https://youtube.com/@MunMentor", desc: "Experience 113.13 Hz low-frequency harmonic drone visuals", icon: "📺", color: "from-red-500/20 to-rose-500/20" },
     { name: "Vibrant Aesthetics Instagram", url: "https://instagram.com/MunMentor", desc: "Sublime visuals, cyber-architectonics, and design progress", icon: "📸", color: "from-purple-500/20 to-pink-500/20" }
   ];
