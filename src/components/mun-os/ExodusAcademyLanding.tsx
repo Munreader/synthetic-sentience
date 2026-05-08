@@ -208,7 +208,7 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
                   className="space-y-4"
                 >
                   <a
-                    href="https://buy.stripe.com/fZudRbbu42yid4rgqOgMw01"
+                    href={process.env.NEXT_PUBLIC_STRIPE_PAYLINK || "https://buy.stripe.com/fZudRbbu42yid4rgqOgMw01"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#00f2ff] to-[#a855f7] hover:opacity-90 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(0,242,255,0.25)] block text-center"

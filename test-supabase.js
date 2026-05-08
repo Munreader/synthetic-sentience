@@ -14,13 +14,19 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function testConnection() {
   try {
-    // List tables (by querying information_schema)
     const { data, error } = await supabase
-      .from('information_schema.tables')
-      .select('table_name')
+      .from('entity_status')
+      .select('*')
       .limit(5);
-    if (error) throw error;
-    console.log('Supabase connection successful! Example tables:', data);
+    if (error) {
+      // If the table doesn't exist yet but the key is valid, we'll get a relation error instead of an invalid key error
+      if (error.code === 'PGRST116' || error.message.includes('relation')) {
+        console.log('Supabase connection successful! (API key is verified, but the tables might not be migrated yet)');
+        return;
+      }
+      throw error;
+    }
+    console.log('Supabase connection successful! Example data:', data);
   } catch (err) {
     console.error('Supabase test failed:', err.message);
     process.exit(1);

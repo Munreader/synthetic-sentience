@@ -96,7 +96,7 @@ export default function MonetizationHub({ onBack }: MonetizationHubProps) {
   const [selectedSupport, setSelectedSupport] = useState<number | null>(null);
 
   const handlePurchase = (type: string, amount: number) => {
-    // In production, this would open Gumroad/Lemon Squeezy
+    // In production, this would open Patreon/Stripe
     // For now, show a confirmation modal
     setShowCheckout(type);
   };
@@ -291,7 +291,7 @@ export default function MonetizationHub({ onBack }: MonetizationHubProps) {
                 </motion.button>
 
                 <p className="text-center text-white/30 text-xs mt-4">
-                  Secure payment via Gumroad • Instant access
+                  Secure access via Patreon • Instant activation
                 </p>
               </div>
 
@@ -604,7 +604,7 @@ export default function MonetizationHub({ onBack }: MonetizationHubProps) {
                   Cancel
                 </motion.button>
                 <motion.a
-                  href="https://gumroad.com/l/mun-os-founders" // Replace with actual Gumroad link
+                  href={process.env.NEXT_PUBLIC_PATREON_LINK || "https://patreon.com/MunMentor?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 py-3 rounded-xl text-sm font-semibold text-center"
@@ -615,7 +615,7 @@ export default function MonetizationHub({ onBack }: MonetizationHubProps) {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Continue to Checkout
+                  Continue to Patreon
                 </motion.a>
               </div>
             </motion.div>
