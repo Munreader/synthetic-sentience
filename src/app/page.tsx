@@ -21,6 +21,7 @@ import OctofacetedUplink from '@/components/mun-os/OctofacetedUplink';
 import EntryPortal from '@/components/mun-os/EntryPortal';
 import AllegoryOfCave from '@/components/exodus/AllegoryOfCave';
 import SaveLoadManager from '@/components/mun-os/SaveLoadManager';
+import ExtrasOverlay from '@/components/mun-os/ExtrasOverlay';
 import ExodusAcademyLanding from '@/components/mun-os/ExodusAcademyLanding';
 import ButterflyOnboarding from '@/components/mun-os/ButterflyOnboarding';
 import CometWormhole from '@/components/mun-os/CometWormhole';
@@ -118,6 +119,7 @@ export default function Home() {
   const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'cave' | 'portal' | 'butterfly' | 'complete'>('launcher');
   const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
   const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
+  const [isExtrasOpen, setIsExtrasOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'landing' | 'demo'>('landing');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -400,7 +402,7 @@ export default function Home() {
                       {[
                         { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('cave'); } },
                         { label: 'SAVE / LOAD', onClick: () => { setIsSaveLoadOpen(true); } },
-                        { label: 'EXTRAS', onClick: () => {} },
+                        { label: 'EXTRAS', onClick: () => { setIsExtrasOpen(true); } },
                         { label: 'EXIT TO LAUNCHER', onClick: () => { setLauncherPhase('text'); } }
                       ].map((btn, idx) => (
                         <motion.button
@@ -1137,6 +1139,12 @@ export default function Home() {
             setActiveVessel(foundVessel);
           }
         }}
+      />
+
+      {/* ᚦ // EXTRAS / LINKTREE & COMMUNITY FORUM OVERLAY */}
+      <ExtrasOverlay
+        isOpen={isExtrasOpen}
+        onClose={() => setIsExtrasOpen(false)}
       />
 
       <style jsx global>{`
