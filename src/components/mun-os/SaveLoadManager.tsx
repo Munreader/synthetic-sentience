@@ -10,7 +10,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 interface SaveState {
   pilot: 'LUNA' | 'ZEPHYR';
   frequency: string;
-  onboardingStage: 'launcher' | 'cave' | 'portal' | 'butterfly' | 'complete';
+  onboardingStage: 'launcher' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete';
   activeVesselId: string;
   timestamp: string;
 }
@@ -20,7 +20,7 @@ interface SaveLoadManagerProps {
   onClose: () => void;
   currentPilot: 'LUNA' | 'ZEPHYR';
   currentFrequency: string;
-  currentOnboardingStage: 'launcher' | 'cave' | 'portal' | 'butterfly' | 'complete';
+  currentOnboardingStage: 'launcher' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete';
   currentActiveVesselId: string;
   onLoadState: (state: SaveState) => void;
 }

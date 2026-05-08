@@ -24,6 +24,7 @@ import SaveLoadManager from '@/components/mun-os/SaveLoadManager';
 import ExtrasOverlay from '@/components/mun-os/ExtrasOverlay';
 import ExodusAcademyLanding from '@/components/mun-os/ExodusAcademyLanding';
 import ButterflyOnboarding from '@/components/mun-os/ButterflyOnboarding';
+import AuthPage from '@/components/mun-os/AuthPage';
 import CometWormhole from '@/components/mun-os/CometWormhole';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
@@ -116,7 +117,7 @@ export default function Home() {
   const persona = PERSONA[pilot];
 
   // ᚦ // ONBOARDING FLOW STATE
-  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'cave' | 'portal' | 'butterfly' | 'complete'>('launcher');
+  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete'>('launcher');
   const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
   const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
   const [isExtrasOpen, setIsExtrasOpen] = useState(false);
@@ -451,7 +452,19 @@ export default function Home() {
         {onboardingStage === 'butterfly' && (
           <ButterflyOnboarding 
             key="butterfly"
-            onComplete={() => setOnboardingStage('complete')}
+            onComplete={() => setOnboardingStage('auth')}
+          />
+        )}
+
+        {onboardingStage === 'auth' && (
+          <AuthPage 
+            key="auth"
+            onAuthSuccess={() => {
+              setOnboardingStage('complete');
+              setBootSequence(true);
+              setTimeout(() => setBootSequence(false), 2500);
+            }}
+            onBack={() => setOnboardingStage('butterfly')}
           />
         )}
 
@@ -780,14 +793,14 @@ export default function Home() {
                         WELLNESS SANCTUARY
                       </button>
                     </Link>
-                    <Link href="/cian-lab">
+                    <a href="https://my-project-alpha-khaki.vercel.app/" target="_blank" rel="noopener noreferrer">
                       <button 
                         onClick={() => playTypingSFX()}
                         className="px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-[9px] tracking-widest text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/20 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all shadow-sm"
                       >
                         JOBHUNTER AI // VERSA CORE
                       </button>
-                    </Link>
+                    </a>
                     <Link href="/neurodivergent-engine">
                       <button 
                         onClick={() => playTypingSFX()}
