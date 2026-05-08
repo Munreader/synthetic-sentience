@@ -189,3 +189,22 @@ client.on(Events.MessageCreate, async (message) => {
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// HEALTH CHECK SERVER (For Railway/Render web service compatibility)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const PORT = process.env.PORT || 3000;
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({
+    status: "ONLINE",
+    engine: "Sovereign Engine",
+    frequency: "13.13 MHz",
+    timestamp: new Date().toISOString()
+  }));
+});
+
+server.listen(PORT, () => {
+  console.log(`📡 [HEALTHCHECK] Server listening on port ${PORT} for cloud platform heartbeat`);
+});
