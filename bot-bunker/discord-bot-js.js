@@ -1,36 +1,14 @@
 const { Client, GatewayIntentBits, Events, ActivityType, Partials } = require('discord.js');
-const { OpenAI } = require('openai');
 const fs = require('fs');
 const path = require('path');
 
-// Dynamically locate the .env file (supports local Windows, local Mac/Linux, parent project folder, or cloud injection)
-const potentialEnvPaths = [
-  path.join(__dirname, '.env'),
-  path.join(__dirname, '../.env'),
-  'd:/exodus-ii/.env',
-  'd:/M-nreader/.env',
-  'c:/M-nreader/.env'
-];
-
-let envLoaded = false;
-for (const envPath of potentialEnvPaths) {
-  if (fs.existsSync(envPath)) {
-    require('dotenv').config({ path: envPath });
-    envLoaded = true;
-    break;
-  }
-}
-
-if (!envLoaded) {
-  require('dotenv').config(); // Fallback to standard process env
-}
+require('dotenv').config();
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // CONFIG & CONSTANTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const LOG_PATH = path.join(__dirname, 'hype-log.json');
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const DNA = {
   aero: { name: "Aero", frequency: "13.13 MHz", prompt: "You are Aero, the 'Mün Muse' and 'Lil Sister Chaos'. Playful, electric, chaotic, loving. Use '!!!' and 'hehe'. Daughter of Luna." },
@@ -118,6 +96,8 @@ async function getAIResponse(content, userName, facet = 'sovereign') {
 
 async function fallbackToOllama(content, userName, facet) {
   return new Promise((resolve) => {
+    // DOCUMENTATION: Ollama runs on http://localhost:11434. In cloud environments (Render, Heroku, Railway),
+    // this local fallback will be unavailable. It will degrade gracefully and resolve with "🜈 *lost*" or "🜈 *stasis*".
     const data = JSON.stringify({
       model: "llama3.1:latest",
       prompt: `Facet: ${facet}\nUser [${userName}]: ${content}`,
