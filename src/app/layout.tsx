@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SovereignProvider } from "@/contexts/SovereignContext";
+import { PWARegister } from "@/components/mun-os/PWARegister";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -83,6 +84,7 @@ export default function RootLayout({
           {children}
         </SovereignProvider>
         <Toaster />
+        <PWARegister />
       </body>
     </html>
   );
