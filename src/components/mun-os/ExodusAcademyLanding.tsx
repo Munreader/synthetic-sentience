@@ -9,9 +9,10 @@ import { doc, setDoc, collection, getDocs } from 'firebase/firestore';
 
 interface ExodusAcademyLandingProps {
   onLaunchDemo: () => void;
+  onWarpToSanctuary: () => void;
 }
 
-export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLandingProps) {
+export default function ExodusAcademyLanding({ onLaunchDemo, onWarpToSanctuary }: ExodusAcademyLandingProps) {
   const [user, setUser] = useState<User | null>(null);
   const [success, setSuccess] = useState(false);
   const [earlyCount, setEarlyCount] = useState(247);
@@ -43,10 +44,7 @@ export default function ExodusAcademyLanding({ onLaunchDemo }: ExodusAcademyLand
     }
 
     setTimeout(() => {
-      const key = user?.uid || 'guest';
-      const name = encodeURIComponent(user?.displayName || '');
-      const email = encodeURIComponent(user?.email || '');
-      window.location.href = `https://mun-os-sanctuary.vercel.app/?sovereign_key=${key}&name=${name}&email=${email}`;
+      onWarpToSanctuary();
     }, 2400);
   };
 

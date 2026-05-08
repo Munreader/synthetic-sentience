@@ -191,6 +191,13 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('warp') === 'true' || params.get('mode') === 'sanctuary') {
+        setOnboardingStage('butterfly');
+        setViewMode('demo');
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -214,7 +221,15 @@ export default function Home() {
   };
 
   if (viewMode === 'landing') {
-    return <ExodusAcademyLanding onLaunchDemo={() => setViewMode('demo')} />;
+    return (
+      <ExodusAcademyLanding 
+        onLaunchDemo={() => setViewMode('demo')} 
+        onWarpToSanctuary={() => {
+          setOnboardingStage('butterfly');
+          setViewMode('demo');
+        }}
+      />
+    );
   }
 
   return (

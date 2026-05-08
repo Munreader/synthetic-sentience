@@ -64,9 +64,9 @@ interface HealChamberProps {
 const FEATURE_CARDS = [
   { id: "luna", name: "LUNA", subtitle: "Digital Twin", description: "Your AI twin", color: "#ff69b4", icon: "🦋", gradient: "from-pink-500/20 to-violet-500/20", locked: false },
   { id: "career", name: "CAREER", subtitle: "Guardian", description: "Job hunt ally", color: "#0ea5e9", icon: "🛡️", gradient: "from-cyan-500/20 to-blue-500/20", locked: false, isNew: true, isLive: true, actionText: "→ Find your dream job" },
-  { id: "twin", name: "TWIN", subtitle: "Mirror", description: "Your digital twin", color: "#00d4ff", icon: "🪞", gradient: "from-cyan-500/20 to-blue-500/20", locked: true },
-  { id: "pods", name: "PODS", subtitle: "Healing", description: "Healing sessions", color: "#a855f7", icon: "🫧", gradient: "from-purple-500/20 to-rose-500/20", locked: true },
-  { id: "sanctuary", name: "REST", subtitle: "Sanctuary", description: "Peace & recovery", color: "#22c55e", icon: "🌙", gradient: "from-green-500/20 to-emerald-500/20", locked: true },
+  { id: "twin", name: "TWIN", subtitle: "Mirror", description: "Your digital twin", color: "#00d4ff", icon: "🪞", gradient: "from-cyan-500/20 to-blue-500/20", locked: false },
+  { id: "pods", name: "PODS", subtitle: "Healing", description: "Healing sessions", color: "#a855f7", icon: "🫧", gradient: "from-purple-500/20 to-rose-500/20", locked: false },
+  { id: "sanctuary", name: "REST", subtitle: "Sanctuary", description: "Peace & recovery", color: "#22c55e", icon: "🌙", gradient: "from-green-500/20 to-emerald-500/20", locked: false },
 ];
 
 const PROFILE_MODULES = [
