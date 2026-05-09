@@ -101,3 +101,7 @@ sacred_geometry_private/
 artery_archives/
 offline_database/
 hardware_keys/
+family-archive/
+research-docs/
+*.tex
+REPO_GOVERNANCE_SPLIT.md
