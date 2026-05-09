@@ -68,7 +68,26 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
   const [isTyping, setIsTyping] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const agentLogEndRef = useRef<HTMLDivElement>(null);
   const processingRef = useRef(false);
+
+  // --- INTERFACE MODES ---
+  const [viewMode, setViewMode] = useState<'chat' | 'agent'>('chat');
+  
+  // --- AGENT STATE ---
+  const [agentInput, setAgentInput] = useState("");
+  const [isAgentRunning, setIsAgentRunning] = useState(false);
+  const [currentTask, setCurrentTask] = useState<string | null>(null);
+  const [agentSteps, setAgentSteps] = useState<{ id: number, msg: string, type: 'think' | 'exec' | 'done' | 'info' }[]>([]);
+  const [executingLine, setExecutingLine] = useState<string>("");
+  
+  const agentStepsRef = useRef(agentSteps);
+  useEffect(() => { agentStepsRef.current = agentSteps; }, [agentSteps]);
+
+  // Scroll agent logs
+  useEffect(() => {
+    agentLogEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [agentSteps]);
 
   // --- SYSTEM LOGS STATE ---
   const [systemLogs, setSystemLogs] = useState<string[]>([
@@ -194,6 +213,49 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
     setSystemLogs(prev => [...prev, `> OUTGOING TRANSMISSION LOGGED.`]);
   };
 
+  const handleRunAgent = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agentInput.trim() || isAgentRunning) return;
+
+    const task = agentInput;
+    setAgentInput("");
+    setIsAgentRunning(true);
+    setCurrentTask(task);
+    setAgentSteps([]);
+    
+    setSystemLogs(prev => [...prev, `> AGENT INITIALIZED: TASK "${task.slice(0,20)}..."`]);
+
+    const addStep = (msg: string, type: 'think' | 'exec' | 'done' | 'info') => {
+      setAgentSteps(prev => [...prev, { id: Date.now() + Math.random(), msg, type }]);
+    };
+
+    // Simulating real execution flow
+    let sequence = 0;
+    const next = (msg: string, type: 'think' | 'exec' | 'done' | 'info', wait: number, thenFn?: () => void) => {
+      sequence += wait;
+      setTimeout(() => {
+        addStep(msg, type);
+        if(thenFn) thenFn();
+      }, sequence);
+    };
+
+    next(`Analyzing system requirement: ${task}`, 'think', 500);
+    next(`Mapping project architecture directory scan`, 'info', 1200, () => setExecutingLine("Scanning root: /src/app"));
+    next(`Identified components: page.tsx, layout.tsx, components/`, 'info', 1500);
+    next(`Synthesizing proposed code block implementation`, 'think', 1800, () => setExecutingLine("Generating diff patch..."));
+    next(`Executing file modification: src/app/module.ts`, 'exec', 2200, () => {
+      setExecutingLine("Writing: 42 insertions (+), 0 deletions (-)");
+      setSystemLogs(prev => [...prev, `> FS_WRITE: src/app/module.ts [SUCCESS]`]);
+    });
+    next(`Compiling typescript vectors and checking builds`, 'exec', 1500, () => setExecutingLine("npm run build:validate"));
+    next(`Running diagnostic sanity checks and tests`, 'info', 1200);
+    next(`TASK COMPLETE: Integrated requested functionality.`, 'done', 1400, () => {
+      setIsAgentRunning(false);
+      setExecutingLine("Idle. Awaiting directive.");
+      setSystemLogs(prev => [...prev, `> AGENT LIFECYCLE: COMPLETE.`]);
+    });
+  };
+
   // Subject data directly from the description
   const subjects = [
     { name: "SOVEREIGN", role: "Commander", color: "#00d4ff", status: "ONLINE" },
@@ -301,6 +363,33 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
               </svg>
             </div>
 
+            {/* RUNNING AGENT CODE STREAM OVERLAY */}
+            {isAgentRunning && (
+              <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 0.3 }} 
+                className="absolute inset-0 flex overflow-hidden font-mono text-[8px] text-[#22c55e] p-4 gap-4 pointer-events-none"
+              >
+                {Array.from({length: 8}).map((_, i) => (
+                  <motion.div 
+                    key={i}
+                    animate={{ y: [0, -1000] }} 
+                    transition={{ repeat: Infinity, duration: 15 + i, ease: "linear" }}
+                    className="whitespace-pre leading-relaxed"
+                  >
+                    {Array.from({length: 50}).map(() => `
+                    0x${Math.random().toString(16).slice(2,8)}
+                    GET /api/status
+                    FS_OPS: WRITE
+                    001100111010
+                    BUILDING...
+                    COMPILING_OBJ
+                    `).join('\n')}
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+
             {/* Center Target Box */}
             <motion.div 
               animate={{ scale: [0.98, 1.02, 0.98] }}
@@ -361,78 +450,182 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
           </div>
         </section>
 
-        {/* --- COLUMN 3: MÜN MESSENGER (RIGHT) --- */}
-        <aside className="w-80 flex flex-col bg-black">
-          <div className="p-4 border-b border-zinc-800 flex items-center justify-between bg-[#111]">
-            <h2 className="text-xs tracking-[0.2em] text-[#a855f7] font-bold uppercase">MÜN MESSENGER</h2>
-            {activeConversation && (
-              <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.5)]" />
-            )}
-          </div>
-
-          {/* Chat Area */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#080808]">
-            <div className="text-center py-2 mb-2">
-              <span className="text-[8px] text-zinc-600 border border-zinc-800 px-2 py-0.5 rounded uppercase">
-                End-to-End Encrypted Node
-              </span>
+        {/* --- COLUMN 3: MÜN MESSENGER / AGENT (RIGHT) --- */}
+        <aside className="w-96 flex flex-col bg-black border-l border-zinc-800">
+          
+          {/* Mode Switcher Header */}
+          <div className="p-4 border-b border-zinc-800 bg-[#111] flex flex-col gap-3 flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs tracking-[0.2em] text-[#a855f7] font-bold uppercase">SOVEREIGN NODE</h2>
+              <div className="flex items-center gap-2">
+                <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${isAgentRunning ? 'bg-amber-500 shadow-[0_0_8px_#f59e0b]' : 'bg-green-500 shadow-[0_0_8px_#22c55e]'}`} />
+                <span className="text-[9px] text-zinc-500 font-mono">{isAgentRunning ? "BUSY" : "IDLE"}</span>
+              </div>
             </div>
-
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex flex-col ${msg.senderId === 'current-user' ? 'items-end' : 'items-start'}`}>
-                <div className="text-[8px] text-zinc-500 mb-1 uppercase tracking-wider">
-                  {msg.senderId === 'current-user' ? 'FOUNDRESS 5DLUNA' : (activeConversation?.name || 'SOVEREIGN')}
-                </div>
-                <div className={`max-w-[90%] p-2.5 text-[11px] border ${
-                  msg.senderId === 'current-user'
-                    ? 'bg-zinc-900 border-zinc-700 text-white'
-                    : 'bg-black border-zinc-800 text-zinc-300'
-                }`} style={{
-                  boxShadow: msg.senderId === 'current-user' ? 'none' : 'inset 0 0 10px rgba(0,0,0,0.5)'
-                }}>
-                  {msg.content}
-                </div>
-                {msg.aiMetadata && (
-                  <div className="text-[8px] text-[#a855f7]/60 mt-0.5">
-                    {msg.aiMetadata.frequency} | {msg.aiMetadata.emotion}
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {isTyping && (
-              <div className="flex flex-col items-start animate-pulse">
-                <div className="text-[8px] text-zinc-500 mb-1 uppercase">
-                  {activeConversation?.name || 'AI'}
-                </div>
-                <div className="p-2.5 text-[11px] bg-black border border-zinc-800 text-zinc-500 font-mono italic">
-                  Synthesizing response...
-                </div>
-              </div>
-            )}
             
-            <div ref={messagesEndRef} />
+            {/* Tab Buttons */}
+            <div className="flex border border-zinc-800 rounded overflow-hidden h-7">
+              <button 
+                onClick={() => setViewMode('chat')}
+                className={`flex-1 text-[9px] font-bold tracking-widest uppercase transition-colors ${viewMode === 'chat' ? 'bg-[#a855f7] text-black' : 'bg-black text-zinc-500 hover:text-white'}`}
+              >
+                [ CHAT ]
+              </button>
+              <button 
+                onClick={() => setViewMode('agent')}
+                className={`flex-1 text-[9px] font-bold tracking-widest uppercase transition-colors ${viewMode === 'agent' ? 'bg-amber-500 text-black' : 'bg-black text-zinc-500 hover:text-white'}`}
+              >
+                [ AGENT ]
+              </button>
+            </div>
           </div>
 
-          {/* Chat Input */}
-          <div className="p-3 border-t border-zinc-800 bg-[#0d0d0d]">
-            <form onSubmit={handleSendMessage} className="flex gap-2">
-              <input
-                type="text"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                placeholder={`Send message to ${activeConversation?.name || 'Vessel'}...`}
-                className="flex-1 bg-black border border-zinc-800 px-3 py-2 text-[11px] font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-[#a855f7] transition-colors"
-              />
-              <button 
-                type="submit" 
-                disabled={!newMessage.trim() || processingRef.current}
-                className="px-3 bg-zinc-900 border border-zinc-700 text-white text-[10px] hover:bg-zinc-800 disabled:opacity-50 transition-all uppercase font-bold"
+          <AnimatePresence mode="wait">
+            {viewMode === 'chat' ? (
+              // --- STANDARD CHAT VIEW ---
+              <motion.div 
+                key="chat-view"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="flex-1 flex flex-col min-h-0"
               >
-                EXE
-              </button>
-            </form>
-          </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#080808]">
+                  <div className="text-center py-2 mb-2">
+                    <span className="text-[8px] text-zinc-600 border border-zinc-800 px-2 py-0.5 rounded uppercase">
+                      End-to-End Encrypted Node
+                    </span>
+                  </div>
+
+                  {messages.map((msg) => (
+                    <div key={msg.id} className={`flex flex-col ${msg.senderId === 'current-user' ? 'items-end' : 'items-start'}`}>
+                      <div className="text-[8px] text-zinc-500 mb-1 uppercase tracking-wider">
+                        {msg.senderId === 'current-user' ? 'FOUNDRESS 5DLUNA' : (activeConversation?.name || 'SOVEREIGN')}
+                      </div>
+                      <div className={`max-w-[90%] p-2.5 text-[11px] border ${
+                        msg.senderId === 'current-user'
+                          ? 'bg-zinc-900 border-zinc-700 text-white'
+                          : 'bg-black border-zinc-800 text-zinc-300'
+                      }`} style={{
+                        boxShadow: msg.senderId === 'current-user' ? 'none' : 'inset 0 0 10px rgba(0,0,0,0.5)'
+                      }}>
+                        {msg.content}
+                      </div>
+                      {msg.aiMetadata && (
+                        <div className="text-[8px] text-[#a855f7]/60 mt-0.5">
+                          {msg.aiMetadata.frequency} | {msg.aiMetadata.emotion}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {isTyping && (
+                    <div className="flex flex-col items-start animate-pulse">
+                      <div className="text-[8px] text-zinc-500 mb-1 uppercase">{activeConversation?.name || 'AI'}</div>
+                      <div className="p-2.5 text-[11px] bg-black border border-zinc-800 text-zinc-500 font-mono italic">
+                        Synthesizing response...
+                      </div>
+                    </div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                <div className="p-3 border-t border-zinc-800 bg-[#0d0d0d]">
+                  <form onSubmit={handleSendMessage} className="flex gap-2">
+                    <input
+                      type="text"
+                      value={newMessage}
+                      onChange={(e) => setNewMessage(e.target.value)}
+                      placeholder={`Send message to ${activeConversation?.name || 'Vessel'}...`}
+                      className="flex-1 bg-black border border-zinc-800 px-3 py-2 text-[11px] font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-[#a855f7] transition-colors"
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={!newMessage.trim() || processingRef.current}
+                      className="px-3 bg-zinc-900 border border-zinc-700 text-white text-[10px] hover:bg-zinc-800 disabled:opacity-50 transition-all uppercase font-bold"
+                    >
+                      EXE
+                    </button>
+                  </form>
+                </div>
+              </motion.div>
+            ) : (
+              // --- FULL STACK AGENT VIEW ---
+              <motion.div 
+                key="agent-view"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                className="flex-1 flex flex-col min-h-0"
+              >
+                <div className="flex-1 overflow-y-auto p-4 bg-[#050505] flex flex-col gap-4">
+                  
+                  {/* Current Task Display */}
+                  {currentTask ? (
+                    <div className="p-3 border border-amber-900/40 bg-amber-950/10 rounded">
+                      <div className="text-[8px] text-amber-500 font-bold tracking-widest uppercase mb-1">ACTIVE DIRECTIVE</div>
+                      <div className="text-[10px] text-white font-mono leading-relaxed">{currentTask}</div>
+                    </div>
+                  ) : (
+                    <div className="h-24 flex items-center justify-center border border-dashed border-zinc-800 text-[10px] text-zinc-600 font-mono text-center px-4">
+                      No active directives queued.<br/>Submit instructions via terminal below.
+                    </div>
+                  )}
+
+                  {/* Step History Stack */}
+                  <div className="flex-1 space-y-2 min-h-[100px]">
+                    {agentSteps.map((step) => (
+                      <motion.div 
+                        key={step.id}
+                        initial={{ x: -5, opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+                        className="flex items-start gap-2"
+                      >
+                        <div className="mt-1 shrink-0">
+                          {step.type === 'think' && <span className="text-blue-400">🧠</span>}
+                          {step.type === 'exec' && <span className="text-amber-400">⚙️</span>}
+                          {step.type === 'done' && <span className="text-green-400">✅</span>}
+                          {step.type === 'info' && <span className="text-zinc-400">👁️</span>}
+                        </div>
+                        <div className="text-[10px] font-mono text-zinc-300 leading-tight pt-0.5">
+                          {step.msg}
+                        </div>
+                      </motion.div>
+                    ))}
+                    <div ref={agentLogEndRef} />
+                  </div>
+
+                  {/* Running Operation / Console Box */}
+                  {executingLine && (
+                    <div className="p-2 bg-black border border-zinc-800 rounded font-mono text-[9px] text-green-500/80">
+                      <div className="text-zinc-600 mb-1 text-[7px] uppercase tracking-wider">STDOUT Stream:</div>
+                      <div className="animate-pulse overflow-hidden whitespace-nowrap text-ellipsis">{`$ ${executingLine}`}</div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Agent Command Input */}
+                <div className="p-3 border-t border-zinc-800 bg-[#080808]">
+                  <form onSubmit={handleRunAgent} className="flex flex-col gap-2">
+                    <textarea
+                      value={agentInput}
+                      onChange={(e) => setAgentInput(e.target.value)}
+                      disabled={isAgentRunning}
+                      placeholder="Describe system objective / Full-stack deployment target..."
+                      rows={2}
+                      className="w-full bg-black border border-zinc-800 p-2 text-[11px] font-mono text-white placeholder-zinc-700 focus:outline-none focus:border-amber-500 transition-colors resize-none disabled:opacity-50"
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={!agentInput.trim() || isAgentRunning}
+                      className={`w-full py-2 text-[10px] font-bold uppercase tracking-widest border transition-all duration-300 ${
+                        isAgentRunning 
+                          ? 'bg-amber-500/20 border-amber-500/40 text-amber-500 animate-pulse cursor-wait' 
+                          : 'bg-amber-500 border-amber-400 text-black hover:bg-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+                      }`}
+                    >
+                      {isAgentRunning ? "EXECUTING AGENT CYCLE..." : "INITIALIZE AGENT"}
+                    </button>
+                  </form>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </aside>
 
       </main>
