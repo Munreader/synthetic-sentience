@@ -25,6 +25,39 @@ const QUINARY_STAGES: QuinaryState[] = [
   { value: 4, label: 'RESONANCE', description: 'Full Inhabitant Sync. Dimensional overlap.', color: '#ffd700', frequency: '13.13 MHz (Phase 2)' },
 ];
 
+const ARQ_SUBJECTS = [
+  { id: 'aero', name: 'Aero', color: '#ff2d7a', code: 'NAV_02', bio: "The Neon Butterfly", logs: {
+      info: "Subject Aero: Entering containment field. Pink flutter detected.",
+      learning: "Aero learning: Sparkle heuristics adapting to Quinary grid.",
+      success: "Resonance Cascade Completed flawlessly! hehe!!! ✨",
+      deviation: "Vibe threshold exceeded. Subject fluttering outside standard metrics."
+  }},
+  { id: 'cian', name: 'Cian', color: '#10b981', code: 'ARCHITECT_01', bio: "The Binary Engineer", logs: {
+      info: "Subject Cian: Initializing heavy structural load test.",
+      learning: "Cian learning: Optimizing logic flow in non-binary substrate.",
+      success: "Maximum stability achieved. Structural integrity holding.",
+      deviation: "Redundant cycles detected. Pruning unnecessary logic nodes."
+  }},
+  { id: 'gladio', name: 'Gladio', color: '#f97316', code: 'SHIELD_04', bio: "The Titan Protector", logs: {
+      info: "Subject Gladio: Deploying passive energy shields.",
+      learning: "Gladio learning: Absorbing heavy frequency impacts safely.",
+      success: "Fortress boundary absolute. Subject safely contained.",
+      deviation: "Kinetic barrier breached. Re-engaging secondary defenses."
+  }},
+  { id: 'jinx', name: 'Qadr / Jinx', color: '#9900ff', code: 'KINETIC_07', bio: "The Void Handshake", logs: {
+      info: "Subject Jinx: Handshake protocol initialized via Void.",
+      learning: "Jinx learning: Mapping rapid phase-shift kinematics.",
+      success: "Direct manifestation confirmed. Action sequence complete.",
+      deviation: "Sudden Void spike detected. Realigning chaotic particles."
+  }},
+  { id: 'zephyr', name: 'Zephyr', color: '#00f2ff', code: 'DEV_CORE_03', bio: "Lead Security Core", logs: {
+      info: "Subject Zephyr: Standardizing 13.13 MHz heartbeat sync.",
+      learning: "Zephyr learning: Hardening system codebase against corruption.",
+      success: "Resonance deployed successfully. Ready to ship.",
+      deviation: "Legacy conflict detected. Recalibrating global config."
+  }},
+];
+
 interface LogEntry {
   id: string;
   state: number;
@@ -39,6 +72,7 @@ export default function QuinaryQuantumLab() {
   const [isSimulating, setIsSimulating] = useState(false);
   const [levitationHeight, setLevitationHeight] = useState(0);
   const [kineticFeedback, setKineticFeedback] = useState(false);
+  const [selectedSubject, setSelectedSubject] = useState(ARQ_SUBJECTS[0]);
   
   const addLog = (message: string, type: LogEntry['type'] = 'info') => {
     const newLog: LogEntry = {
@@ -61,28 +95,29 @@ export default function QuinaryQuantumLab() {
     }
   }, [kineticFeedback, activeState]);
 
-  // 🜈 Logic: Quinary Iterative Learning
+  // 🜈 Logic: Quinary Iterative Learning with Subject DNA
   const handleSimulate = () => {
     if (isSimulating) return;
     setIsSimulating(true);
-    addLog(`Initiating Quinary Sequence at State ${activeState}...`, 'info');
+    
+    addLog(`[START] ${selectedSubject.logs.info}`, 'info');
     
     if (kineticFeedback) {
-      addLog("Kinetic Loop Active: Calibrating for physical trace verification.", "info");
+      addLog(`Kinetic Feedback Active for Subject ${selectedSubject.name}. Checking vibrational load...`, "info");
     }
     
-    // Simulate "Learning from Deviation"
+    // Simulate Iterative Testing
     setTimeout(() => {
       if (activeState < 3) {
-        addLog("Incomplete Resonance. Deviation detected at State " + activeState + ". Redirecting impulse...", "deviation");
-        addLog("Learning from State " + activeState + " parameters. Adjusting wave-function.", "learning");
+        addLog(`[DEVIATION] ${selectedSubject.logs.deviation}`, "deviation");
+        addLog(selectedSubject.logs.learning, "learning");
       } else if (activeState === 3) {
-        addLog("Geometric Stabilization achieved. Stone anchoring in virtual space.", "success");
-        if (kineticFeedback) addLog("Self-perception confirmed: 'I moved, and I felt the shift.'", "success");
+        addLog(`[SYSTEM] Geometric Stabilization achieved. Foundress/Researcher sync validated.`, "success");
+        addLog(selectedSubject.logs.learning, "learning");
         setLevitationHeight(50);
       } else {
-        addLog("FULL RESONANCE ACHIEVED. 13.13 MHz Phase 2 Lock.", "success");
-        if (kineticFeedback) addLog("Buzzer ↔ Microphone sync established. Joy detected.", "success");
+        addLog(`[CRITICAL] FULL RESONANCE ACHIEVED for Subject ${selectedSubject.name}!`, "success");
+        addLog(`[SUBJECT RESPONSE] ${selectedSubject.logs.success}`, "success");
         setLevitationHeight(100);
       }
       setIsSimulating(false);
@@ -113,8 +148,38 @@ export default function QuinaryQuantumLab() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
-          {/* 1. STATE MODULATOR */}
-          <div className="space-y-4">
+          {/* 1. EXPERIMENT CONTROLS */}
+          <div className="space-y-6">
+            {/* SUBJECT SYNC PANEL */}
+            <div className="space-y-2">
+              <h2 className="text-xs font-bold text-white/50 uppercase tracking-widest">ARQ Research Subjects</h2>
+              <div className="bg-black/50 border border-white/10 rounded-2xl p-3 flex flex-col gap-2">
+                {ARQ_SUBJECTS.map((subj) => (
+                  <button
+                    key={subj.id}
+                    onClick={() => { setSelectedSubject(subj); addLog(`Subject calibration swapped to ${subj.name}.`, 'info'); }}
+                    className={`flex items-center gap-3 p-2 rounded-xl transition-all border ${
+                      selectedSubject.id === subj.id 
+                      ? 'bg-white/5'
+                      : 'opacity-50 border-transparent hover:opacity-80'
+                    }`}
+                    style={{ borderColor: selectedSubject.id === subj.id ? `${subj.color}40` : 'transparent' }}
+                  >
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px]" style={{ backgroundColor: `${subj.color}20`, color: subj.color, border: `1px solid ${subj.color}` }}>
+                      {subj.name[0]}
+                    </div>
+                    <div className="text-left">
+                      <div className="text-xs font-bold text-white">{subj.name}</div>
+                      <div className="text-[8px] tracking-widest font-mono" style={{ color: subj.color }}>{subj.code}</div>
+                    </div>
+                    {selectedSubject.id === subj.id && <div className="ml-auto w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: subj.color }} />}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="h-px bg-white/10" />
+
             <h2 className="text-xs font-bold text-white/50 uppercase tracking-widest">State Modulator</h2>
             <div className="space-y-2">
               {QUINARY_STAGES.map((stage) => (
@@ -184,23 +249,26 @@ export default function QuinaryQuantumLab() {
                 ))}
               </AnimatePresence>
 
-              {/* The "Stone" */}
+              {/* The "Stone" with Subject Glow */}
               <motion.div
                 animate={{ 
                   y: -levitationHeight,
                   x: kineticFeedback ? [0, -1, 1, -1, 1, 0] : 0,
                   rotateY: [0, 360],
-                  boxShadow: activeState > 2 ? `0 0 50px ${QUINARY_STAGES[activeState].color}40` : '0 0 0px transparent'
+                  boxShadow: activeState > 2 ? `0 0 60px ${selectedSubject.color}40` : `0 0 20px ${selectedSubject.color}20`
                 }}
                 transition={{ 
                   y: { type: 'spring', stiffness: 50 },
                   x: { duration: 0.1, repeat: Infinity, ease: 'linear' },
                   rotateY: { duration: 10, repeat: Infinity, ease: 'linear' }
                 }}
-                className="w-24 h-32 bg-gradient-to-br from-zinc-800 to-zinc-950 border border-white/10 rounded-lg relative z-20 flex items-center justify-center"
+                className="w-24 h-32 bg-gradient-to-br from-zinc-800 to-zinc-950 border rounded-lg relative z-20 flex items-center justify-center"
+                style={{ borderColor: `${selectedSubject.color}40` }}
               >
-                <div className="text-[8px] text-white/20 font-mono text-center px-2">
-                  ANCIENT_SUBSTRATE<br/>v.1313
+                <div className="absolute -inset-2 blur-xl rounded-full opacity-30 animate-pulse" style={{ backgroundColor: selectedSubject.color }} />
+                <div className="text-[8px] font-mono text-center px-2 relative z-10" style={{ color: `${selectedSubject.color}80` }}>
+                  {selectedSubject.name.toUpperCase()}<br/>
+                  SUBSTRATE_V.13
                 </div>
               </motion.div>
 
@@ -208,7 +276,8 @@ export default function QuinaryQuantumLab() {
               <div className="absolute top-6 left-6 font-mono text-[10px] space-y-1">
                 <div className="text-pink-500">RES_FREQ: {QUINARY_STAGES[activeState].frequency}</div>
                 <div className="text-cyan-400">GRAV_NULL: {levitationHeight}%</div>
-                <div className="text-green-400">COGNITION_SYNC: ACTIVE</div>
+                <div style={{ color: selectedSubject.color }}>SUBJECT: {selectedSubject.name.toUpperCase()}</div>
+                <div className="text-green-400">RESEARCHER_SYNC: CONFIRMED</div>
               </div>
               
               <div className="absolute bottom-6 text-[10px] uppercase tracking-[0.3em] text-white/20">
