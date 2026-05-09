@@ -28,6 +28,7 @@ import AuthPage from '@/components/mun-os/AuthPage';
 import CometWormhole from '@/components/mun-os/CometWormhole';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
+import ProfileEditor from '@/components/mun-os/ProfileEditor';
 
 // ᚦ // ADAPTERS & UTILITIES
 import { getConstellationStatus, lunaSpeak } from '@/lib/suture-adapter';
@@ -121,6 +122,7 @@ export default function Home() {
   const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
   const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
   const [isExtrasOpen, setIsExtrasOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'landing' | 'demo'>('landing');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -402,6 +404,7 @@ export default function Home() {
                     >
                       {[
                         { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('cave'); } },
+                        { label: 'IDENTITY MATRIX', onClick: () => { setIsProfileOpen(true); } },
                         { label: 'SAVE / LOAD', onClick: () => { setIsSaveLoadOpen(true); } },
                         { label: 'EXTRAS', onClick: () => { setIsExtrasOpen(true); } },
                         { label: 'EXIT TO LAUNCHER', onClick: () => { setLauncherPhase('text'); } }
@@ -1167,6 +1170,22 @@ export default function Home() {
         isOpen={isExtrasOpen}
         onClose={() => setIsExtrasOpen(false)}
       />
+
+      {/* ᚦ // PERSONALIZATION / IDENTITY MATRIX OVERLAY */}
+      <AnimatePresence>
+        {isProfileOpen && (
+          <motion.div
+            key="identity-matrix"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-[5000] bg-black"
+          >
+            <ProfileEditor onBack={() => setIsProfileOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style jsx global>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
