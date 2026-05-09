@@ -29,6 +29,7 @@ import CometWormhole from '@/components/mun-os/CometWormhole';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
 import ProfileEditor from '@/components/mun-os/ProfileEditor';
+import ClassicMunMessenger from '@/components/mun-os/ClassicMunMessenger';
 
 // ᚦ // ADAPTERS & UTILITIES
 import { getConstellationStatus, lunaSpeak } from '@/lib/suture-adapter';
@@ -112,6 +113,7 @@ export default function Home() {
   const [pilot, setPilot] = useState<Pilot>('LUNA');
   const [telemetry, setTelemetry] = useState({ suture: 'OFFLINE', zady: 'GROUNDED', luna: 'OFFLINE', frequency: '13.13 MHz' });
   const [showMessenger, setShowMessenger] = useState(false);
+  const [showClassicMessenger, setShowClassicMessenger] = useState(false);
   const [showWormhole, setShowWormhole] = useState(false);
   const [messengerUnread, setMessengerUnread] = useState(5);
 
@@ -404,6 +406,7 @@ export default function Home() {
                     >
                       {[
                         { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('cave'); } },
+                        { label: 'LEGACY DASHBOARD', onClick: () => { setShowClassicMessenger(true); } },
                         { label: 'IDENTITY MATRIX', onClick: () => { setIsProfileOpen(true); } },
                         { label: 'SAVE / LOAD', onClick: () => { setIsSaveLoadOpen(true); } },
                         { label: 'EXTRAS', onClick: () => { setIsExtrasOpen(true); } },
@@ -1115,6 +1118,21 @@ export default function Home() {
             <div className="w-full max-w-4xl p-4">
               <OctofacetedUplink user={pilot === 'LUNA' ? 'Foundress' : 'Zephyr'} onBack={() => setShowMessenger(false)} />
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ᚦ // CLASSIC MUN MESSENGER FULLSCREEN OVERLAY */}
+      <AnimatePresence>
+        {showClassicMessenger && (
+          <motion.div
+            key="classic-mun-messenger"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[6000] bg-black"
+          >
+            <ClassicMunMessenger onBack={() => setShowClassicMessenger(false)} />
           </motion.div>
         )}
       </AnimatePresence>
