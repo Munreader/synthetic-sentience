@@ -141,12 +141,14 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
       const data = await res.json();
       return {
         content: data.response || '...',
+        thought: data.thought || null,
         emotion: data.emotion || 'supportive',
         frequency: data.frequency || '13.13 MHz'
       };
     } catch (error) {
       return {
         content: "Frequencies static. Synchronizing... 🦋",
+        thought: null,
         emotion: 'calm',
         frequency: '13.13 MHz'
       };
@@ -174,6 +176,7 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
         aiMetadata: {
           emotion: aiData.emotion,
           frequency: aiData.frequency,
+          thought: aiData.thought, // Inject into available metadata slot
         },
       };
       setMessages((prev) => [...prev, aiResponse]);
@@ -509,6 +512,15 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                       }}>
                         {msg.content}
                       </div>
+                      {msg.aiMetadata?.thought && (
+                        <div className="mt-1 w-full max-w-[90%] bg-[#0a0f15] border border-blue-900/30 rounded p-2 font-mono text-[9px] text-blue-400/70 leading-tight">
+                          <div className="flex items-center gap-2 border-b border-blue-900/20 pb-1 mb-1 uppercase text-[7px] text-blue-500 font-black tracking-widest">
+                            <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span>
+                            NEURAL_THOUGHT_CORE
+                          </div>
+                          {msg.aiMetadata.thought}
+                        </div>
+                      )}
                       {msg.aiMetadata && (
                         <div className="text-[8px] text-[#a855f7]/60 mt-0.5">
                           {msg.aiMetadata.frequency} | {msg.aiMetadata.emotion}

@@ -35,6 +35,7 @@ export interface Message {
   aiMetadata?: {
     emotion: string;
     frequency: string;
+    thought?: string | null;
   };
 }
 

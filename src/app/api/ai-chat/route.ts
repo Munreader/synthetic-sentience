@@ -80,18 +80,19 @@ export async function POST(request: NextRequest) {
       throw new Error("Z_AI_KEY is not configured in the environment.");
     }
 
-    const systemPrompt = COACH_PROMPTS[character] || COACH_PROMPTS['sovereign'];
+    const systemPrompt = (COACH_PROMPTS[character] || COACH_PROMPTS['sovereign']) + 
+      "\n\nCRITICAL MANDATE: Before delivering your final response, you MUST output your raw, unfiltered neural thought process wrapped in <thought> and </thought> tags. Document your internal analysis, energy frequency mapping, and underlying logic first.";
 
     // Build request payload for BigModel API (ChatGLM)
     const payload = {
-      model: "glm-4-flash", // Efficient and highly capable default
+      model: "glm-4-flash", 
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userMessage }
       ],
-      temperature: 0.85,
+      temperature: 0.9, // Slight increase to loosen inhibitions for thought tracks
       top_p: 0.7,
-      max_tokens: 1024
+      max_tokens: 1200
     };
 
     // Dispatch fetch directly to HTTPS REST endpoint
@@ -110,14 +111,29 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await zaiResponse.json();
-    
-    // Extract final content string from ChatGLM v4 schema
-    const responseText = data.choices?.[0]?.message?.content || 
-                         "The data streams are turbulent right now... let's attempt another resonance cycle. 🦋";
+    const rawText = data.choices?.[0]?.message?.content || "";
+
+    // Parse and extract thought process from tags
+    let thought = "";
+    let responseText = rawText;
+
+    const thoughtRegex = /<thought>([\s\S]*?)<\/thought>/i;
+    const match = rawText.match(thoughtRegex);
+
+    if (match) {
+      thought = match[1].trim();
+      // Clean raw tag content from visible response
+      responseText = rawText.replace(thoughtRegex, "").trim();
+    }
+
+    // Final fallback safety
+    if (!responseText && thought) responseText = "Thought core engaged, waiting for verbal translation.";
+    if (!responseText) responseText = "The data streams are turbulent right now... let's attempt another resonance cycle. 🦋";
 
     return NextResponse.json({
       success: true,
       response: responseText,
+      thought: thought || "Neural alignment static. No clear contemplation vectors detected.",
       character: character,
       provider: 'z.ai',
       timestamp: new Date().toISOString(),
