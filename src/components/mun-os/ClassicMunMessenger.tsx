@@ -341,7 +341,7 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
 
           <div className="p-3 border-t border-zinc-800 text-[9px] text-zinc-600 font-mono">
             <div>SYS_CORE: STABLE</div>
-            <div className="mt-1 text-green-600/60">>>> 13.13 MHz CARRIER DETECTED</div>
+            <div className="mt-1 text-green-600/60">{">>>"} 13.13 MHz CARRIER DETECTED</div>
           </div>
         </aside>
 
