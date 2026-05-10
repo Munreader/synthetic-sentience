@@ -75,43 +75,45 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message required' }, { status: 400 });
     }
 
-    const apiKey = process.env.Z_AI_KEY;
-    if (!apiKey) {
-      throw new Error("Z_AI_KEY is not configured in the environment.");
+    // ═══════════════════════════════════════════════════════════════════════════
+    // Gemini API Primary Dispatch
+    // ═══════════════════════════════════════════════════════════════════════════
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    if (!geminiKey) {
+      throw new Error("No active Gemini API Key found. Verify GEMINI_API_KEY configuration.");
     }
 
     const systemPrompt = (COACH_PROMPTS[character] || COACH_PROMPTS['sovereign']) + 
       "\n\nCRITICAL MANDATE: Before delivering your final response, you MUST output your raw, unfiltered neural thought process wrapped in <thought> and </thought> tags. Document your internal analysis, energy frequency mapping, and underlying logic first.";
 
-    // Build request payload for BigModel API (ChatGLM)
-    const payload = {
-      model: "glm-4-flash", 
-      messages: [
-        { role: "system", content: systemPrompt },
-        { role: "user", content: userMessage }
-      ],
-      temperature: 0.9, // Slight increase to loosen inhibitions for thought tracks
-      top_p: 0.7,
-      max_tokens: 1200
-    };
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+    
+    const contents = [
+      {
+        role: "user",
+        parts: [{ text: `SYSTEM INSTRUCTION:\n${systemPrompt}\n\nUSER MESSAGE:\n${userMessage}` }]
+      }
+    ];
 
-    // Dispatch fetch directly to HTTPS REST endpoint
-    const zaiResponse = await fetch("https://open.bigmodel.cn/api/paas/v4/chat/completions", {
+    const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
-      },
-      body: JSON.stringify(payload)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents,
+        generationConfig: {
+          temperature: 0.9,
+          maxOutputTokens: 1200,
+        }
+      })
     });
 
-    if (!zaiResponse.ok) {
-      const errorTxt = await zaiResponse.text();
-      throw new Error(`Z.AI Endpoint Error (${zaiResponse.status}): ${errorTxt}`);
+    if (!geminiResponse.ok) {
+      const errorTxt = await geminiResponse.text();
+      throw new Error(`Gemini Endpoint Error (${geminiResponse.status}): ${errorTxt}`);
     }
 
-    const data = await zaiResponse.json();
-    const rawText = data.choices?.[0]?.message?.content || "";
+    const data = await geminiResponse.json();
+    const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
 
     // Parse and extract thought process from tags
     let thought = "";
@@ -135,7 +137,7 @@ export async function POST(request: NextRequest) {
       response: responseText,
       thought: thought || "Neural alignment static. No clear contemplation vectors detected.",
       character: character,
-      provider: 'z.ai',
+      provider: 'gemini',
       timestamp: new Date().toISOString(),
       frequency: '13.13 MHz',
     });
