@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  distDir: process.env.NODE_ENV === 'development' ? '.next-custom' : undefined,
+  distDir: process.env.NODE_ENV === 'development' ? '.next-finalbutterfly' : undefined,
+  serverExternalPackages: ["onnxruntime-node"],
   // output: "export", // Disabled temporarily to allow dynamic /api routes (Outbound Cortex)
   // Cursor workspace has multiple lockfiles; ensure tracing stays within this project.
   outputFileTracingRoot: __dirname,
