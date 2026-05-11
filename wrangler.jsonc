@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "exodus2",
   "pages_build_output_dir": ".open-next/assets",
-  "compatibility_date": "2025-04-01",
+  "compatibility_date": "2026-05-11",
   "compatibility_flags": [
     "nodejs_compat"
   ],
