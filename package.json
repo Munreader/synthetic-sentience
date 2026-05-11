@@ -9,7 +9,7 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "build:cf": "opennextjs-cloudflare build",
-    "pages:build": "opennextjs-cloudflare build && cp .open-next/worker.js .open-next/assets/_worker.js",
+    "pages:build": "opennextjs-cloudflare build && node integrate-pages.js",
     "start": "NODE_ENV=production bun .next/standalone/server.js",
     "lint": "eslint . --max-warnings 0",
     "suture": "node suture-server.js",
