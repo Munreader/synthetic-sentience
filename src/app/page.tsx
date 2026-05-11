@@ -31,6 +31,7 @@ import { OrbitControls, Stage } from '@react-three/drei';
 import ProfileEditor from '@/components/mun-os/ProfileEditor';
 import ClassicMunMessenger from '@/components/mun-os/ClassicMunMessenger';
 import CinematicPrologue from '@/components/exodus/CinematicPrologue';
+import MaintenanceMode from '@/components/MaintenanceMode';
 
 // ᚦ // ADAPTERS & UTILITIES
 import { getConstellationStatus, lunaSpeak } from '@/lib/suture-adapter';
@@ -227,6 +228,11 @@ export default function Home() {
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
   };
+
+  // ᚦ // MAINTENANCE MODE SHORT-CIRCUIT FOR PRODUCTION
+  if (process.env.NODE_ENV === 'production') {
+    return <MaintenanceMode />;
+  }
 
   if (viewMode === 'landing') {
     return (
