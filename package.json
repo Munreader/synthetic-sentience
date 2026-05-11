@@ -88,6 +88,6 @@
     "pm2": "^7.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "wrangler": "^3.103.2"
+    "wrangler": "^4.90.0"
   }
 }

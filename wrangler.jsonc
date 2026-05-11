@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "exodus2",
   "main": ".open-next/worker.js",
-  "compatibility_date": "2024-05-01",
+  "compatibility_date": "2025-04-01",
   "compatibility_flags": [
     "nodejs_compat"
   ],
