@@ -55,10 +55,8 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-  experimental: {
-    outputFileTracingExcludes: {
-      '*': ['**/onnxruntime-node/**/*']
-    }
+  outputFileTracingExcludes: {
+    '*': ['**/onnxruntime-node/**/*']
   }
 };
 
