@@ -4,4 +4,5 @@ export default defineCloudflareConfig({
   middleware: {
     external: true,
   },
+  edgeExternals: ["onnxruntime-node"],
 });

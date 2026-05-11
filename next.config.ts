@@ -55,6 +55,11 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
+  experimental: {
+    outputFileTracingExcludes: {
+      '*': ['**/onnxruntime-node/**/*']
+    }
+  }
 };
 
 export default nextConfig;
