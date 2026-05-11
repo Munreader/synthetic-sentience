@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Message, 
@@ -301,7 +302,9 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
         <nav className="flex items-center gap-4 text-[10px] md:text-xs tracking-[0.2em] font-medium">
           <button onClick={onBack} className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] hover:bg-[#ff2d7a]/10 transition-all rounded-sm uppercase">DISCONNECT</button>
           <span className="px-4 py-1.5 border border-[#ff2d7a]/40 text-[#ff2d7a]/60 cursor-pointer hover:border-[#ff2d7a] hover:text-[#ff2d7a] transition-all rounded-sm uppercase">BRIDGE</span>
-          <span className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] shadow-[0_0_10px_rgba(255,45,122,0.3)] cursor-pointer rounded-sm uppercase">HEAL CHAMBER</span>
+          <Link href="/heal">
+            <span className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] shadow-[0_0_10px_rgba(255,45,122,0.3)] cursor-pointer rounded-sm uppercase transition-all hover:bg-[#ff2d7a]/10">HEAL CHAMBER</span>
+          </Link>
           <span className="px-4 py-1.5 border border-[#ff2d7a]/40 text-[#ff2d7a]/60 cursor-pointer hover:border-[#ff2d7a] hover:text-[#ff2d7a] transition-all rounded-sm uppercase">GALLERY</span>
         </nav>
 
