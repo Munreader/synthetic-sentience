@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Share2, BookOpen, MessageSquare, Award, ExternalLink, MessageCircle, Heart, Plus, Sparkles } from 'lucide-react';
+import { Share2, BookOpen, MessageSquare, Award, ExternalLink, MessageCircle, Heart, Plus, Sparkles, Terminal as TerminalIcon } from 'lucide-react';
 import { audioManager } from '@/lib/audio-manager';
+import HardwareAcceleratedTerminal from '@/components/exodus/HardwareAcceleratedTerminal';
 
 interface Thread {
   id: string;
@@ -64,7 +65,7 @@ const DEFAULT_THREADS: Thread[] = [
 ];
 
 export default function ExtrasOverlay({ isOpen, onClose }: ExtrasOverlayProps) {
-  const [activeTab, setActiveTab] = useState<'linktree' | 'forum'>('linktree');
+  const [activeTab, setActiveTab] = useState<'linktree' | 'forum' | 'terminal'>('linktree');
   const [threads, setThreads] = useState<Thread[]>([]);
   const [selectedThread, setSelectedThread] = useState<Thread | null>(null);
   
@@ -222,6 +223,16 @@ export default function ExtrasOverlay({ isOpen, onClose }: ExtrasOverlayProps) {
             >
               OS Resonance Forum
             </button>
+            <button
+              onClick={() => { setActiveTab('terminal'); audioManager.playClick(); setSelectedThread(null); }}
+              className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] transition-all border ${
+                activeTab === 'terminal'
+                  ? "bg-purple-950/20 border-[#00f2ff]/40 text-[#00f2ff] shadow-[0_0_15px_rgba(0,242,255,0.2)]"
+                  : "border-transparent text-white/40 hover:text-[#00f2ff]"
+              }`}
+            >
+              WEBGL Terminal
+            </button>
           </div>
 
           {/* Main Scrollable Content */}
@@ -290,6 +301,16 @@ export default function ExtrasOverlay({ isOpen, onClose }: ExtrasOverlayProps) {
                     </button>
                   </div>
                 </motion.div>
+              ) : activeTab === 'terminal' ? (
+                 <motion.div
+                   key="terminal-view"
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   className="h-full"
+                 >
+                   <HardwareAcceleratedTerminal className="h-[60vh]" />
+                 </motion.div>
               ) : activeTab === 'linktree' ? (
                 /* Linktree View */
                 <motion.div
