@@ -4,7 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Share2, BookOpen, MessageSquare, Award, ExternalLink, MessageCircle, Heart, Plus, Sparkles, Terminal as TerminalIcon } from 'lucide-react';
 import { audioManager } from '@/lib/audio-manager';
-import HardwareAcceleratedTerminal from '@/components/exodus/HardwareAcceleratedTerminal';
+import dynamic from 'next/dynamic';
+
+const HardwareAcceleratedTerminal = dynamic(
+  () => import('@/components/exodus/HardwareAcceleratedTerminal'),
+  { ssr: false }
+);
 
 interface Thread {
   id: string;
