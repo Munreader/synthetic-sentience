@@ -121,7 +121,7 @@ export default function Home() {
   const persona = PERSONA[pilot];
 
   // ᚦ // ONBOARDING FLOW STATE
-  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'prologue' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete'>('launcher');
+  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'prologue' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete'>('butterfly');
   const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
   const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
   const [isExtrasOpen, setIsExtrasOpen] = useState(false);
