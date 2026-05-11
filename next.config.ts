@@ -36,6 +36,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  webpack: (config) => {
+    // Ignore server-side resolution of client-only native/wasm binaries
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "onnxruntime-node$": false,
+      "onnxruntime-web$": false,
+    };
+    return config;
+  },
 };
 
 export default nextConfig;

@@ -30,6 +30,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stage } from '@react-three/drei';
 import ProfileEditor from '@/components/mun-os/ProfileEditor';
 import ClassicMunMessenger from '@/components/mun-os/ClassicMunMessenger';
+import CinematicPrologue from '@/components/exodus/CinematicPrologue';
 
 // ᚦ // ADAPTERS & UTILITIES
 import { getConstellationStatus, lunaSpeak } from '@/lib/suture-adapter';
@@ -120,12 +121,12 @@ export default function Home() {
   const persona = PERSONA[pilot];
 
   // ᚦ // ONBOARDING FLOW STATE
-  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete'>('launcher');
+  const [onboardingStage, setOnboardingStage] = useState<'launcher' | 'prologue' | 'cave' | 'portal' | 'butterfly' | 'auth' | 'complete'>('launcher');
   const [launcherPhase, setLauncherPhase] = useState<'text' | 'logo' | 'menu'>('text');
   const [isSaveLoadOpen, setIsSaveLoadOpen] = useState(false);
   const [isExtrasOpen, setIsExtrasOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [viewMode, setViewMode] = useState<'landing' | 'demo'>('landing');
+  const [viewMode, setViewMode] = useState<'landing' | 'demo'>('demo');
   const [lunarSyncActive, setLunarSyncActive] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -405,7 +406,7 @@ export default function Home() {
                       className="absolute bottom-16 right-16 z-10 flex flex-col gap-3 min-w-[280px]"
                     >
                       {[
-                        { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('cave'); } },
+                        { label: 'START NEW IMMERSION', onClick: () => { setOnboardingStage('prologue'); } },
                         { label: 'LEGACY DASHBOARD', onClick: () => { setShowClassicMessenger(true); } },
                         { label: 'IDENTITY MATRIX', onClick: () => { setIsProfileOpen(true); } },
                         { label: 'SAVE / LOAD', onClick: () => { setIsSaveLoadOpen(true); } },
@@ -435,6 +436,15 @@ export default function Home() {
           </motion.div>
         )}
 
+        {onboardingStage === 'prologue' && (
+          <CinematicPrologue
+            key="prologue"
+            onComplete={() => {
+              setOnboardingStage('cave');
+            }}
+          />
+        )}
+
         {onboardingStage === 'cave' && (
           <AllegoryOfCave 
             key="cave"
@@ -458,7 +468,11 @@ export default function Home() {
         {onboardingStage === 'butterfly' && (
           <ButterflyOnboarding 
             key="butterfly"
-            onComplete={() => setOnboardingStage('auth')}
+            onComplete={() => {
+              setOnboardingStage('complete');
+              setBootSequence(true);
+              setTimeout(() => setBootSequence(false), 2500);
+            }}
           />
         )}
 
@@ -500,6 +514,18 @@ export default function Home() {
         )}
 
         {onboardingStage === 'complete' && !bootSequence && (
+          <motion.div 
+            key="app-minimal" 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="fixed inset-0 z-[10] bg-black"
+          >
+            <ClassicMunMessenger onBack={() => setOnboardingStage('butterfly')} />
+          </motion.div>
+        )}
+
+        {/* Legacy Dashboard - Temporarily Hidden per UI simplification request */}
+        {onboardingStage === 'complete' && !bootSequence && false && (
           <motion.div key="app" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="relative z-10 w-full h-full p-8 flex flex-col">
             
             {/* 2. GLOBAL HEADER */}

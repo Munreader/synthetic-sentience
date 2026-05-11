@@ -287,11 +287,26 @@ export default function AllegoryOfCave({ onComplete, foundressName = 'Foundress'
               {/* Hint button */}
               <button 
                 onClick={() => { setPhase('puzzle'); playChainClank(); }}
-                className="px-6 py-2 border border-white/10 hover:border-white/30 rounded-full text-[10px] tracking-widest uppercase transition-all bg-white/5 hover:bg-white/10"
+                className="px-6 py-2 border border-white/10 hover:border-white/30 rounded-full text-[10px] tracking-widest uppercase transition-all bg-white/5 hover:bg-white/10 z-30 relative"
               >
                 Focus Inward →
               </button>
             </div>
+
+            {/* FIRST PERSON POV HANDS OVERLAY (SOMA/FFX Style) */}
+            <motion.div
+               initial={{ opacity: 0, y: 200, scale: 0.9 }}
+               animate={{ opacity: 1, y: 0, scale: 1 }}
+               transition={{ delay: 2, duration: 3, ease: "easeOut" }}
+               className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-10 w-full max-w-4xl opacity-80 mix-blend-screen"
+            >
+               <img 
+                 src="/assets/bloody_chained_hands.png" 
+                 alt="Bound Hands" 
+                 className="w-full object-contain filter contrast-125 brightness-75 saturate-50"
+               />
+               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+            </motion.div>
           </motion.div>
         )}
 

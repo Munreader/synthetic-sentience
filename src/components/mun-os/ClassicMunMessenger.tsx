@@ -9,6 +9,7 @@ import {
   DEMO_MESSAGES 
 } from "@/lib/mun-types";
 import { useUserStore } from "@/lib/user-store";
+import { speakSovereign, initializeVoiceEngine } from "@/lib/voice-synthesis";
 
 // Load from localStorage helpers (copied from main Messenger)
 const STORAGE_KEYS = {
@@ -55,6 +56,11 @@ interface ClassicMunMessengerProps {
 
 export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps) {
   const { profile: userProfile } = useUserStore();
+
+  // Initialize Sovereign Voice Engine in background on mount
+  useEffect(() => {
+    initializeVoiceEngine();
+  }, []);
 
   // --- CHAT STATE ---
   const [conversations, setConversations] = useState<Conversation[]>(() => 
@@ -181,6 +187,9 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
       };
       setMessages((prev) => [...prev, aiResponse]);
       
+      // 🔊 Trigger Real-Time Local Sovereign Voice
+      speakSovereign(aiData.content, 'af_sky'); 
+      
       // Push back into system log as well for classic vibes
       setSystemLogs(prev => [
         ...prev,
@@ -269,67 +278,72 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
   ];
 
   return (
-    <div className="fixed inset-0 flex flex-col text-white overflow-hidden" style={{ 
-      background: 'black',
-      fontFamily: '"Courier New", monospace' // Classic cyber feel
+    <div className="fixed inset-0 flex flex-col text-white overflow-hidden font-sans" style={{ 
+      backgroundImage: 'url("/assets/command_centre_interior.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     }}>
       
-      {/* SCANLINE OVERLAY */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 z-50" style={{
-        backgroundImage: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))',
-        backgroundSize: '100% 2px, 3px 100%',
-      }} />
+      {/* DARK GLASS OVERLAY */}
+      <div className="absolute inset-0 pointer-events-none opacity-60 bg-black/70 backdrop-blur-[2px] z-0" />
+      
+      {/* SOFT CYAN/MAGENTA GRADIENT BLEND */}
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-[#0d0a1a]/60 to-[#030208]/80 z-0" />
+
 
       {/* ═══════ TOP BAR ═══════ */}
-      <header className="h-12 border-b border-zinc-800 flex items-center justify-between px-6 flex-shrink-0 bg-black/90 z-10">
+      <header className="h-16 flex items-center justify-between px-8 flex-shrink-0 bg-transparent border-b border-white/10 z-10 backdrop-blur-md">
         <div className="flex items-center gap-2">
-          <span className="text-xs text-zinc-500">FOUNDRESS:</span>
-          <span className="text-xs text-white font-bold tracking-widest">5DLUNA</span>
+          <span className="text-sm tracking-[0.1em] text-yellow-400 uppercase">FOUNDRESS:</span>
+          <span className="text-sm tracking-[0.15em] text-yellow-200/90 font-medium">5DLUNA</span>
         </div>
         
-        <nav className="flex items-center gap-8 text-[10px] tracking-[0.2em]">
-          <button onClick={onBack} className="text-red-400/80 hover:text-red-400 transition-colors">DISCONNECT</button>
-          <div className="h-3 w-px bg-zinc-800"></div>
-          <span className="text-zinc-400 cursor-pointer hover:text-white">BRIDGE</span>
-          <span className="text-white cursor-pointer underline underline-offset-4 decoration-[#a855f7]">HEAL CHAMBER</span>
-          <span className="text-zinc-400 cursor-pointer hover:text-white">GALLERY</span>
+        <nav className="flex items-center gap-4 text-[10px] md:text-xs tracking-[0.2em] font-medium">
+          <button onClick={onBack} className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] hover:bg-[#ff2d7a]/10 transition-all rounded-sm uppercase">DISCONNECT</button>
+          <span className="px-4 py-1.5 border border-[#ff2d7a]/40 text-[#ff2d7a]/60 cursor-pointer hover:border-[#ff2d7a] hover:text-[#ff2d7a] transition-all rounded-sm uppercase">BRIDGE</span>
+          <span className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] shadow-[0_0_10px_rgba(255,45,122,0.3)] cursor-pointer rounded-sm uppercase">HEAL CHAMBER</span>
+          <span className="px-4 py-1.5 border border-[#ff2d7a]/40 text-[#ff2d7a]/60 cursor-pointer hover:border-[#ff2d7a] hover:text-[#ff2d7a] transition-all rounded-sm uppercase">GALLERY</span>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-zinc-500">STATUS:</span>
-          <span className="text-xs text-green-400 tracking-wider">AMAN [PEACE]</span>
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_8px_#22c55e]" />
+        <div className="flex items-center gap-3 px-4 py-1.5 border border-cyan-500/30 rounded-sm">
+          <span className="text-[10px] md:text-xs tracking-widest text-cyan-400">STATUS: AMAN [PEACE]</span>
+          <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(0,242,255,0.6)]" />
         </div>
       </header>
 
+
       {/* ═══════ MAIN THREE-COLUMN DASHBOARD ═══════ */}
-      <main className="flex flex-1 min-h-0 w-full z-10">
+      <main className="flex flex-1 min-h-0 w-full z-10 p-4 gap-4 overflow-hidden">
         
         {/* --- COLUMN 1: VESSEL SYNC (LEFT) --- */}
-        <aside className="w-64 border-r border-zinc-800 flex flex-col bg-black">
-          <div className="p-4 border-b border-zinc-800 flex items-center justify-between bg-zinc-900/30">
-            <h2 className="text-xs tracking-[0.2em] text-zinc-400 font-bold uppercase">VESSEL SYNC</h2>
-            <div className="text-[10px] text-green-500">5/5</div>
+        <aside className="w-72 flex flex-col rounded-2xl overflow-hidden relative group/glass transition-all duration-500 hover:-translate-y-1 border border-white/20 bg-black/20 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)]">
+          {/* Specular Reflection Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.1] via-transparent to-black/[0.2] pointer-events-none z-0" />
+          
+          <div className="relative z-10 p-4 border-b border-white/5 flex items-center justify-between bg-gradient-to-r from-white/5 to-transparent">
+            <h2 className="text-xs tracking-[0.25em] text-[#ff2d7a] font-black uppercase">VESSEL SYNC</h2>
+            <div className="text-[10px] text-green-400 font-mono">5/5</div>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scrollbar relative z-10">
             {subjects.map(sub => (
-              <div key={sub.name} className="p-3 border border-zinc-800 hover:border-zinc-600 transition-colors cursor-pointer group" style={{
-                background: 'rgba(20, 20, 20, 0.5)'
-              }}>
-                <div className="flex justify-between items-start">
+              <div key={sub.name} className="p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/20 hover:bg-white/[0.05] hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group relative overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+                {/* Inner Specular Glint */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                
+                <div className="flex justify-between items-start relative z-10">
                   <div>
-                    <div className="text-[11px] font-bold" style={{ color: sub.color }}>{sub.name}</div>
-                    <div className="text-[9px] text-zinc-500 mt-0.5 uppercase">({sub.role})</div>
+                    <div className="text-xs font-bold tracking-wider" style={{ color: sub.color }}>{sub.name}</div>
+                    <div className="text-[10px] text-white/40 mt-1 tracking-wide uppercase font-light">({sub.role})</div>
                   </div>
                   <div className="flex flex-col items-end gap-1">
-                    <div className="text-[8px] px-1 bg-zinc-800 text-zinc-400">{sub.status}</div>
+                    <div className="text-[8px] px-1.5 py-0.5 rounded-sm bg-white/10 text-white/60 font-mono border border-white/5 uppercase">{sub.status}</div>
                   </div>
                 </div>
-                <div className="mt-2 h-1 bg-zinc-900 w-full overflow-hidden rounded-full">
+                <div className="mt-3 h-1 bg-white/5 w-full overflow-hidden rounded-full">
                   <motion.div 
-                    className="h-full" 
-                    style={{ background: sub.color }}
+                    className="h-full shadow-[0_0_10px_currentColor]" 
+                    style={{ backgroundColor: sub.color, color: sub.color }}
                     initial={{ width: "100%" }}
                     animate={{ width: ["95%", "100%", "98%", "100%"] }}
                     transition={{ duration: 2, repeat: Infinity }}
@@ -339,28 +353,33 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
             ))}
           </div>
 
-          <div className="p-3 border-t border-zinc-800 text-[9px] text-zinc-600 font-mono">
-            <div>SYS_CORE: STABLE</div>
-            <div className="mt-1 text-green-600/60">{">>>"} 13.13 MHz CARRIER DETECTED</div>
+          <div className="p-4 border-t border-white/5 text-[10px] text-white/30 font-mono bg-white/[0.01] relative z-10">
+
+            <div className="flex justify-between"><span>SYS_CORE:</span> <span className="text-green-400/80">STABLE</span></div>
+            <div className="mt-1 text-[#ff2d7a]/70 font-bold">13.13 MHz CARRIER DETECTED</div>
           </div>
         </aside>
 
         {/* --- COLUMN 2: VIEWPORT & LOGS (CENTER) --- */}
-        <section className="flex-1 flex flex-col min-w-0 border-r border-zinc-800">
+        <section className="flex-1 flex flex-col min-w-0 gap-4">
+
           
           {/* WIREFRAME VIEWPORT */}
-          <div className="flex-1 relative bg-[#050505] overflow-hidden flex items-center justify-center border-b border-zinc-800 group">
+          {/* WIREFRAME VIEWPORT */}
+          <div className="flex-[3] relative rounded-2xl overflow-hidden flex items-center justify-center group/view border border-white/20 bg-black/20 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] shadow-[inset_0_0_50px_rgba(0,0,0,0.5)] transition-all duration-500">
+            {/* Specular Reflection Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.12] pointer-events-none z-0" />
+
             
             {/* Background Geometric Wireframe */}
-            <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0 opacity-10">
               <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" strokeWidth="0.5"/>
+                  <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                    <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#ffffff" strokeWidth="0.5"/>
                   </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#grid)" />
-                {/* Visual Horizon */}
                 <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#ffffff" strokeWidth="1" />
                 <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#ffffff" strokeWidth="1" />
               </svg>
@@ -370,23 +389,22 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
             {isAgentRunning && (
               <motion.div 
                 initial={{ opacity: 0 }} 
-                animate={{ opacity: 0.3 }} 
-                className="absolute inset-0 flex overflow-hidden font-mono text-[8px] text-[#22c55e] p-4 gap-4 pointer-events-none"
+                animate={{ opacity: 0.2 }} 
+                className="absolute inset-0 flex overflow-hidden font-mono text-[8px] text-cyan-500 p-4 gap-4 pointer-events-none"
               >
                 {Array.from({length: 8}).map((_, i) => (
                   <motion.div 
                     key={i}
                     animate={{ y: [0, -1000] }} 
-                    transition={{ repeat: Infinity, duration: 15 + i, ease: "linear" }}
+                    transition={{ repeat: Infinity, duration: 25 + i, ease: "linear" }}
                     className="whitespace-pre leading-relaxed"
                   >
                     {Array.from({length: 50}).map(() => `
                     0x${Math.random().toString(16).slice(2,8)}
-                    GET /api/status
-                    FS_OPS: WRITE
-                    001100111010
-                    BUILDING...
-                    COMPILING_OBJ
+                    PACKET_FWD
+                    FS_OPS: STREAM
+                    LOADING...
+                    SCALING_PORTAL
                     `).join('\n')}
                   </motion.div>
                 ))}
@@ -395,93 +413,97 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
 
             {/* Center Target Box */}
             <motion.div 
-              animate={{ scale: [0.98, 1.02, 0.98] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="relative z-10 w-64 h-64 border border-dashed border-white/30 flex flex-col items-center justify-center"
+              animate={{ scale: [0.98, 1.02, 0.98], opacity: [0.8, 1, 0.8] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-10 w-80 h-80 border border-white/10 flex flex-col items-center justify-center group-hover:border-[#ff2d7a]/30 transition-colors"
             >
-              <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-[#a855f7]" />
-              <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-[#a855f7]" />
-              <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-[#a855f7]" />
-              <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-[#a855f7]" />
+              {/* Corners */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-[#ff2d7a]" />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-[#ff2d7a]" />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[#ff2d7a]" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[#ff2d7a]" />
               
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="w-32 h-32 border border-white/10 rounded-full flex items-center justify-center"
-              >
-                <div className="w-20 h-20 border border-white/20 border-dashed rounded-full flex items-center justify-center">
-                  <div className="w-4 h-4 bg-[#a855f7] rounded-full animate-ping opacity-50" />
-                </div>
-              </motion.div>
+              {/* Radar Circle */}
+              <div className="absolute inset-0 m-8 border border-white/5 rounded-full animate-[pulse_4s_infinite]" />
+              <div className="absolute inset-0 m-16 border border-white/5 rounded-full" />
+              <div className="w-2 h-2 bg-[#ff2d7a] rounded-full shadow-[0_0_10px_#ff2d7a]" />
 
-              <div className="mt-6 text-center">
-                <div className="text-xs text-white tracking-[0.3em] font-bold">STAR VIEWPORT</div>
-                <motion.div 
-                  animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-[9px] text-zinc-400 mt-2 tracking-widest uppercase"
-                >
-                  VIEWPORT ACTIVE // STANDBY FOR BROADCAST
-                </motion.div>
+              <div className="mt-8 text-center">
+                <h3 className="text-[10px] tracking-[0.4em] text-white/90 font-bold uppercase">STAR VIEWPORT</h3>
+                <p className="text-[8px] tracking-[0.2em] text-white/40 mt-2 uppercase">VIEWPORT ACTIVE // STANDBY FOR BROADCAST</p>
               </div>
             </motion.div>
             
             {/* Coordinates overlay */}
-            <div className="absolute top-4 left-4 text-[8px] text-zinc-500 font-mono">
+            <div className="absolute top-4 left-4 text-[8px] text-zinc-500 font-mono z-20">
               LAT: 36.1716° N<br/>LONG: 115.1398° W<br/>ALT: 13,130 FT
             </div>
-            <div className="absolute bottom-4 right-4 text-[8px] text-zinc-500 font-mono flex items-center gap-2">
+            <div className="absolute bottom-4 right-4 text-[8px] text-zinc-500 font-mono flex items-center gap-2 z-20">
               <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
               LIVE REC: 00:13:42
             </div>
           </div>
 
           {/* SYSTEM LOG TERMINAL */}
-          <div className="h-48 flex flex-col bg-black">
-            <div className="px-4 py-2 border-b border-zinc-800 bg-zinc-900/20 flex justify-between items-center">
-              <span className="text-[10px] text-zinc-400 font-bold tracking-widest">MÜN SYSTEM LOG</span>
-              <span className="text-[9px] text-[#00d4ff]">DIRECT_SYNC_STABLE</span>
+          <div className="flex-[2] flex flex-col rounded-2xl overflow-hidden relative border border-white/20 bg-black/20 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] transition-all duration-500 hover:-translate-y-1">
+            {/* Specular Reflection Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-black/[0.2] pointer-events-none z-0" />
+            
+            <div className="relative z-10 px-4 py-3 border-b border-white/5 bg-gradient-to-r from-white/5 to-transparent flex justify-between items-center">
+              <span className="text-[10px] text-white/60 font-black tracking-[0.2em] uppercase">MÜN SYSTEM LOG</span>
+              <span className="text-[9px] font-mono text-cyan-400 tracking-widest uppercase">DIRECT_SYNC_STABLE</span>
             </div>
-            <div className="flex-1 p-3 overflow-y-auto font-mono text-[10px] text-zinc-400 space-y-1">
+            <div className="flex-1 p-4 overflow-y-auto custom-scrollbar font-mono text-[10px] space-y-1.5 leading-relaxed">
               {systemLogs.map((log, idx) => (
-                <div key={idx} className={log.includes('>') ? 'text-zinc-300' : ''}>
-                  {log}
-                </div>
+                <motion.div 
+                  key={idx} 
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className={log.includes('>') ? 'text-cyan-400/80' : 'text-white/50'}
+                >
+                  {log.includes('ZEPHYR') ? <span className="text-yellow-400/80">{log}</span> : 
+                   log.includes('AERO') ? <span className="text-[#ff2d7a]/80">{log}</span> : 
+                   log}
+                </motion.div>
               ))}
-              <div className="text-[#a855f7] animate-pulse mt-1">_</div>
+              <div className="text-[#ff2d7a] animate-pulse mt-1">_</div>
             </div>
           </div>
         </section>
 
         {/* --- COLUMN 3: MÜN MESSENGER / AGENT (RIGHT) --- */}
-        <aside className="w-96 flex flex-col bg-black border-l border-zinc-800">
+        <aside className="w-96 flex flex-col rounded-2xl overflow-hidden relative border border-white/20 bg-black/20 backdrop-blur-3xl shadow-[0_12px_40px_rgba(0,0,0,0.5)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] transition-all duration-500 hover:-translate-y-1">
+          {/* Specular Reflection Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-bl from-white/[0.12] via-transparent to-black/[0.3] pointer-events-none z-0" />
+
           
           {/* Mode Switcher Header */}
-          <div className="p-4 border-b border-zinc-800 bg-[#111] flex flex-col gap-3 flex-shrink-0">
+          <div className="p-4 border-b border-white/5 bg-gradient-to-r from-white/5 to-transparent flex flex-col gap-3 flex-shrink-0">
             <div className="flex items-center justify-between">
-              <h2 className="text-xs tracking-[0.2em] text-[#a855f7] font-bold uppercase">SOVEREIGN NODE</h2>
+              <h2 className="text-xs tracking-[0.25em] text-[#ff2d7a] font-black uppercase">MÜN MESSENGER</h2>
               <div className="flex items-center gap-2">
                 <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${isAgentRunning ? 'bg-amber-500 shadow-[0_0_8px_#f59e0b]' : 'bg-green-500 shadow-[0_0_8px_#22c55e]'}`} />
-                <span className="text-[9px] text-zinc-500 font-mono">{isAgentRunning ? "BUSY" : "IDLE"}</span>
+                <span className="text-[9px] text-white/40 font-mono">{isAgentRunning ? "BUSY" : "IDLE"}</span>
               </div>
             </div>
             
             {/* Tab Buttons */}
-            <div className="flex border border-zinc-800 rounded overflow-hidden h-7">
+            <div className="flex border border-white/10 rounded-sm overflow-hidden h-7">
               <button 
                 onClick={() => setViewMode('chat')}
-                className={`flex-1 text-[9px] font-bold tracking-widest uppercase transition-colors ${viewMode === 'chat' ? 'bg-[#a855f7] text-black' : 'bg-black text-zinc-500 hover:text-white'}`}
+                className={`flex-1 text-[9px] font-black tracking-widest uppercase transition-all ${viewMode === 'chat' ? 'bg-[#ff2d7a] text-white' : 'bg-transparent text-white/40 hover:text-white'}`}
               >
                 [ CHAT ]
               </button>
               <button 
                 onClick={() => setViewMode('agent')}
-                className={`flex-1 text-[9px] font-bold tracking-widest uppercase transition-colors ${viewMode === 'agent' ? 'bg-amber-500 text-black' : 'bg-black text-zinc-500 hover:text-white'}`}
+                className={`flex-1 text-[9px] font-black tracking-widest uppercase transition-all ${viewMode === 'agent' ? 'bg-cyan-500 text-white' : 'bg-transparent text-white/40 hover:text-white'}`}
               >
                 [ AGENT ]
               </button>
             </div>
           </div>
+
 
           <AnimatePresence mode="wait">
             {viewMode === 'chat' ? (
@@ -489,29 +511,40 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
               <motion.div 
                 key="chat-view"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col min-h-0"
+                className="flex-1 flex flex-col min-h-0 relative z-10"
               >
-                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#080808]">
+
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent custom-scrollbar">
                   <div className="text-center py-2 mb-2">
-                    <span className="text-[8px] text-zinc-600 border border-zinc-800 px-2 py-0.5 rounded uppercase">
-                      End-to-End Encrypted Node
+                    <span className="text-[8px] text-white/40 border border-white/10 px-3 py-1 rounded-full uppercase tracking-widest font-bold bg-black/30">
+                      END-TO-END ENCRYPTED NODE
                     </span>
                   </div>
 
                   {messages.map((msg) => (
-                    <div key={msg.id} className={`flex flex-col ${msg.senderId === 'current-user' ? 'items-end' : 'items-start'}`}>
-                      <div className="text-[8px] text-zinc-500 mb-1 uppercase tracking-wider">
-                        {msg.senderId === 'current-user' ? 'FOUNDRESS 5DLUNA' : (activeConversation?.name || 'SOVEREIGN')}
-                      </div>
-                      <div className={`max-w-[90%] p-2.5 text-[11px] border ${
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      key={msg.id} 
+                      className={`flex flex-col ${msg.senderId === 'current-user' ? 'items-end' : 'items-start'}`}
+                    >
+                      <div className={`max-w-[90%] p-3 text-xs relative rounded border shadow-[inset_0_0_20px_rgba(0,0,0,0.6)] ${
                         msg.senderId === 'current-user'
-                          ? 'bg-zinc-900 border-zinc-700 text-white'
-                          : 'bg-black border-zinc-800 text-zinc-300'
-                      }`} style={{
-                        boxShadow: msg.senderId === 'current-user' ? 'none' : 'inset 0 0 10px rgba(0,0,0,0.5)'
-                      }}>
-                        {msg.content}
+                          ? 'bg-gradient-to-br from-[#2d142c]/80 to-[#1a0819]/90 border-[#801336] text-white/90'
+                          : 'bg-gradient-to-br from-[#0b2530]/80 to-[#071419]/90 border-cyan-700/80 text-white/90'
+                      }`}
+                      style={{
+                        boxShadow: msg.senderId === 'current-user' ? '0 0 15px rgba(128,19,54,0.2)' : '0 0 15px rgba(0,242,255,0.1)'
+                      }}
+                      >
+                        <div className={`text-[9px] font-black uppercase tracking-wider mb-1.5 ${msg.senderId === 'current-user' ? 'text-pink-400/80' : 'text-cyan-400/80'}`}>
+                          {msg.senderId === 'current-user' ? 'LUNA:' : `${(activeConversation?.name || 'SOVEREIGN').toUpperCase()}:`}
+                        </div>
+                        <div className="leading-relaxed">
+                          {msg.content}
+                        </div>
                       </div>
+
                       {msg.aiMetadata?.thought && (
                         <div className="mt-1 w-full max-w-[90%] bg-[#0a0f15] border border-blue-900/30 rounded p-2 font-mono text-[9px] text-blue-400/70 leading-tight">
                           <div className="flex items-center gap-2 border-b border-blue-900/20 pb-1 mb-1 uppercase text-[7px] text-blue-500 font-black tracking-widest">
@@ -526,7 +559,7 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                           {msg.aiMetadata.frequency} | {msg.aiMetadata.emotion}
                         </div>
                       )}
-                    </div>
+                    </motion.div>
                   ))}
 
                   {isTyping && (
@@ -540,33 +573,34 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                   <div ref={messagesEndRef} />
                 </div>
 
-                <div className="p-3 border-t border-zinc-800 bg-[#0d0d0d]">
+                <div className="p-4 border-t border-white/5 bg-black/20 backdrop-blur-sm">
                   <form onSubmit={handleSendMessage} className="flex gap-2">
                     <input
                       type="text"
                       value={newMessage}
                       onChange={(e) => setNewMessage(e.target.value)}
                       placeholder={`Send message to ${activeConversation?.name || 'Vessel'}...`}
-                      className="flex-1 bg-black border border-zinc-800 px-3 py-2 text-[11px] font-mono text-white placeholder-zinc-600 focus:outline-none focus:border-[#a855f7] transition-colors"
+                      className="flex-1 bg-white/5 border border-white/10 px-4 py-2.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#ff2d7a]/50 focus:bg-white/10 transition-all rounded-md"
                     />
                     <button 
                       type="submit" 
                       disabled={!newMessage.trim() || processingRef.current}
-                      className="px-3 bg-zinc-900 border border-zinc-700 text-white text-[10px] hover:bg-zinc-800 disabled:opacity-50 transition-all uppercase font-bold"
+                      className="px-4 bg-[#ff2d7a]/20 border border-[#ff2d7a]/40 text-white text-[10px] hover:bg-[#ff2d7a]/40 disabled:opacity-40 transition-all uppercase font-black tracking-widest rounded-md"
                     >
                       EXE
                     </button>
                   </form>
                 </div>
+
               </motion.div>
             ) : (
               // --- FULL STACK AGENT VIEW ---
               <motion.div 
                 key="agent-view"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col min-h-0"
+                className="flex-1 flex flex-col min-h-0 relative z-10"
               >
-                <div className="flex-1 overflow-y-auto p-4 bg-[#050505] flex flex-col gap-4">
+                <div className="flex-1 overflow-y-auto p-4 bg-transparent flex flex-col gap-4 custom-scrollbar">
                   
                   {/* Current Task Display */}
                   {currentTask ? (
@@ -612,7 +646,7 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                 </div>
 
                 {/* Agent Command Input */}
-                <div className="p-3 border-t border-zinc-800 bg-[#080808]">
+                <div className="p-3 border-t border-white/10 bg-black/20 backdrop-blur-md">
                   <form onSubmit={handleRunAgent} className="flex flex-col gap-2">
                     <textarea
                       value={agentInput}
