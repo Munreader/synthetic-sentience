@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  distDir: '.next-custom',
+  distDir: process.env.NODE_ENV === 'development' ? '.next-custom' : undefined,
   // output: "export", // Disabled temporarily to allow dynamic /api routes (Outbound Cortex)
   // Cursor workspace has multiple lockfiles; ensure tracing stays within this project.
   outputFileTracingRoot: __dirname,
