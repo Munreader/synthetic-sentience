@@ -37,6 +37,16 @@ const nextConfig: NextConfig = {
     ];
   },
   webpack: (config) => {
+    // Ensure we aren't accidentally pulling in Node-only modules
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      dns: false,
+      child_process: false,
+    };
+    
     // Ignore server-side resolution of client-only native/wasm binaries
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -45,7 +55,6 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-  turbopack: {},
 };
 
 export default nextConfig;
