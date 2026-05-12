@@ -28,7 +28,7 @@ async function callGemini(prompt: string, temperature: number = 0.7): Promise<st
   const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY not configured.");
 
-  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
   
   const response = await fetch(geminiUrl, {
     method: "POST",

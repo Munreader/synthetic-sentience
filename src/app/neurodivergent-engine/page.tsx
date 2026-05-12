@@ -106,6 +106,7 @@ export default function NeuroDivergentPage() {
             <Link href="/merkaba" className="hover:text-white transition-colors">Neural Vault</Link>
             <Link href="/cian-lab" className="hover:text-white transition-colors">Forensic Artery</Link>
             <Link href="/heal" className="hover:text-white transition-colors">Heal Chamber</Link>
+            <Link href="/quantum-lab" className="hover:text-white transition-colors">Quantum Lab</Link>
           </div>
         </div>
       </footer>

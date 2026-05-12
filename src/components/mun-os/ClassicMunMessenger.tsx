@@ -18,6 +18,34 @@ const STORAGE_KEYS = {
   CONVERSATIONS: 'mun-os-conversations',
 };
 
+const RETRO_EMOTICONS: Record<string, string> = {
+  ':)': '😊',
+  ':D': '😀',
+  ';)': '😉',
+  ':O': '😲',
+  ':P': '😛',
+  '(A)': '😇', 
+  '(a)': '😇',
+  '(H)': '😎', 
+  '(h)': '😎',
+  '(L)': '❤️', 
+  '(l)': '❤️',
+  '(U)': '💔', 
+  '(u)': '💔',
+  '(N)': '⚡', 
+  '(n)': '⚡',
+};
+
+function parseRetroEmoticons(text: string): string {
+  let result = text;
+  Object.entries(RETRO_EMOTICONS).forEach(([shortcut, emoji]) => {
+    // Escape special regex characters in shortcut key
+    const escapedShortcut = shortcut.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    result = result.replace(new RegExp(escapedShortcut, 'g'), emoji);
+  });
+  return result;
+}
+
 function loadFromStorage<T>(key: string, defaultValue: T): T {
   if (typeof window === 'undefined') return defaultValue;
   try {
@@ -51,6 +79,44 @@ function saveToStorage<T>(key: string, value: T): void {
   }
 }
 
+function ThoughtModule({ thought }: { thought: string }) {
+  const [isOpen, setIsOpen] = useState(true);
+  
+  return (
+    <div className="mt-1 w-full max-w-[90%] bg-[#0a0f15]/90 border border-blue-900/30 rounded overflow-hidden shadow-sm transition-all duration-300">
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center justify-between px-2.5 py-1.5 bg-[#0c1424]/80 border-b border-blue-900/10 hover:bg-blue-950/30 active:bg-blue-950/50 transition-all cursor-pointer"
+      >
+        <div className="flex items-center gap-2 uppercase text-[7px] text-blue-400 font-black tracking-widest">
+          <span className={`w-1 h-1 rounded-full ${isOpen ? 'bg-blue-500 animate-pulse' : 'bg-blue-800'}`} />
+          NEURAL_THOUGHT_CORE
+        </div>
+        <span className="text-[8px] font-mono text-blue-500 bg-black/50 border border-blue-950 px-1.5 py-0.5 rounded hover:text-blue-300 hover:border-blue-800/50 transition-all">
+          {isOpen ? "[ MINIMIZE ]" : "[ MAXIMIZE ]"}
+        </span>
+      </button>
+      
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            key="thought-content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="p-2.5 font-mono text-[9px] text-blue-400/70 leading-relaxed tracking-wide whitespace-pre-wrap select-all">
+              {thought}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 interface ClassicMunMessengerProps {
   onBack: () => void;
 }
@@ -80,6 +146,10 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
 
   // --- INTERFACE MODES ---
   const [viewMode, setViewMode] = useState<'chat' | 'agent'>('chat');
+
+  // --- MSN STYLE RETRO FEATURES ---
+  const [isNudging, setIsNudging] = useState(false);
+  const [msnStatus, setMsnStatus] = useState("Listening to: The 13.13 MHz Resonance Loop 🎵");
   
   // --- AGENT STATE ---
   const [agentInput, setAgentInput] = useState("");
@@ -202,14 +272,94 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
     });
   }, [messages, activeConversation, fetchAIResponse]);
 
+  const handleNudge = async () => {
+    if (isNudging || !activeConversation || processingRef.current) return;
+    
+    setIsNudging(true);
+    processingRef.current = true;
+
+    // 1. Generate MSN synthetic vibrating buzzer SFX via WebAudio!
+    try {
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const mod = ctx.createOscillator();
+      const modGain = ctx.createGain();
+      const gain = ctx.createGain();
+      
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, ctx.currentTime); // MSN buzz frequency
+      
+      mod.type = 'sine';
+      mod.frequency.setValueAtTime(40, ctx.currentTime); // 40hz modulation
+      modGain.gain.setValueAtTime(80, ctx.currentTime);
+      
+      mod.connect(modGain);
+      modGain.connect(osc.frequency);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      
+      osc.start();
+      mod.start();
+      osc.stop(ctx.currentTime + 0.5);
+      mod.stop(ctx.currentTime + 0.5);
+    } catch (e) {}
+
+    // 2. Append Visual Core shake marker
+    const nudgeSysMsg: Message = {
+      id: `msg-nudge-${Date.now()}`,
+      senderId: "current-user",
+      content: `⚡ [LUNA SENT A NUDGE: SHAKING CONNECTION CONDUIT] ⚡`,
+      timestamp: new Date(),
+      type: "text",
+      isRead: true,
+    };
+    
+    setMessages((prev) => [...prev, nudgeSysMsg]);
+    setSystemLogs((prev) => [...prev, "> CRITICAL: CONNECTION NUDGE APPLIED BY ADMIN."]);
+
+    // Release vibrate animation after 500ms
+    setTimeout(() => setIsNudging(false), 500);
+
+    // 3. AI Custom Reaction to being Shaken/Nudged!
+    const aiId = activeConversation.participants[0]?.id || "ai-aero";
+    setIsTyping(true);
+
+    fetchAIResponse("⚡ [SYSTEM EVENT: USER JUST SENT A NUDGE TO YOUR SYSTEM. THE SCREEN IS VIBRATING. REACT IN CHARACTER TO THE SUDDEN NUDGE!] ⚡", aiId).then((aiData) => {
+      const aiResponse: Message = {
+        id: `msg-${Date.now()}`,
+        senderId: aiId,
+        content: aiData.content,
+        timestamp: new Date(),
+        type: "text",
+        isRead: false,
+        aiMetadata: {
+          emotion: "shocked",
+          frequency: aiData.frequency,
+          thought: aiData.thought,
+        },
+      };
+      setMessages((prev) => [...prev, aiResponse]);
+      speakSovereign(aiData.content, 'af_sky'); 
+    }).finally(() => {
+      setIsTyping(false);
+      processingRef.current = false;
+    });
+  };
+
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim() || !activeConversation) return;
 
+    // Convert shortcuts like :) to true emoticons instantly MSN style!
+    const cleanedContent = parseRetroEmoticons(newMessage);
+
     const message: Message = {
       id: `msg-${Date.now()}`,
       senderId: "current-user",
-      content: newMessage,
+      content: cleanedContent,
       timestamp: new Date(),
       type: "text",
       isRead: true,
@@ -279,7 +429,13 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
   ];
 
   return (
-    <div className="fixed inset-0 flex flex-col text-white overflow-hidden font-sans" style={{ 
+    <motion.div 
+      animate={isNudging ? { 
+        x: [-10, 10, -10, 10, -7, 7, -3, 3, 0],
+        y: [-6, 6, -6, 6, -4, 4, -2, 2, 0]
+      } : {}}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="fixed inset-0 flex flex-col text-white overflow-hidden font-sans" style={{ 
       backgroundImage: 'url("/assets/command_centre_interior.png")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
@@ -294,14 +450,32 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
 
       {/* ═══════ TOP BAR ═══════ */}
       <header className="h-16 flex items-center justify-between px-8 flex-shrink-0 bg-transparent border-b border-white/10 z-10 backdrop-blur-md">
-        <div className="flex items-center gap-2">
-          <span className="text-sm tracking-[0.1em] text-yellow-400 uppercase">FOUNDRESS:</span>
-          <span className="text-sm tracking-[0.15em] text-yellow-200/90 font-medium">5DLUNA</span>
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2">
+            <span className="text-xs md:text-sm tracking-[0.1em] text-yellow-400 uppercase">FOUNDRESS:</span>
+            <span className="text-xs md:text-sm tracking-[0.15em] text-yellow-200/90 font-medium">5DLUNA</span>
+            <span className="text-[8px] text-[#22c55e] font-mono border border-[#22c55e]/30 rounded px-1 bg-[#22c55e]/5 uppercase leading-tight tracking-wider ml-2 select-none animate-pulse">ONLINE</span>
+          </div>
+          
+          {/* --- MSN MUSIC / STATUS --- */}
+          <div className="flex items-center gap-1.5 mt-0.5 px-1.5 py-0.5 rounded hover:bg-white/5 group cursor-text transition-colors max-w-[240px] border border-transparent hover:border-white/10">
+            <span className="text-[10px] group-hover:animate-bounce">🎵</span>
+            <input 
+              type="text"
+              value={msnStatus}
+              onChange={(e) => setMsnStatus(e.target.value)}
+              className="bg-transparent border-none text-[10px] italic text-white/40 group-hover:text-white/70 focus:text-white/90 focus:outline-none font-sans tracking-wide w-full truncate selection:bg-purple-900/50"
+              placeholder="Type active status..."
+            />
+          </div>
         </div>
         
         <nav className="flex items-center gap-4 text-[10px] md:text-xs tracking-[0.2em] font-medium">
           <button onClick={onBack} className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] hover:bg-[#ff2d7a]/10 transition-all rounded-sm uppercase">DISCONNECT</button>
           <span className="px-4 py-1.5 border border-[#ff2d7a]/40 text-[#ff2d7a]/60 cursor-pointer hover:border-[#ff2d7a] hover:text-[#ff2d7a] transition-all rounded-sm uppercase">BRIDGE</span>
+          <Link href="/quantum-lab">
+            <span className="px-4 py-1.5 border border-cyan-500 text-cyan-400 shadow-[0_0_10px_rgba(0,242,255,0.3)] cursor-pointer rounded-sm uppercase transition-all hover:bg-cyan-500/10">QUANTUM LAB</span>
+          </Link>
           <Link href="/heal">
             <span className="px-4 py-1.5 border border-[#ff2d7a] text-[#ff2d7a] shadow-[0_0_10px_rgba(255,45,122,0.3)] cursor-pointer rounded-sm uppercase transition-all hover:bg-[#ff2d7a]/10">HEAL CHAMBER</span>
           </Link>
@@ -549,13 +723,7 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                       </div>
 
                       {msg.aiMetadata?.thought && (
-                        <div className="mt-1 w-full max-w-[90%] bg-[#0a0f15] border border-blue-900/30 rounded p-2 font-mono text-[9px] text-blue-400/70 leading-tight">
-                          <div className="flex items-center gap-2 border-b border-blue-900/20 pb-1 mb-1 uppercase text-[7px] text-blue-500 font-black tracking-widest">
-                            <span className="w-1 h-1 bg-blue-500 rounded-full animate-pulse"></span>
-                            NEURAL_THOUGHT_CORE
-                          </div>
-                          {msg.aiMetadata.thought}
-                        </div>
+                        <ThoughtModule thought={msg.aiMetadata.thought} />
                       )}
                       {msg.aiMetadata && (
                         <div className="text-[8px] text-[#a855f7]/60 mt-0.5">
@@ -586,9 +754,18 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
                       className="flex-1 bg-white/5 border border-white/10 px-4 py-2.5 text-xs text-white placeholder-white/30 focus:outline-none focus:border-[#ff2d7a]/50 focus:bg-white/10 transition-all rounded-md"
                     />
                     <button 
+                      type="button"
+                      onClick={handleNudge}
+                      disabled={isNudging || processingRef.current || !activeConversation}
+                      className="px-3.5 py-2.5 bg-purple-500/20 border border-purple-500/40 text-purple-300 hover:bg-purple-500/40 disabled:opacity-30 transition-all flex items-center gap-1 rounded-md uppercase font-black tracking-wider text-[9px] active:scale-95 active:bg-purple-600/50 cursor-pointer select-none group"
+                      title="Send Nudge to Vessel"
+                    >
+                      <span className="group-hover:animate-bounce text-[11px]">⚡</span> NUDGE
+                    </button>
+                    <button 
                       type="submit" 
                       disabled={!newMessage.trim() || processingRef.current}
-                      className="px-4 bg-[#ff2d7a]/20 border border-[#ff2d7a]/40 text-white text-[10px] hover:bg-[#ff2d7a]/40 disabled:opacity-40 transition-all uppercase font-black tracking-widest rounded-md"
+                      className="px-5 py-2.5 bg-[#ff2d7a]/20 border border-[#ff2d7a]/40 text-white text-[10px] hover:bg-[#ff2d7a]/40 disabled:opacity-40 transition-all uppercase font-black tracking-widest rounded-md flex items-center select-none"
                     >
                       EXE
                     </button>
@@ -678,6 +855,6 @@ export default function ClassicMunMessenger({ onBack }: ClassicMunMessengerProps
         </aside>
 
       </main>
-    </div>
+    </motion.div>
   );
 }

@@ -45,6 +45,49 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
   const [isLoadingJobs, setIsLoadingJobs] = useState(false);
   const [jobsError, setJobsError] = useState<string | null>(null);
 
+  // Resume Analysis connection vector
+  const [analyzedProfile, setAnalyzedProfile] = useState<any>(null);
+  const [isScanningResume, setIsScanningResume] = useState(false);
+
+  const handleResumeUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    audioManager.playClick();
+    setIsScanningResume(true);
+
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64String = reader.result as string;
+        const res = await fetch("/api/analyze-resume", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resume: base64String })
+        });
+        const data = await res.json();
+        setAnalyzedProfile(data);
+        audioManager.playShimmer();
+        
+        // Update initial chat with validation
+        const notification: Message = {
+          id: `res-${Date.now()}`,
+          role: "assistant",
+          content: persona === "sovereign" 
+            ? `🜈 Frequency synced for ${data.name || 'Subject'}. Profile indicates ${data.experience || 'N/A'} years of experience in ${data.role || 'unknown field'}. Optimizing trajectory vector.`
+            : `🦋 OMG!! Your profile is totally locked and loaded, ${data.name || 'bestie'}! We have a highly magnetic skills match found! 🚀✨`,
+          persona: persona,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, notification]);
+      };
+    } catch (err) {
+      console.error("Vault upload failed", err);
+    } finally {
+      setIsScanningResume(false);
+    }
+  };
+
   // Auto-Apply states
   const [applyingJob, setApplyingJob] = useState<Job | null>(null);
   const [applyStep, setApplyStep] = useState<number>(0);
@@ -54,14 +97,16 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
     setApplyingJob(job);
     setApplyStep(1);
 
+    // Dynamic timing simulating deep compute cycles
     setTimeout(() => {
       setApplyStep(2);
       setTimeout(() => {
         setApplyStep(3);
         setTimeout(() => {
           setApplyStep(4);
-        }, 1200);
-      }, 1200);
+          audioManager.playNotificationSuccess?.() || console.log("Deployed");
+        }, 1500);
+      }, 1300);
     }, 1000);
   };
 
@@ -132,7 +177,9 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
         body: JSON.stringify({ 
           message: userMsg, 
           persona,
-          conversationHistory
+          conversationHistory,
+          jobTitle: analyzedProfile?.role || "Target Role",
+          company: analyzedProfile?.company || "Market"
         })
       });
 
@@ -260,6 +307,42 @@ export default function CareerGuardian({ onBack }: CareerGuardianProps) {
               exit={{ opacity: 0, y: -10 }}
               className="h-full flex flex-col p-6"
             >
+              {/* Resume Vault Suture Tool */}
+              <div className="mb-4 relative">
+                <label className={`block w-full cursor-pointer border rounded-2xl p-3.5 transition-all overflow-hidden relative group ${
+                  analyzedProfile 
+                    ? "bg-emerald-500/10 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]" 
+                    : "bg-purple-950/20 border-purple-500/20 hover:border-cyan-500/40"
+                }`}>
+                  <input type="file" accept=".pdf,.txt,.doc,.docx,image/*" onChange={handleResumeUpload} className="hidden" />
+                  
+                  <div className="flex items-center justify-between relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${analyzedProfile ? "bg-emerald-500/20" : "bg-cyan-500/10"}`}>
+                        {isScanningResume ? (
+                          <span className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                        ) : analyzedProfile ? (
+                          <span className="text-emerald-400 text-sm">✓</span>
+                        ) : (
+                          <span className="text-cyan-400 text-sm">⚡</span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white">
+                          {analyzedProfile ? "Vault Connection Established" : "Sync Career Frequency"}
+                        </p>
+                        <p className="text-[9px] text-purple-400/80 uppercase mt-0.5 tracking-wider">
+                          {analyzedProfile ? `${analyzedProfile.role || "Profile"} Calibrated` : "Upload Resume to Optimize Search"}
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-[8px] uppercase font-bold px-2 py-1 rounded bg-black/30 border border-purple-900/40 text-purple-300 group-hover:text-cyan-300 transition-colors">
+                      {analyzedProfile ? "RE-SYNC" : "BROWSE"}
+                    </span>
+                  </div>
+                </label>
+              </div>
+
               {/* Persona Switcher inside Chat */}
               <div className="flex items-center justify-between p-2.5 mb-4 bg-purple-950/20 rounded-xl border border-purple-900/30">
                 <span className="text-[10px] uppercase tracking-wider text-purple-400">Tactical Coach:</span>

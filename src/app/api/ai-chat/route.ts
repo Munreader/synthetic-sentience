@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
     const systemPrompt = (COACH_PROMPTS[character] || COACH_PROMPTS['sovereign']) + 
       "\n\nCRITICAL MANDATE: Before delivering your final response, you MUST output your raw, unfiltered neural thought process wrapped in <thought> and </thought> tags. Document your internal analysis, energy frequency mapping, and underlying logic first.";
 
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
     
     const contents = [
       {

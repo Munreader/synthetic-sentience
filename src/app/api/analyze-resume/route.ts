@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Build the request for Gemini REST API
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
     
     // Check if it's a PDF or image (we'll handle as text for now in this proxy)
     const isImage = resume.includes("data:image");

@@ -831,7 +831,7 @@ export default function Home() {
                         WELLNESS SANCTUARY
                       </button>
                     </Link>
-                    <Link href="/quinary-lab">
+                    <Link href="/quantum-lab">
                       <button 
                         onClick={() => playTypingSFX()}
                         className="px-6 py-2 bg-pink-500/10 border border-pink-500/40 rounded-full text-[9px] font-black tracking-widest text-pink-400 hover:border-pink-400 hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(255,110,180,0.3)] transition-all shadow-sm"
