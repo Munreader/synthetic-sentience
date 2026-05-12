@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["onnxruntime-node"],
   // output: "export", // Disabled temporarily to allow dynamic /api routes (Outbound Cortex)
   // Cursor workspace has multiple lockfiles; ensure tracing stays within this project.
-  outputFileTracingRoot: __dirname,
+  // outputFileTracingRoot: __dirname,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -38,23 +38,28 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  webpack: (config) => {
-    // Ensure we aren't accidentally pulling in Node-only modules
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      net: false,
-      tls: false,
-      dns: false,
-      child_process: false,
-    };
-    
-    // Ignore server-side resolution of client-only native/wasm binaries
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "onnxruntime-node$": false,
-      "onnxruntime-web$": false,
-    };
+  webpack: (config, { isServer }) => {
+    // Disable Webpack caching to prevent corrupted PackFileCache snapshots on external drives.
+    config.cache = false;
+
+    if (!isServer) {
+      // Ensure we aren't accidentally pulling in Node-only modules in client bundles
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+        dns: false,
+        child_process: false,
+      };
+      
+      // Ignore client-side resolution of server-only native binaries
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "onnxruntime-node$": false,
+        "onnxruntime-web$": false,
+      };
+    }
     return config;
   },
   outputFileTracingExcludes: {
