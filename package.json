@@ -5,6 +5,9 @@
     "node": ">=22.13.1"
   },
   "private": true,
+  "overrides": {
+    "onnxruntime-node": "npm:empty-npm-package@1.0.0"
+  },
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
