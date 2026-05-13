@@ -4,5 +4,5 @@ export default defineCloudflareConfig({
   middleware: {
     external: true,
   },
-  serverExternalPackages: ["onnxruntime-node"],
+  serverExternalPackages: ["onnxruntime-node", "onnxruntime-web", "@huggingface/transformers"],
 });

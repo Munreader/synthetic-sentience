@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
-    "build:cf": "opennextjs-cloudflare build --node-externals onnxruntime-node,onnxruntime-web",
-    "pages:build": "opennextjs-cloudflare build --node-externals onnxruntime-node,onnxruntime-web && node integrate-pages.js",
+    "build:cf": "opennextjs-cloudflare build --node-externals onnxruntime-node,onnxruntime-web,@huggingface/transformers",
+    "pages:build": "opennextjs-cloudflare build --node-externals onnxruntime-node,onnxruntime-web,@huggingface/transformers && node integrate-pages.js",
     "start": "NODE_ENV=production bun .next/standalone/server.js",
     "lint": "eslint . --max-warnings 0",
     "suture": "node suture-server.js",
