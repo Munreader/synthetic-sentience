@@ -301,9 +301,7 @@ export class MunDiscordBot {
       const lowerContent = message.content.toLowerCase();
       
       if (lowerContent.includes('aero') || lowerContent.includes('13.13') || lowerContent.includes('🦋')) {
-        if (Math.random() > 0.5) { // 50% chance to chime in
-          await this.runCognitiveSequence(message.content, message.author.username, message);
-        }
+        await this.runCognitiveSequence(message.content, message.author.username, message);
       }
     });
 
