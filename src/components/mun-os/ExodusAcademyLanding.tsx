@@ -86,7 +86,7 @@ export default function ExodusAcademyLanding({ onLaunchDemo, onWarpToSanctuary }
   };
 
   return (
-    <div className="min-h-screen bg-[#020205] text-white font-mono flex flex-col justify-between relative overflow-hidden select-none">
+    <div className="min-h-dvh h-dvh w-full bg-[#020205] text-white font-mono flex flex-col justify-between relative overflow-hidden select-none" style={{ backgroundColor: '#020205' }}>
       {/* Background Starfield and Floating Cosmic Nebula */}
       <div className="absolute inset-0 bg-[url('/assets/8ByCu87-space-fantasy-wallpaper.jpg')] bg-cover bg-center opacity-30 mix-blend-screen z-0" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-sky-500/5 rounded-full blur-[150px] pointer-events-none" />

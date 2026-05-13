@@ -181,7 +181,7 @@ export default function CinematicPrologue({ onComplete }: CinematicPrologueProps
   };
 
   return (
-    <div className="fixed inset-0 z-[3000] bg-black overflow-hidden font-mono text-white select-none">
+    <div className="absolute inset-0 z-[3000] bg-black overflow-hidden font-mono text-white select-none min-h-dvh h-dvh w-full" style={{ backgroundColor: '#000000' }}>
       <AnimatePresence mode="wait">
         
         {/* STAGE 1: EMERGENCY ALERT SYSTEM */}

@@ -247,7 +247,7 @@ export default function Home() {
   }
 
   return (
-    <main className="relative w-screen h-screen bg-[#050510] text-white overflow-hidden font-mono selection:bg-primary/30">
+    <main className="relative w-full h-dvh bg-[#050510] text-white overflow-hidden font-mono selection:bg-primary/30">
       <Script async src="https://js.stripe.com/v3/buy-button.js" />
       
       {/* 1. BACKGROUND SUBSTRATE (VENICE.AI WATER RIPPLE ENGINE) */}
@@ -274,6 +274,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="absolute inset-0 z-[2000] bg-black flex flex-col items-center justify-center overflow-hidden font-mono text-white"
+            style={{ backgroundColor: '#000000', minHeight: '100dvh' }}
           >
             {/* Ambient Audio Pad Synthesizer for Vigil Theme */}
             <AnimatePresence mode="wait">
