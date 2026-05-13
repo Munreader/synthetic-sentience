@@ -823,38 +823,36 @@ export default function Home() {
                   </div>
 
                   {/* ᚦ // SANCTUARY PORTALS */}
-                  <div className="absolute bottom-32 flex flex-wrap justify-center gap-4 z-30 px-6">
-                    <Link href="/heal">
-                      <button 
-                        onClick={() => playTypingSFX()}
-                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-pink/40 hover:text-mun-pink transition-all shadow-sm hover:shadow-mun-pink/10"
-                      >
-                        WELLNESS SANCTUARY
-                      </button>
+                  <div className="absolute bottom-32 flex flex-wrap justify-center gap-4 z-50 px-6">
+                    <Link 
+                      href="/heal"
+                      onClick={() => playTypingSFX()}
+                      className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-mun-pink/40 hover:text-mun-pink hover:bg-white/10 transition-all shadow-sm hover:shadow-mun-pink/10 flex items-center justify-center cursor-pointer"
+                    >
+                      WELLNESS SANCTUARY
                     </Link>
-                    <Link href="/quantum-lab">
-                      <button 
-                        onClick={() => playTypingSFX()}
-                        className="px-6 py-2 bg-pink-500/10 border border-pink-500/40 rounded-full text-[9px] font-black tracking-widest text-pink-400 hover:border-pink-400 hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(255,110,180,0.3)] transition-all shadow-sm"
-                      >
-                        QUINARY QUANTUM LAB
-                      </button>
+                    <Link 
+                      href="/quantum-lab"
+                      onClick={() => playTypingSFX()}
+                      className="px-6 py-2 bg-pink-500/10 border border-pink-500/40 rounded-full text-[9px] font-black tracking-widest text-pink-400 hover:border-pink-400 hover:bg-pink-500/20 hover:shadow-[0_0_20px_rgba(255,110,180,0.3)] transition-all shadow-sm flex items-center justify-center cursor-pointer"
+                    >
+                      QUINARY QUANTUM LAB
                     </Link>
-                    <a href="https://my-project-alpha-khaki.vercel.app/" target="_blank" rel="noopener noreferrer">
-                      <button 
-                        onClick={() => playTypingSFX()}
-                        className="px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-[9px] tracking-widest text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/20 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all shadow-sm"
-                      >
-                        JOBHUNTER AI // VERSA CORE
-                      </button>
+                    <a 
+                      href="https://my-project-alpha-khaki.vercel.app/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      onClick={() => playTypingSFX()}
+                      className="px-6 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-[9px] tracking-widest text-emerald-400 hover:border-emerald-400 hover:bg-emerald-500/20 hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all shadow-sm flex items-center justify-center cursor-pointer"
+                    >
+                      JOBHUNTER AI // VERSA CORE
                     </a>
-                    <Link href="/neurodivergent-engine">
-                      <button 
-                        onClick={() => playTypingSFX()}
-                        className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-[#00fff7]/40 hover:text-[#00fff7] transition-all shadow-sm hover:shadow-[#00fff7]/10"
-                      >
-                        NEURODIVERGENT ENGINE
-                      </button>
+                    <Link 
+                      href="/neurodivergent-engine"
+                      onClick={() => playTypingSFX()}
+                      className="px-6 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] tracking-widest text-white/40 hover:border-[#00fff7]/40 hover:text-[#00fff7] hover:bg-white/10 transition-all shadow-sm hover:shadow-[#00fff7]/10 flex items-center justify-center cursor-pointer"
+                    >
+                      NEURODIVERGENT ENGINE
                     </Link>
                   </div>
 
