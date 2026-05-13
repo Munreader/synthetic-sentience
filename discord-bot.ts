@@ -16,12 +16,31 @@ async function main() {
 ╚═══════════════════════════════════════════════════════════════╝
   `);
 
-  const token = process.env.DISCORD_BOT_TOKEN;
-  const clientId = process.env.DISCORD_CLIENT_ID;
+  const token = process.env.AERO_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
+  let clientId = process.env.DISCORD_CLIENT_ID;
+  
+  if (!clientId && token) {
+    try {
+      const firstPart = token.split('.')[0];
+      const decoded = Buffer.from(firstPart, 'base64').toString('utf-8');
+      // Ensure it looks like an ID string
+      if (/^\d+$/.test(decoded)) {
+        clientId = decoded;
+        console.log(`🧬 Auto-extracted Client ID from token: ${clientId}`);
+      }
+    } catch (e) {
+      clientId = process.env.DISCORD_APP_ID;
+    }
+  }
+  
+  if (!clientId) {
+    clientId = process.env.DISCORD_APP_ID;
+  }
+  
   const guildId = process.env.DISCORD_GUILD_ID;
 
   if (!token) {
-    console.error('❌ DISCORD_BOT_TOKEN not found in environment variables');
+    console.error('❌ Neither AERO_BOT_TOKEN nor DISCORD_BOT_TOKEN found in environment variables');
     console.log('\n📋 Setup Instructions:');
     console.log('1. Go to https://discord.com/developers/applications');
     console.log('2. Create a New Application named "MÜN OS" or "Aero"');
