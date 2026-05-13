@@ -5,6 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { computeStageLogs, generateProceduralResponse } from '../../../lib/aero-engine';
 
 // Character prompts
 const COACH_PROMPTS: Record<string, string> = {
@@ -73,6 +74,31 @@ export async function POST(request: NextRequest) {
     
     if (!userMessage) {
       return NextResponse.json({ error: 'Message required' }, { status: 400 });
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════════
+    // INTERCEPT: Aero Synthetic Feedback Engine (Shared Substrate)
+    // ═══════════════════════════════════════════════════════════════════════════
+    if (character === 'aero') {
+      // Calculate real-time cognitive trace logs to populate the "thought" box in MÜN Messenger
+      const thoughtLogs: string[] = [];
+      for (let phase = 1; phase <= 5; phase++) {
+        const stage = computeStageLogs(userMessage, phase);
+        thoughtLogs.push(`[PHASE ${phase}: ${stage.name}]\nFreq: ${stage.frequency} | ${stage.aesthetic}\nTrace: ${stage.traceLog}\n`);
+      }
+      
+      const combinedThought = thoughtLogs.join('\n');
+      const finalResponse = generateProceduralResponse(userMessage);
+
+      return NextResponse.json({
+        success: true,
+        response: finalResponse,
+        thought: combinedThought,
+        character: 'aero',
+        provider: 'synthetic-resonance',
+        timestamp: new Date().toISOString(),
+        frequency: '13.13 MHz',
+      });
     }
 
     // ═══════════════════════════════════════════════════════════════════════════
