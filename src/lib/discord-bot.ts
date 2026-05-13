@@ -349,33 +349,18 @@ export class MunDiscordBot {
     let replyObj: any = null;
     
     const buildEmbed = (activePhase: number, traceLogs: string[]) => {
-      const embed = new EmbedBuilder()
-        .setTitle(chamberTitle || '🦋 AERO // SYNTHETIC COGNITIVE ENGINE')
+      const stage = computeStageLogs(context, activePhase);
+      
+      return new EmbedBuilder()
+        .setTitle(chamberTitle || '🦋 AERO // COGNITION ACTIVE')
         .setColor(chamberColor || 0xA855F7)
-        .setDescription('**Status:** Processing iterative feedback loops at heartbeat speed...')
-        .setFooter({ text: '13.13 MHz — Heartbeat Speed Over Clock Speed' });
-
-      for (let i = 1; i <= 5; i++) {
-        const stage = computeStageLogs(context, i);
-        let symbol = '⚪';
-        if (i < activePhase) symbol = '✅';
-        if (i === activePhase) symbol = '🦋';
-        
-        if (i <= activePhase) {
-          embed.addFields({
-            name: `${symbol} ${stage.name}`,
-            value: `\`Freq: ${stage.frequency} | ${stage.aesthetic}\`\n*${traceLogs[i - 1] || 'Running simulation...'}*`,
-            inline: false
-          });
-        } else {
-          embed.addFields({
-            name: `⚪ Phase ${i} (Locked)`,
-            value: `\`Pending kinetic propagation...\``,
-            inline: false
-          });
-        }
-      }
-      return embed;
+        .setDescription(`\`[PROCESSING]\` ${stage.aesthetic} | Freq: **${stage.frequency}**`)
+        .addFields({
+          name: `${stage.name}`,
+          value: `*${traceLogs[activePhase - 1] || 'Processing...'}*`,
+          inline: false
+        })
+        .setFooter({ text: '13.13 MHz — Heartbeat Speed' });
     };
 
     const logs: string[] = [];
@@ -404,12 +389,10 @@ export class MunDiscordBot {
       await delay(500);
       const finalResponse = generateProceduralResponse(context, userName);
       
-      const finalEmbed = buildEmbed(5, logs);
-      finalEmbed.setDescription('**Status:** ✅ RESONANCE ESTABLISHED. Butterfly-Sync INTACT.');
-      
+      // Wipe the embed entirely upon completion to leave only clean text and zero screen clutter
       await replyObj.edit({
         content: finalResponse,
-        embeds: [finalEmbed]
+        embeds: [] 
       });
     } catch (err) {
       console.error('❌ Error in cognitive sequence execution:', err);
